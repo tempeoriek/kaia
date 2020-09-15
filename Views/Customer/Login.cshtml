@@ -1,0 +1,208 @@
+﻿@model LoginModel
+@using Nop.Web.Models.Customer;
+@using Nop.Core;
+@using Nop.Core.Infrastructure;
+
+@{
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Login").Text);
+
+    //register URL with return URL (if specified)
+    var registerUrl = Url.RouteUrl("Register");
+
+    var returnurl = "";
+    if (!String.IsNullOrEmpty(this.Context.Request.QueryString["returnUrl"]))
+    {
+        returnurl = this.Context.Request.QueryString["returnUrl"];
+
+        var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+
+        registerUrl = webHelper.ModifyQueryString(registerUrl, "returnurl=" + HttpUtility.UrlEncode(this.Context.Request.QueryString["returnUrl"]), null);
+    }
+
+
+    }
+
+
+
+<div class="col-main-slim" style="margin-top:100px;">
+    <!--sign in sign up-->
+
+    
+
+    <div class="form-login">
+        <ul class="nav nav-pills form-caption">
+            <li class="nav-item"><a class="nav-link active text-center" data-toggle="pill" href="#signin">SIGN IN</a></li>
+            <li class="nav-item"><a class="nav-link text-center" data-toggle="pill" href="#signup">SIGN UP</a></li>
+
+        </ul>
+        <div class="tab-content">
+            <div class="container tab-pane active" id="signin">
+                <br />
+                <div class="login-intro">
+                    @Html.Action("TopicBlock", "Topic", new { systemName = "LoginIntro" })
+                </div>
+                <br />
+
+                @using (Ajax.BeginForm("Login", "Customer", new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.InsertAfter,
+                    HttpMethod = "POST",
+                    LoadingElementId = "ajax-loader",
+                    OnSuccess = "loginCallback",
+                    UpdateTargetId = "pnlMsg"
+                }, new { id = "form1", @class = "login-form" }))
+                
+               {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("ReturnUrl", @returnurl)
+
+                    var validationSummary = Html.ValidationSummary(true, T("Account.Login.Unsuccessful").Text);
+                    <div id="pnlMsg" class="text-danger">@validationSummary</div>
+                    <div class="form-fields">
+                        <div class="form-group">
+                            @if (Model.UsernamesEnabled)
+                            {
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form_signin", autofocus = "autofocus", placeholder = "Username" })
+                                @Html.ValidationMessageFor(m => m.Username)
+                            }
+                            else
+                            {
+                                <input type="email" placeholder="Email" name="Email" class="form_signin" required>
+                                @*@Html.TextBoxFor(m => m.Email, new { @class = "form_signin", autofocus = "autofocus", placeholder = "Email" })*@
+                                @Html.ValidationMessageFor(m => m.Email)
+                            }
+                        </div>
+                        <div class="form-group">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form_signin pb-2", placeholder = "Password" })
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                        <div class="form-group">
+                            <span class="psw">
+                                @Html.RouteLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery")
+                            </span>
+                        </div>
+
+
+                        <button type="submit" class="button_sare button_signin">SIGN IN</button>
+
+
+                        @*<div class="col-md-3">
+                    <div class="form-group">
+                        <div class="buttons">
+                            <input class="btn btn-default btn-general" type="submit" value="LOGIN" />
+                            <br /><br />
+                            <input type="button" class="btn btn-inverse btn-block" onclick="location.href='@registerUrl'" value="@T(" Account.Register")" />
+                        </div>
+                    </div>
+                </div>*@
+                        @if (Model.DisplayCaptcha)
+                        {
+                            <div class="captcha-box">
+                                @Html.Raw(Html.GenerateCaptcha())
+                            </div>
+                        }
+                    </div>
+                }
+
+
+            </div>
+            <div class="container tab-pane fade" id="signup">
+                <br />
+                <div class="login-intro">
+                    @Html.Action("TopicBlock", "Topic", new { systemName = "LoginRegistrationInfo" })
+                </div>
+                <br />
+                @Html.Action("Register", "Customer")
+                @*<form class="login-form">
+            <input type="text" placeholder="First Name" name="fname" class="form_signin pb-2" required>
+            <input type="text" placeholder="Last Name" name="lname" class="form_signin pb-2" required>
+            <input type="tel" placeholder="Mobile" name="mobile" class="form_signin pb-2" required>
+            <input type="email" placeholder="Email" name="uname" class="form_signin pb-2" required>
+            <input type="password" placeholder="Password" name="psw" class="form_signin pb-2" required>
+            <button type="submit" class="button_kivee button_signin" style="width:135px;">SIGN UP</button>
+        </form>*@
+            </div>
+                    </div>
+                </div>
+
+
+    <!--end of sign in sign up-->
+
+    
+
+</div>
+
+
+@section HeaderSection{
+    <style>
+        @@media (max-width: 991.98px) {
+
+        #body-content {
+            padding-bottom: 20em;   /*or else button reigster will be hidden*/
+        }
+    }
+    </style>
+    
+
+}
+
+
+@section scripts
+{
+
+  @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+
+    function loginCallback(data) {
+
+            if (data.ok) {
+                if (data.msg != "")
+                {
+                    $("#pnlMsg").html(data.msg);
+                }
+                else
+                {
+                    $("#pnlMsg").html('');
+                }
+
+                //alert(data.newurl);
+
+                window.location = data.newurl;
+            }
+            else {
+                $("#pnlMsg").html(data.msg);
+            }
+        }
+
+    function reqfailed() {
+            $("#pnlfailure").html("Sorry, an error occured.");
+        }
+
+    function loginCallbackRegister(data) {
+
+            if (data.ok) {
+                if (data.msg != "") {
+                    $("#pnlfailure").html(data.msg);
+                }
+                else {
+                    $("#pnlfailure").html('');
+                }
+
+                $("#form-register-body").hide();
+
+                //window.location = data.newurl;
+            }
+            else {
+                $("#pnlfailure").html(data.msg);
+            }
+        }
+
+</script>
+
+}
+
+
+    

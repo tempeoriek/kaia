@@ -1,0 +1,141 @@
+﻿@using Nop.Core
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Infrastructure;
+@{
+    var displayMiniProfiler = EngineContext.Current.Resolve<Nop.Core.Domain.StoreInformationSettings>().DisplayMiniProfilerInPublicStore;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@Html.NopTitle(true)</title>
+    <meta name="description" content="@(Html.NopMetaDescription())" />
+    <meta name="keywords" content="@(Html.NopMetaKeywords())" />
+    <meta name="Author" content="Onka, flitts">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="~/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon/favicon-16x16.png">
+
+    @*<link rel="manifest" href="~/favicon/manifest.json">*@
+    <link rel="mask-icon" href="~/favicon/safari-pinned-tab.svg" color="#c4c6c9">
+    <meta name="theme-color" content="#93453B">
+    <link href="~/favicon.ico" rel="shortcut icon">
+
+
+    @Styles.Render("~/Content/bootstrapcss")
+
+    @*<link href="~/Content/bootstrap/bootstrap.css" rel="stylesheet" />*@
+
+    <link href="~/Themes/v1/Content/Layout.css" rel="stylesheet" />
+    <link href="~/Themes/v1/Content/ProductDetail.css" rel="stylesheet" />
+    <link href="~/Themes/v1/Content/Default.css" rel="stylesheet" />
+    <link href="~/Themes/v1/Content/Catalogue.css" rel="stylesheet" />
+    @Styles.Render("~/app/css")
+
+    @Html.Partial("Head")
+
+    @if (displayMiniProfiler)
+    {
+        @StackExchange.Profiling.MiniProfiler.RenderIncludes();
+    }
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    @*@Scripts.Render("~/bundles/jquery")*@
+
+    @Html.NopCanonicalUrls()
+
+    @if (IsSectionDefined("RootHeaderSection"))
+    {
+        @RenderSection("RootHeaderSection", false)
+    }
+
+    @{
+        var scrollspy = "";
+        if (ViewBag.UseScrollSpy != null)
+        {
+            scrollspy = "data-spy=scroll data-target=#productgallery";
+        }
+    }
+
+
+</head>
+<body @scrollspy>
+  
+    <div id="body-wrapper">
+        @Html.Action("JavaScriptDisabledWarning", "Common")
+        @Html.Partial("OldInternetExplorerWarning")
+        @RenderBody()
+    </div>
+ 
+
+    <script src="~/Scripts/modernizr.js"></script>
+    @Scripts.Render("~/bundles/bootstrapjs")
+
+    @*dropdown hover*@
+    <script src="~/Scripts/app/dropdownhover/js/bootstrap-dropdownhover.min.js"></script>
+
+    <script src="~/Scripts/jquery.menu-aim.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/public.ajaxcart.js"></script>
+    <script src="~/Scripts/public.common.js"></script>
+    <script src="~/Themes/v1/Scripts/scrolltopcontrol.js"></script>
+   
+
+
+    <script src="~/Scripts/asidebar.jquery.js"></script>
+    @*<script src="~/Themes/v1/Scripts/waypoints.min.js"></script>*@
+
+
+
+    @Scripts.Render("~/app/script")
+
+    @if (IsSectionDefined("RootScripts"))
+    {
+        @RenderSection("RootScripts", required: false)
+    }
+
+
+    <script type="text/javascript">
+        AjaxCart.init(false, '.cart-qty', '.wishlist-qty', '#flyout-cart');
+
+        @*disable right click*@
+       $(document).ready(function () {
+           $("img").on("contextmenu", function () {
+               return false;
+           });
+       });
+    </script>
+
+    @*ajax loading window*@
+    <div class="ajax-loading-block-window" style="display: none;">
+        <div class="loading-image">
+        </div>
+    </div>
+
+
+    <script>
+        $('.signin').hover(function () {
+            //$(this).find('.dropmenu').stop(true, true).delay(200).fadeIn(500);
+            $('.myaccount-menu').fadeIn("slow", function () {
+            });
+
+        }, function () {
+            //$(this).find('.dropmenu').stop(true, true).delay(200).fadeOut(500);
+            $('.myaccount-menu').delay(3000).fadeOut("slow", function () { });
+        });
+
+        $(".accordion").on("click", ".accordion-header", function () {
+            $(this).toggleClass("active").next().slideToggle();
+        });
+
+    </script>
+
+  
+
+</body>
+</html>

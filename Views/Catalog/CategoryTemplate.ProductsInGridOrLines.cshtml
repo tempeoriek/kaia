@@ -1,0 +1,177 @@
+﻿@model CategoryModel
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+
+@{
+
+    //Layout = "~/Views/Shared/_LayoutTwo.cshtml";
+
+    Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+    if (canonicalUrlsEnabled)
+    {
+        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(categoryUrl);
+    }
+
+    var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
+}
+
+
+@{
+    var pg_i = 0;
+
+    var title = Model.Name;
+    if(Model.Name.Equals("categories", StringComparison.OrdinalIgnoreCase))
+    {
+        title = "All Categories";
+    }
+
+    <style>
+            .menu_shop{display:block !important;}
+    </style>
+    
+@*<div class="row d-flex justify-content-end">
+    <div class="col-10 mb-4 d-none d-sm-block"><h1 class="cataloque-name">@title</h1></div>
+    <div class="col-12 mb-4 d-block d-sm-none"><h1 class="cataloque-name">@title</h1></div>
+</div>*@
+
+
+<div class="container">
+    @*<div class="col-12 col-lg-3"></div>*@
+   
+       
+
+    @if (Model.Products.Any())
+    {
+        <div class="row catalogue-img">
+            @foreach (var item in Model.Products)
+            {
+            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4";
+            var type = item.ThumbnailOrientation;
+            if (type.Equals("landscape", StringComparison.OrdinalIgnoreCase))
+            {
+            colCss = "col-6";
+            }
+
+            <div class="@colCss catalog-line">
+                @Html.Partial("_ProductBox", item)
+            </div>
+            pg_i++;
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-main-slim mt-5"><h3>We're still preparing the collection. Please stay tuned.</h3></div>
+
+    }
+   
+    <div class="gap"></div>
+        
+
+</div>
+}
+
+<br /><br /><br /><br /><br />
+
+@*<div style="margin-top:120px; margin-bottom:120px;">
+    <div class="shop_all_row">
+        <div class="product1">
+            <a href="#"><img src="~/Content/Images/uploaded/product/Mask Group 9.png" class="img-shopall"/></a>
+                <p class="name_item">SHIRT WITH POCKETS</p>
+                <p class="price_item">IDR 329,000</p>
+        </div>
+        <div class="product2-small">
+            <a href="#"><img src="~/Content/Images/uploaded/product/Mask Group 13.png" class="img-shopall"/></a>
+                <p class="name_item">SHIRT WITH PIPING</p>
+                <p class="price_item">IDR 329,000</p>
+        </div>
+    </div>
+
+    <div class="shop_all_row">
+        <div class="product2">
+            <a href="#"><img src="~/Content/Images/uploaded/product/Mask Group 31.png" class="img-shopall"/></a>
+                <p class="name_item">SHIRT WITH POCKETS</p>
+                <p class="price_item">IDR 329,000</p>
+        </div>
+        <div class="product3">
+            <a href="#"><img src="~/Content/Images/uploaded/product/Mask Group 32.png" class="img-shopall"/></a>
+                <p class="name_item">SHIRT WITH PIPING</p>
+                <p class="price_item">IDR 329,000</p>
+        </div>
+    </div>
+
+    <div class="shop_all_row">
+        <div class="product2">
+            <a href="#"><img src="~/Content/Images/uploaded/product/Mask Group 33.png" class="img-shopall"/></a>
+                <p class="name_item">SHIRT WITH POCKETS</p>
+                <p class="price_item">IDR 329,000</p>
+        </div>
+        <div class="product3">
+            <a href="#"><img src="~/Content/Images/uploaded/product/Mask Group 34.png" class="img-shopall"/></a>
+                <p class="name_item">SHIRT WITH PIPING</p>
+                <p class="price_item">IDR 329,000</p>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="product2 text-center">
+            <a href="#"><img src="~/Content/Images/uploaded/product/Mask Group 35.png" class="img-shopall"/></a>
+                <p class="name_item">SHIRT WITH POCKETS</p>
+                <p class="price_item">IDR 329,000</p>
+        </div>
+    </div>
+
+</div>*@
+
+
+
+
+
+@section scripts{
+    
+@*<script type="text/javascript" src="~/Scripts/app/exif/exif.js"></script>
+<script>
+        //"use strict";
+        //window.onload=getExif;
+
+        function getExif() {
+            var img1 = document.getElementById("img1");
+            EXIF.getData(img1, function() {
+                var make = EXIF.getTag(this, "Make");
+                var model = EXIF.getTag(this, "Model");
+                var makeAndModel = document.getElementById("makeAndModel");
+                makeAndModel.innerHTML = `${make} ${model}`;
+            });
+        }
+</script>
+
+    <script>
+
+        function imageOrientation(src) {
+
+            var orientation,
+            img = new Image();
+            img.src = src;
+
+            if (img.naturalWidth > img.naturalHeight) {
+                orientation = 'landscape';
+            } else if (img.naturalWidth < img.naturalHeight) {
+                orientation = 'portrait';
+            } else {
+                orientation = 'even';
+            }
+
+            return orientation;
+
+        }
+    </script>*@
+
+}
+

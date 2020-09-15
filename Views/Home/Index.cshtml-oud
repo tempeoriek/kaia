@@ -1,0 +1,231 @@
+﻿@*@model IEnumerable<Nop.Web.Models.rajaongkir>*@
+@model Nop.Web.Models.MyProvince
+
+
+
+@*<div class="page home-page">
+        <div class="page-body">
+            @Html.Widget("home_page_top")
+          
+            @Html.Widget("home_page_before_categories")
+            @Html.Action("HomepageCategories", "Catalog")
+            @Html.Widget("home_page_before_products")
+            @Html.Action("HomepageProducts", "Product")
+            @Html.Widget("home_page_before_best_sellers")
+            @Html.Action("HomepageBestSellers", "Product")
+            @Html.Widget("home_page_before_news")
+            @Html.Action("HomePageNews", "News")
+            @Html.Widget("home_page_before_poll")
+            @Html.Action("HomePagePolls", "Poll")
+            @Html.Widget("home_page_bottom")
+        </div>
+    </div>*@
+
+
+
+@*@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })*@
+
+<!-- Hero -->
+@*@Html.Widget("home_page_top")*@
+@*http://www.docs.purethemes.net/sukces/layerslider/documentation/documentation.html*@
+  <!-- Optional header components (ex: slider) -->
+<!-- Importing slider content -->
+<section id="slider-wrapper" class="layer-slider-wrapper">
+    <div id="layerslider" style="width:100%;height:500px;">
+        <div class="ls-slide" data-ls="transition2d:1;timeshift:-1000;">
+            <img src="~/Content/Images/uploaded/homepage/slider1.jpg" class="ls-bg" />
+            <img src="~/Content/Images/uploaded/homepage/section1.jpg" class="ls-l" style="left:50%;top:50%;"
+                 data-ls="offsetxin:0;offsetyin:250;durationin:950;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;" alt="eunoia">
+        </div>
+
+        <div class="ls-slide" data-ls="transition2d:1;timeshift:-1000;">
+            <img src="~/Content/Images/uploaded/homepage/slider2.jpg" class="ls-bg" />
+            <!-- Right Image -->
+            @*<img src="~/Content/Images/uploaded/homepage/slider02.png" class="ls-l" style="left:70%;" 
+                 data-ls="offsetxin:0;offsetyin:250;durationin:950;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">*@
+
+            <!-- Left Text -->
+            @*<h2 class="ls-l title" 
+                style="width:500px; color:#ffffff; top:30%;left:30%;" 
+                data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:500;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">New and Exclusive</h2>
+             <p class="ls-l text-standard" style="width:500px; color:#ffffff; top:45%; left:30%;" data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:1500;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+                PROUD TO BE INDONESIAN <br />COLLECTION
+            </p>
+            <p class="ls-l" style="width:500px; top:65%; left:30%;" 
+               data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:1000;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+                <a href="" class="btn btn-default btn-lg">View All</a>
+            </p>*@
+        </div>
+
+        @*<div class="ls-slide" data-ls="transition2d:1;timeshift:-1000;">
+            <img src="~/Content/Images/uploaded/homepage/slider03-bg.jpg" class="ls-bg" />
+            <img src="~/Content/Images/uploaded/homepage/slider03.png" class="ls-l" style="left:60%;"
+                 data-ls="offsetxin:0;offsetyin:250;durationin:950;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+            <p class="ls-l" data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:500;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;"
+               style="top:35%;left:30%; width:500px;">
+                <img src="~/Content/Images/uploaded/homepage/slider03-title.png" />
+            </p>
+            <p class="ls-l text-standard" style="width:500px; top:45%; left:30%;color:#ffffff;" data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:1500;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+               PASTEL NAIL STICKER<br />COLLECTION
+            </p>
+            <p class="ls-l" style="width:500px; top:65%; left:30%;"
+               data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:1000;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+                <a href="" class="btn btn-default btn-lg">View All</a>
+            </p>
+        </div>*@
+
+        @*<div class="ls-slide" data-ls="transition2d:1;timeshift:-1000;">
+            <img src="~/Content/Images/uploaded/homepage/slider04-bg.jpg" class="ls-bg"  />
+            <!-- Right Image -->
+            <img src="~/Content/Images/uploaded/homepage/slider04.png" class="ls-l" style="left:70%;"
+                 data-ls="offsetxin:0;offsetyin:250;durationin:950;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+
+            <!-- Left Text -->
+          <p class="ls-l" data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:500;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;"
+             style="top:35%;left:30%; width:500px;">
+              <img src="~/Content/Images/uploaded/homepage/slider04-title.png" />
+          </p>
+          <p class="ls-l text-standard" style="width:500px; color:#ffffff; top:55%; left:30%;" data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:1500;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+               ALL TIME FAVORITE SONG<br />COLLECTION
+            </p>
+            <p class="ls-l" style="width:500px; top:75%; left:30%;"
+               data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:1000;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+                <a href="" class="btn btn-default btn-lg" style="background-color:#ef233e">View All</a>
+            </p>
+        </div>
+
+        <div class="ls-slide" data-ls="transition2d:1;timeshift:-1000;">
+            <img src="~/Content/Images/uploaded/homepage/slider05-bg.jpg" class="ls-bg" />
+            <!-- Right Image -->
+            <img src="~/Content/Images/uploaded/homepage/slider05.png" class="ls-l" style="left:70%;"
+                 data-ls="offsetxin:0;offsetyin:250;durationin:950;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+
+            <!-- Left Text -->
+            <p class="ls-l text-standard" style="width:500px; color:#000; top:45%; left:30%;" data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:1500;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+               WORLD OF WORDS <br />COLLECTION
+            </p>
+            <p class="ls-l" style="width:500px; top:65%; left:30%;"
+               data-ls="offsetxin:0;offsetyin:250;durationin:1000;delayin:1000;offsetxout:0;offsetyout:-8;easingout:easeInOutQuart;scalexout:1.2;scaleyout:1.2;">
+                <a href="" class="btn btn-default btn-lg">View All</a>
+            </p>
+        </div>*@
+
+
+    </div>
+</section>
+
+
+
+<div class="homepage">
+
+    @*<section class="hero">
+        <img src="~/Content/Images/uploaded/homepage/section1.jpg" class="img-responsive" />
+    </section>*@
+
+    @*<section class="prlx-bg inset-shadow-1" data-stellar-ratio="2" style="padding: 50px 0; background-image: url('/content/images/uploaded/homepage/section-bg-1.jpg'); background-position: 0 -400px;">
+            <div class="mask mask-2"></div>
+            <div class="wp-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <h4 class="c-white"><i class="fa fa-quote-left fa-3x"></i></h4>
+                                <h2 class="c-white">Subscribe us</h2>
+                                <p class="c-white">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas neque diam, luctus at laoreet in, auctor ut tellus.
+                                    <br>
+                                    Etiam enim lacus, ornare et tempor, rhoncus rhoncus sem.
+                                </p>
+                                <span class="clearfix"></span>
+
+                                <div class="text-center">
+                                    <a href="http://player.vimeo.com/video/22290612" class="btn btn-lg btn-b-white mt-20 ext-source">Watch our video</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>*@
+
+    <!-- Section 2 -->
+    <section>
+        <img src="~/Content/Images/uploaded/homepage/section2.png" class="img-responsive" />
+    </section>
+
+    <!-- section 3-->
+    <section>
+
+        <ul class="list-unstyled" style="margin:0; padding:0;">
+            <li class="col-xs-12 col-sm-4" style="padding:0; margin:0">
+                <img src="~/Content/Images/uploaded/homepage/section3.jpg" class="img-responsive" />
+            </li>
+            <li class="col-xs-12 col-sm-4" style="padding:0;margin:0">
+                <img src="~/Content/Images/uploaded/homepage/section3.jpg" class="img-responsive" />
+            </li>
+            <li class="col-xs-12 col-sm-4" style="padding:0;margin:0">
+                <img src="~/Content/Images/uploaded/homepage/section3.jpg" class="img-responsive" />
+            </li>
+        </ul>
+
+      
+        
+        @*@Html.Action("HomepageProducts", "Product", new { categoryId = 1 })*@
+    </section>
+
+    <!-- section 4 -->
+    <section>
+        <img src="~/Content/Images/uploaded/homepage/section4a.png" class="img-responsive" />
+    </section>
+
+    
+</div>
+
+
+<!-- Social media feed -->
+@*http://www.c-sharpcorner.com/UploadFile/raj1979/how-to-authenticate-and-get-data-using-instagram-api/*@
+    @*<div class="blox-instagram">
+        <div class="insta-logo">
+            <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
+        </div>
+        <h2>Be part of our Instagram Adventure</h2>
+        @Html.Widget("home_page_bottom")
+
+        <ul class="instagram">
+            @foreach (var image in Model.Images)
+            {
+                <li>
+                    <div class="image_frame">
+                        <a href="/instagram-@image.Id/@image.CaptionText.Slugify()" title="@image.CaptionText">
+                            <img src="@image.Thumbnail" />
+                        </a>
+                    </div>
+                </li>
+            }
+        </ul>
+        <br />
+        #eunoia_ig
+        <br />
+        POST IT. BOAST IS.
+    </div>*@
+
+
+
+
+@*@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })*@
+
+
+@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            $('.carousel').carousel(
+                'pause'
+                //{ interval: 6000 }
+                );
+        });
+    </script>
+}
+
+

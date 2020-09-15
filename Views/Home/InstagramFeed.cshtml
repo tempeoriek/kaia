@@ -1,0 +1,27 @@
+﻿@model Skybrud.Social.Instagram.Responses.InstagramRecentMediaResponse
+
+
+<div class="row position-relative slider-instagram">
+    <div class="carouseldesktop d-none d-md-block">
+
+        @for (int i = 0; i < 6; i++)
+        {
+            var post = Model.Body.Data[i];
+            <div><a href="@post.Link" target="_blank"><img src="@post.Standard" class="img-fluid" /></a></div>
+        }
+    </div>
+    <div class="carouselmobile d-block d-md-none">
+        @for (int i = 0; i < 6; i++)
+        {
+            var post = Model.Body.Data[i];
+            <div><a href="@post.Link" target="_blank"><img src="@post.Standard" class="img-fluid" /></a></div>
+        }
+  
+    </div>
+    <div class="d-block d-md-none">
+        <div class="position-absolute arrow-carousel d-flex justify-content-between">
+            <p class="left" style="left:10px"><img src="~/Themes/v1/Content/images/pref.png" /></p>
+            <p class="right" style="right:10px;"><img src="~/Themes/v1/Content/images/next.png" /></p>
+        </div>
+    </div>
+</div>

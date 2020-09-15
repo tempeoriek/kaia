@@ -1,0 +1,216 @@
+﻿@model ProductDetailsModel
+@using Nop.Core
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Services.Localization;
+@using Nop.Web.Models.Catalog;
+@{
+    //Layout = "~/Views/Shared/_LayoutTwo.cshtml";
+
+    //title, meta
+    Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var seoSettings = EngineContext.Current.Resolve<SeoSettings>();
+
+    //canonical URL
+    if (seoSettings.CanonicalUrlsEnabled)
+    {
+        var productUrl = Url.RouteUrl("Product", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(productUrl);
+    }
+
+    //open graph META tags
+    if (seoSettings.OpenGraphMetaTags)
+    {
+        var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+        Html.AddHeadCustomParts("<meta property=\"og:type\" content=\"product\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:title\" content=\"" + Html.Encode(Model.Name) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:description\" content=\"" + Html.Encode(Model.MetaDescription) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:site_name\" content=\"" + Html.Encode(storeName) + "\" />");
+    }
+
+    //Twitter META tags
+    if (seoSettings.TwitterMetaTags)
+    {
+        var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+        Html.AddHeadCustomParts("<meta property=\"twitter:card\" content=\"summary\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:site\" content=\"" + Html.Encode(storeName) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:title\" content=\"" + Html.Encode(Model.Name) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:description\" content=\"" + Html.Encode(Model.MetaDescription) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
+    }
+
+
+}
+
+
+
+
+<div class="container product-detail">
+
+
+
+    <div class="row">
+        <div class="col-12 col-md-8">
+
+            @Html.Partial("_ProductDetailsPictures", Model)
+        </div>
+        <div class="col-12 col-md-4">
+
+            <div class="product-description">
+
+                @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
+                {
+                    <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
+
+                        <h1 itemprop="name"><b>@Model.Name</b></h1>
+                        <br>
+                        <div class="description">
+                            @*<p style="opacity:0.6">DESCRIPTION</p>*@
+                            @Html.Raw(Model.FullDescription)
+                        </div>
+                        <br>
+                        @{
+                            var dataDictPrice = new ViewDataDictionary();
+                            dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
+                            @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
+
+                            var dataDictAttributes = new ViewDataDictionary();
+                            dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
+                            @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
+
+
+                            var dataDictAddToCart = new ViewDataDictionary();
+                            dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
+                            @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)
+
+                            //notify me if oos
+                            var totalstock = 0;
+                            foreach (var pa in Model.ProductAttributes)
+                            {
+                                foreach (var s in pa.Values)
+                                {
+                                    totalstock += s.VariantStockQuantity;
+                                }
+                            }
+
+                            if (totalstock >= 1)
+                            {
+                                //Cart & quantity
+                            }
+                            else
+                            {
+                                <!--Back in stock subscription-->
+                                @*@Html.Partial("_BackInStockSubscription", Model)*@
+
+                                <p class="out-of-stock" style="font-style:italic;">
+                                    Sorry, this product is completely out of stock
+                                </p>
+
+                            }
+                        }
+
+                        @*<div class="description">
+                            <p style="opacity:0.6">DESCRIPTION</p>
+                            @Html.Raw(Model.FullDescription)
+                        </div>*@
+
+                    </div>
+
+                }
+            </div>
+
+            @*@Html.Action("RelatedProducts", "Product", new { productId = Model.Id })*@
+
+        </div>
+    </div>
+
+
+
+    <!-- recommendation--->
+    @*Automatic*@
+    @*@Html.Action("ProductsAlsoPurchased", "Product", new { productId = Model.Id })*@
+
+    @*Manual*@
+    @*@Html.Action("CrossSellProducts", "Product", new { productId = Model.Id })*@
+
+    <!--temporary-->
+    <!-- end temp -->
+
+
+
+</div>
+
+
+
+@section HeaderSection{
+
+    <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick-theme.css">
+}
+
+@section scripts{
+
+    <script>
+        $('.add').click(function () {
+            if ($(this).prev().val() < 9) {
+                $(this).prev().val(+$(this).prev().val() + 1);
+            }
+        });
+        $('.sub').click(function () {
+            if ($(this).next().val() > 1) {
+                if ($(this).next().val() > 1) $(this).next().val(+$(this).next().val() - 1);
+            }
+        });
+
+        function btnclick() {
+            if ($(".btn-addcart").innerHTML == "ADD TO BAG") {
+                $(".btn-addcart").innerHTML = "✓ SEE BAG";
+            }
+            else {
+                $(".btn-addcart").innerHTML = "ADD TO BAG";
+            }
+        }
+
+
+    </script>
+
+
+    @*Slick*@
+    <script src="~/Scripts/app/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $(document).ready(function () {
+            $('.carouseldesktop').slick({
+                slidesToShow: 1.5,
+                slideToScroll: 2,
+                infinite: true,
+                dots: false,
+                centerMode: false,
+                arrows: false,
+                autoplay: true,
+                autoplaySpeed: 2000,
+            });
+        });
+    </script>
+
+
+    @*sticky thumbnail*@
+    <script src="~/Themes/v1/Scripts/jquery.sticky.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#productgallery").sticky({ topSpacing: 0 });
+        });
+    </script>
+
+
+
+
+
+}
+
+

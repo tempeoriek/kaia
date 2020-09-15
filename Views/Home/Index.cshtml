@@ -1,0 +1,266 @@
+﻿@model IEnumerable<Nop.Web.Models.Flitts.Homepage.HomepageViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Action("HeaderLinks", "Common")
+
+@if (Model != null)
+{
+    if (Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            @* Slider *@
+            if (item.Id == 1)
+            {
+                <div class="container-fluid homepage">
+                    @if (item.DesktopItems.Any())
+                    {
+                        <div class="row d-none d-md-block carousel slide" data-ride="carousel" id="carouselDesktop">
+                            <div class="carousel-inner col-12 d-block d-md-block">
+                                @{
+                                    var index = 0;
+                                    var firstactive = "active";
+                                    foreach (var img in item.DesktopItems)
+                                    {
+                                        if (index > 0)
+                                        {
+                                            firstactive = "";
+                                        }
+
+                                        <div class="carousel-item @firstactive position-relative">
+                                            <a href="@img.NavigateTo" class="">
+                                                <img class="d-block w-100" src="@img.PictureUrl">
+                                                @*<div class="position-absolute" style="right:10%; bottom:10%;">
+                                                    <h1 class="mb-3 recoleta">@img.Title</h1>
+                                                </div>*@
+                                            </a>
+                                          
+                                        </div>
+
+                                        index++;
+
+                                    }
+                                }
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselDesktop" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselDesktop" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+
+                    }
+
+                    @if (item.MobileItems.Any())
+                    {
+                        <div class="row d-block d-md-none carousel slide" data-ride="carousel" id="carouselExampleControls" style="margin-top: 10%;">
+                            <div class="carousel-inner col-12 d-block d-md-block position-relative">
+
+                                @{
+                                    var index = 0;
+                                    var firstactive = "active";
+                                    foreach (var img in item.MobileItems)
+                                    {
+                                        if (index > 0)
+                                        {
+                                            firstactive = "";
+                                        }
+
+                                        <div class="carousel-item @firstactive">
+                                            <a href="@img.NavigateTo">
+                                                <img class="d-block w-100" src="@img.PictureUrl">
+                                                @*<div class="position-absolute" style="right:50%; bottom:10%;transform: translate(50%, -50%);">
+                                                    <h1 class="recoleta">@img.Title</h1>
+                                                    <button class="btn-default">SHOP NOW</button>
+                                                </div>*@
+                                            </a>
+
+                                        </div>
+
+                                        index++;
+                                    }
+                                }
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    }
+
+
+                </div>
+            }
+        }
+    }
+}
+
+@* <div class="container-fluid homepage">
+    <div class="row ">
+        <div class="col-12 col-md-6 ">
+            <img src="/content/images/uploaded/homepage/1.png" class="img-fluid mx-auto d-block" />
+        </div>
+        <div class="col-12 col-md-6" style="background-color:#CAb876;">
+            <img src="/content/images/uploaded/homepage/2.png" class="img-fluid mx-auto d-block" />
+        </div>
+    </div>
+</div> *@
+
+@*<div class="container container__homepage mt-50">
+    <div class="row">
+        <div class="d-none d-md-block col-md-6"></div>
+        <div class="col-12 col-md-6">
+            <img src="/content/images/uploaded/homepage/3.png" class="img-fluid" />
+            <h3 class="text-right text-lg-center  mt-3 pt-md-3 mb-5" style="letter-spacing:4px;">Relaxed Casual</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <img src="/content/images/uploaded/homepage/4.png" class="img-fluid" />
+        </div>
+    </div>
+</div>*@
+
+@*<div class="container container__homepage mt-50">
+    <div class="row">
+        <div class="col-md-4" style="display: flex;justify-content: center; height: 1000px;">
+            <div>
+                <img src="/content/images/home1.png" class="img-fluid" style="position: absolute; left: 16%; bottom: 11%; right: 0; margin: auto auto 0;" />
+            </div>
+        </div>
+        <div class="col-12 col-md-4" style="display: flex;justify-content: center;">
+            <div>
+                <img src="/content/images/home1.png" class="img-fluid" style="position: absolute; left: 0; top: 22%; right: 0; margin: auto auto 0;" />
+            </div>
+        </div>
+        <div class="col-12 col-md-4" style="display: flex;justify-content: center;">
+            <div>
+                <img src="/content/images/home2.png" class="img-fluid"/>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="container container__homepage mt-50">
+    <div class="row mt-2">
+        <div class="d-none d-md-block col-12 col-md-4"></div>
+        <div class="col-12 col-md-4"></div>
+        <div class="col-12 col-md-4 center-img-homepage">
+            <div>
+                <img src="/content/images/home2.png" class="img-fluid"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="d-none d-md-block col-12 col-md-4"></div>
+        <div class="col-12 col-md-4 center-img-homepage">
+            <div><img src="/content/images/home2.png" class="img-fluid"/></div>
+        </div>
+        <div class="col-12 col-md-4"></div>
+    </div>
+
+    <div class="row mt-4 mb-5">
+        <div class="col-12 col-md-4 center-img-homepage">
+            <div><img src="/content/images/home2.png" class="img-fluid"/></div>
+        </div>
+        <div class="col-12 col-md-4"></div>
+        <div class="col-12 col-md-4 center-img-homepage"> 
+            <div class="position-absolute btn-shop-locate-homepage">
+                <button class="btn-shop-homepage">SHOP NOW</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="flag" value="0" />
+
+@Html.Action("Footer", "Common")
+
+
+@section RootHeaderSection
+{
+
+    <style>
+        
+        .col-12, .col-6 {
+            padding: 0 !important;
+        }
+
+         @@media (max-width: 769px) {
+
+             .container__homepage .row{
+                 margin-left:0;
+                 margin-right:0;
+             }
+
+         }
+       
+
+        #mCartItemsQty {
+            background-color: #fff;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick-theme.css">
+
+
+    <link href="~/Themes/v1/Content/homepage.css" rel="stylesheet" />
+    <style>
+
+
+        .brand-menu {
+            position: absolute;
+        }
+    </style>
+}
+
+@section RootScripts{
+
+    <script src="~/Scripts/app/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+
+    <script>
+        // $(".brandImage").attr("src", "/Themes/v1/Content/images/logo-white.png");
+
+        $(document).ready(function () {
+            $('.carouseldesktop').slick({
+                slidesToShow: 3,
+                dots: false,
+                centerMode: false,
+                arrows: false,
+                autoplay: true,
+                autoplaySpeed: 2000,
+            });
+        });
+        $(document).ready(function () {
+            $('.carouselmobile').slick({
+                slidesToShow: 3,
+                dots: false,
+                centerMode: false,
+                arrows: false,
+            });
+        });
+
+        $('.left').click(function () {
+            $('.carouselmobile').slick('slickPrev');
+        })
+
+        $('.right').click(function () {
+            $('.carouselmobile').slick('slickNext');
+        })
+
+
+    </script>
+
+
+}

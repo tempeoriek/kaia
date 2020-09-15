@@ -1,0 +1,61 @@
+﻿@model FooterModel
+@using Nop.Core
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Common;
+
+<footer data-section-name="footer">
+    <div class="container">
+        <div class="row mt-2 mt-md-4">
+            <div class="col-12 d-flex flex-column align-items-center">
+                <div>
+                    <div class="mt-4" id="nieuwsbrief">
+                        <form action="https://aboutonka.us19.list-manage.com/subscribe/post?u=fd378e85fe4fe1460877e78f4&amp;id=6c013484fd" method="post" id="mc-embedded-subscribe-form"
+                                name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                            <div class="form-group d-flex flex-column justify-content-center justify-content-md-end mb-4 mb-md-0" style="vertical-align:top;">
+                                <input id="mce-EMAIL" class="email" type="email" style="text-align: center;" name="EMAIL" placeholder="Subsribe to newsletter" value="" required="required" />
+                                <button id="mc-embedded-subscribe" type="submit" name="subscribe" value="">Signup</button>
+                                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_fd378e85fe4fe1460877e78f4_6c013484fd" id="b_fd378e85fe4fe1460877e78f4_6c013484fd" tabindex="-1" value=""></div>
+                            </div>
+                        </form>
+                        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+                        <script type='text/javascript'>(function ($) { window.fnames = new Array(); window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME'; ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; }(jQuery)); var $mcj = jQuery.noConflict(true);</script>
+                    </div>
+                    <div id="nieuwsbrief-msg" style="display:none;">
+                        Thank you for subscribing!
+                    </div>
+                </div>
+
+                <div class="">
+                    <a href="~/" style="font-size: 27px; font-family: Baskerville Old Face;">Shopee</a>&nbsp.&nbsp
+                    <a href="~/" style="font-size: 27px; font-family: Baskerville Old Face;">Instagram</a>
+                </div>
+
+                <div class="d-block d-sm-flex mt-0 mt-md-3 mb-0">
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
+                    {
+                        <a class="nav-item nav-link active" href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
+                    }
+                    <a class="nav-item nav-link active" href="~/contactus">Contact</a>
+                </div>
+                <div class="">
+                    <p class="copyright-text">
+                        &#9400; Kaia 2020. All right reserved.  site by <a href="http://flitts.com" target="_blank" style="font-size:1rem;">flitts</a>
+                    </p>
+                </div>
+                <div class="mt-2">
+                    <a href="~/"><img style="width:30px;" src="~/Themes/v1/Content/images/logo.svg" class="brandImage" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+   
+
+<script>
+    $("#mc-embedded-subscribe").click(function () {
+        $("#nieuwsbrief").css("display", "none");
+        $("#nieuwsbrief-msg").css("display", "block");
+    });
+</script>
+

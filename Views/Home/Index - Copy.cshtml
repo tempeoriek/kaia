@@ -1,0 +1,103 @@
+﻿@*<div class="page home-page">
+        <div class="page-body">
+            @Html.Widget("home_page_top")
+            @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+            @Html.Widget("home_page_before_categories")
+            @Html.Action("HomepageCategories", "Catalog")
+            @Html.Widget("home_page_before_products")
+            @Html.Action("HomepageProducts", "Product")
+            @Html.Widget("home_page_before_best_sellers")
+            @Html.Action("HomepageBestSellers", "Product")
+            @Html.Widget("home_page_before_news")
+            @Html.Action("HomePageNews", "News")
+            @Html.Widget("home_page_before_poll")
+            @Html.Action("HomePagePolls", "Poll")
+            @Html.Widget("home_page_bottom")
+        </div>
+    </div>*@
+
+
+
+<!-- Hero -->
+@*@Html.Widget("home_page_top")*@
+<div>
+
+</div>
+
+
+
+<!-- New Tattoo -->
+<div class="blox-newIn text-center">
+    <div class="row">
+        <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 col-md-2 col-md-offset-5">
+            <h2 class="titel"><span>New In Tattoos</span></h2>
+            <a href="#" class="lnk">View All</a>
+        </div>
+    </div>
+    @Html.Action("HomepageProducts", "Product", new { categoryId = 1 })
+</div>
+
+<!-- Newsletter -->
+<div class="container-fluid" id="nieuwsbrief">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-6">
+            <h2>Subscribe Us</h2>
+        
+                        <form id="mc-embedded-subscribe-form" class="fvalidate" target="_blank" name="mc-embedded-subscribe-form" method="post" action="">
+                <div class="form-group" style="vertical-align:top;">
+                    <input id="mce-EMAIL" class="form-control email" type="email" style="" placeholder="Email" name="EMAIL" value="" required="required" />
+                    <button id="mc-embedded-subscribe" type="submit" class="btn btn-link"  name="subscribe">Submit <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- New Nails -->
+<div class="blox-newIn">
+    <div class="row">
+        <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 col-md-2 col-md-offset-5">
+            <h2 class="titel"><span>New In Nails</span></h2>
+            <a href="#" class="lnk">View All</a>
+        </div>
+    </div>
+    @Html.Action("HomepageProducts", "Product", new { categoryId = 2 })
+</div>
+
+
+
+<!-- Social media feed -->
+@*http://www.c-sharpcorner.com/UploadFile/raj1979/how-to-authenticate-and-get-data-using-instagram-api/*@
+    <div class="blox-instagram">
+        <div class="insta-logo">
+            <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
+        </div>
+        <h2>Be part of our Instagram Adventure</h2>
+        @Html.Widget("home_page_bottom")
+
+        <br />
+        #LOLITATTOO
+        <br />
+        POST IT. BOAST IS.
+    </div>
+
+
+
+
+@*@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })*@
+
+
+@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            $('.carousel').carousel({
+                interval: 6000
+            })
+        });
+    </script>
+}
