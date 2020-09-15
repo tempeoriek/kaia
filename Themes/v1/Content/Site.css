@@ -1825,7 +1825,8 @@ footer a:hover {
     }
 
 .copyright-text {
-    font-size: 0.92rem;
+    font-size: 11px;
+    /* font-size: 0.92rem; */
 }
 
 .semi-footer {
@@ -2525,7 +2526,7 @@ footer a:hover {
         margin-bottom: 0;
         padding: 10px;
         background-color: #C9B89A;
-        color#fff;
+        color: #fff;
     }
 
         .sideMenu.open {
@@ -2773,7 +2774,7 @@ footer a:hover {
 
 
 .left_menu .navbar a,
-.left_menu a{font-size:15px;}
+.left_menu a{font-size:11px;/* font-size:15px; */}
 
 
 .left_menu .active  > a{text-decoration:underline;}

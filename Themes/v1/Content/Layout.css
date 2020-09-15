@@ -23,7 +23,7 @@ footer a {
     color: #FFFFFF;
         padding: 3px 0;
         font-family: 'Helvetica';
-        font-size:1rem;
+        font-size:11px;
 }
 footer .img-footer{width:100%; max-width:160px;}
 footer .copyright,
@@ -106,7 +106,7 @@ footer h6 {
 
 #nieuwsbrief input[type="submit"],
 #nieuwsbrief-mobile input[type="submit"] {background-color: rgba(0, 0, 255, 0);border: 0 none;display: inline;margin: 0;padding: 0;text-transform: uppercase;}
-#nieuwsbrief #mc-embedded-subscribe { background-color: transparent;border: none;margin-left:-1vw}
+#nieuwsbrief #mc-embedded-subscribe { background-color: transparent;border: none;margin-left:-1vw;}
 
 
     #nieuwsbrief #mc-embedded-subscribe {

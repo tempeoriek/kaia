@@ -98,6 +98,7 @@ margin:auto;font-size:16px;color:#000;text-align:center;
 .product-description{
     max-width:355px;
     margin:0 auto 30px;
+    font-size: 11px;
 }
 
 .product-description .description p, 
@@ -346,14 +347,14 @@ h1.cataloque-name {
 
 
 .product-item  .prices {padding-top: 0;}
-.price {display: inline-block;}
+.price {display: inline-block; font-size: 11px;}
 .old--price {color: #969696;}
 .price .actual--price{color:#FFAF42}
 .product-item .price + .price{margin-left:13px;color:#965226}
 
 
 .new-item,
-.out-of-stock {text-transform: uppercase; color: #2F2F2F;}
+.out-of-stock {text-transform: uppercase; color: #2F2F2F; font-size: 11px;}
 
 
 
@@ -514,5 +515,6 @@ input[type=number] {
         margin-top: 20px;
         width:100%;
         max-width:100%;
+        font-size: 11px;
     }
 }

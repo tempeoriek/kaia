@@ -52,7 +52,7 @@
             }
 
             @*render price*@
-            <h4>
+            <h4 style="font-size: 11px;">
                 <b><span @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount)) { <text> itemprop="price" class="price-value-@(Model.ProductId)" </text> }>
                     @Html.Raw(Model.Price)
                 </span></b>
