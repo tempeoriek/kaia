@@ -164,7 +164,7 @@ a:hover {
 .dropdown > a:focus,
 .dropdown > a:active,
 .dropdown > a:hover {
-    text-decoration: underline;
+    /* text-decoration: underline; */
     color: #2F2F2F;
 }
 
@@ -2758,13 +2758,15 @@ footer a:hover {
 
 
 
+.menu-shop {font-weight: 400;}
+.menu-shop.active { font-weight: bold; }
 
 .left_menu {
     width: 120px;
     position: fixed;
     top: 80px;
     left: 40px;
-    z-index:1030;
+    z-index:103000;
 }
 
 .left_menu .navbar{
@@ -2777,8 +2779,8 @@ footer a:hover {
 .left_menu a{font-size:11px;/* font-size:15px; */}
 
 
-.left_menu .active  > a{text-decoration:underline;}
-.subcat.active a { text-decoration: underline;}
+.left_menu .active  > a{/* text-decoration:underline */font-weight: bold;}
+.subcat.active a { text-decoration: underline; font-weight: 400;}
 
 .menu__right {
     padding-top: 25px;

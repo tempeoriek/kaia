@@ -139,7 +139,7 @@
                 if (category.SubCategories.Any())
                 {
                     <div class="dropdown">
-                        <a class="" href="#" data-toggle="collapse" data-target="#collapse-@category.SeName" aria-expanded="@shopExpanded" aria-controls="collapse-@category.SeName">@category.Name</a>
+                        <a class="menu-shop" href="#" data-toggle="collapse" data-target="#collapse-@category.SeName" aria-expanded="@shopExpanded" aria-controls="collapse-@category.SeName">@category.Name</a>
                         <div class="collapse c-@category.SeName @liCollapse" id="collapse-@category.SeName">
                             @foreach (var subcat in category.SubCategories)
                             {
@@ -282,3 +282,19 @@
 }
 
 
+<script>
+    // var from = document.referrer;
+    // var str = from.split("/"); 
+    // var parameter = str[str.length - 1];
+    // console.log(parameter)
+
+    $(document).ready(function()
+    {
+        if($(".subcat").hasClass('active')) {
+            $('.menu-shop').addClass('active');
+        } else {
+            $('.menu-shop').removeClass('active');
+        }
+    });
+    
+</script>
