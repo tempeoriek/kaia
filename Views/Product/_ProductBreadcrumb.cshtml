@@ -8,16 +8,16 @@
 @if (Model.Enabled)
 {
     <div class="breadcrumb">
-        @*<ul class="list-unstyled list-inline">
+        <ul>
+            @Html.Widget("productbreadcrumb_before", Model.ProductId)
             <li>
                 <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                     <a href="@Url.RouteUrl("HomePage")" itemprop="url">
                         <span itemprop="title">@T("Products.Breadcrumb.Top")</span>
                     </a>
                 </span>
-               
+                <span class="delimiter">@breadcrumbDelimiter</span>
             </li>
-            <li><span class="delimiter">@breadcrumbDelimiter</span></li>
             @foreach (var category in Model.CategoryBreadcrumb)
             {
                 <li>
@@ -26,26 +26,15 @@
                             <span itemprop="title">@category.Name</span>
                         </a>
                     </span>
-                   
+                    <span class="delimiter">@breadcrumbDelimiter</span>
                 </li>
-                <li><span class="delimiter">@breadcrumbDelimiter</span></li>
             }
             <li>
                 <strong class="current-item">@Model.ProductName</strong>
+                @*<strong class="current-item"><a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })" itemprop="url">@Model.ProductName</a></strong>*@
+                @Html.Widget("productbreadcrumb_after", Model.ProductId)
             </li>
-        </ul>*@
-
-        <a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a><span class="delimiter">@breadcrumbDelimiter</span>
-        @foreach (var cat in Model.CategoryBreadcrumb)
-        {
-            <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" itemprop="url">
-                    <span itemprop="title">@cat.Name</span>
-                </a>
-            </span>
-            <span class="delimiter">@breadcrumbDelimiter</span>
-        }
-        <span class="current-item">@Model.ProductName</span>
+        </ul>
     </div>
 
 }

@@ -6,306 +6,274 @@
 @using Nop.Web.Framework.Themes
 
 @{
-
     //logo path
     var currentThemeName = "v1"; //EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
-    var logo = "~/Themes/" + currentThemeName + "/Content/images/logo.png";
-
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/images/logo.svg";
+    var logoPath1 = "~/Themes/" + currentThemeName + "/Content/images/logo.png";
+    
     //store name
     var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
 
-    //current category ID
-    int currentCategoryId = 0;
-    if (Url.RequestContext.RouteData.Values["categoryId"] != null)
+    //Currency
+    var currencyActief = "IDR";
+    if (Model.AvailableCurrencies.Count > 1)
     {
-        currentCategoryId = Convert.ToInt32(Url.RequestContext.RouteData.Values["categoryId"].ToString());
+        var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+
+        var currencies = Model.AvailableCurrencies.Select(x => new SelectListItem
+        {
+            Text = x.Name,
+            Value = webHelper.ModifyQueryString(Url.RouteUrl("ChangeCurrency", new { customercurrency = x.Id }), "returnurl=" + HttpUtility.UrlEncode(HttpContext.Current.Request.RawUrl), null),
+            Selected = x.Id.Equals(Model.CurrentCurrencyId)
+        });
+
+        foreach (var just_currency in currencies)
+        {
+            if (just_currency.Selected == true)
+            {
+                currencyActief = just_currency.Text;
+            }
+        }
+
+
     }
 
-    //current product ID
-    int currentProductId = 0;
-    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
-        Url.RequestContext.RouteData.Values["action"].ToString().Equals("productdetails", StringComparison.InvariantCultureIgnoreCase))
-    {
-        currentProductId = Convert.ToInt32(Url.RequestContext.RouteData.Values["productId"].ToString());
-    }
 
-
-    string about, newproduct, contact, saleall;
-    about = newproduct = contact = saleall = string.Empty;
-    var url = HttpContext.Current.Request.Url.AbsolutePath;
-    if (url.Contains("/about"))
-    {
-        about = "active";
-    }
-    else if (url.Contains("/newproducts"))
-    {
-        newproduct = "active";
-    }
-    else if (url.Contains("/contact"))
-    {
-        contact = "active";
-    }
-    else if (url.Contains("sale-all"))
-    {
-        saleall = "active";
-    }
-
+   
 
 }
 
-@*desktop navbar*@
-<div class="d-none d-lg-block alert alert-info flashinfo alert-dismissible" style="font-size: 11px;">
-    @*@Html.Action("TopicBlock", "Topic", new { systemName = "FreeShippingBar" })*@
-    Apply promo code "KAIA" to receive 10% off your first order!
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-</div>
-<div class="left_menu d-none d-lg-block">
-    <a href="~/"><img style="width:97px;margin-left:-30px;" src="~/Themes/v1/Content/images/logo.svg" class="brandImage" /></a>
-    <nav class="navbar navbar-expand-md sidebarNavigation d-block" data-sidebarClass="navbar-dark" style="background-color:transparent; ">
-        @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId, isSidebar = false })
-    </nav>
-    <div class="@newproduct"><a class="" href="~/newproducts">New Arrival</a></div>
-    <div class="@saleall"><a href="~/sale-all" class="sale-all">Sale</a></div>
-    @*<div class="@about"><a href="~/about">About</a></div>*@
-    <div class="@about"><a href="~/orderinformation">How To Order?</a></div>
+<!--Top balk-->
+<div class="navbar navbar-collapse collapse top-balk" role="navigation">
+    <div class="container-fluid cf-padding">
+        <div class="row">
+            <div class="col-xs-12">
 
-    <div class="@contact"><a href="~/contactus">Contact</a></div>
-</div>
-<div class="mobile-left-sidebar-overlay"></div>
-<div class="mobile-left-sidebar d-flex justify-content-center">
-    <div class=" d-flex flex-column" style="top:40vh;color:#D3A774">
-        <form action="~/search" autocomplete="on">
-            <!--<input id="search_submit" value="" type="submit">--><input class="search-nav mb-5" id="search" name="q" type="text" placeholder="Search">
-        </form>
-    </div>
-</div>
-<div class="container d-none d-lg-block menu__right">
-    <div class="row">
-        <div class="col-12 d-flex justify-content-end">
-            <div class="d-none d-sm-block pr-5">
-                <div class="show-mobile-menu-btn" style="cursor:pointer;"><span style="font-size: 11px;"> Search</span></div>
-            </div>
+                @*Tab*@
+                <nav id="top-nav" class="navbar-right">
 
-            <div class="pr-5">
-                <div>
-                    <ul class="list-unstyled list-inline">
-                        @if (Model.IsAuthenticated)
+                    <ul id="tabs" class="nav navbar-nav" role="tablist">
+                        <li role="presentation" class="tab-menu eerst tab-toggle">
+                            <a data-toggle="tab" href="#search">Search</a>
+                        </li>
+
+                        <li role="presentation" class="tab-menu tweede tab-toggle">
+                            <a data-toggle="tab" href="#help">Help</a> @*@currencyActief*@
+                        </li>
+                        <li role="presentation" class="tab-menu tab-toggle">
+                            <a data-toggle="tab" href="#contact">Contact</a>
+                        </li>
+
+                        <li role="presentation" class="tab-menu derde tab-toggle">
+                            <a data-toggle="tab" href="#myaccount">My account</a>
+                        </li>
+
+
+
+
+                        @if (Model.ShoppingCartEnabled)
                         {
-                            <li>
-                                <div class="dropdown">
-                                    <a href="#" class="nav-item">Account</a>
-                                    <div class="dropdown-content2 text-left">
-                                        <a href="~/order/ConfirmPayments">Confirm Payment</a>
-                                        <a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a>
-                                        <a href="@Url.RouteUrl("CustomerInfo")">Personal Info</a>
-                                        <a href="@Url.RouteUrl("CustomerChangePassword")">Change Password</a>
-                                        <a href="~/customer/addressAdd">Address Book</a>
-                                        <a href="@Url.RouteUrl("Logout")"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Logout</a>
+                        @*<li id="topcartlink" class="tab-menu dropdown tab-toggle">*@
+
+                        <li role="presentation" class="tab-menu  laatste tab-toggle">
+
+                            @if (!String.IsNullOrWhiteSpace(@Html.Action("FlyoutShoppingCart", "ShoppingCart").ToString()))
+                                {
+                                <a href="#bag" data-toggle="tab" data-hover="tab">
+                                    <span class="cart-label">@T("ShoppingCart"):</span><span class="cart-qty">@Model.ShoppingCartItems</span>
+                                </a>
+                                }
+                                else
+                                {
+                                <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
+                                    <span class="cart-label">@T("ShoppingCart"):</span> <span class="cart-qty">@Model.ShoppingCartItems</span>
+                                </a>
+                                }
+
+
+                        </li>
+                        }
+                        @*<li class="stretch"></li>*@
+                    </ul>
+
+
+
+                    <div class="tab-content">
+                        <div class="tab-container">
+                            <div role="tabpanel" id="search" class="tab-pane" style="height:82px">
+                                @Html.Action("SearchBox", "Catalog")
+                            </div>
+
+                            <div role="tabpanel" id="help" class="tab-pane" style="height:140px">
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("help") })">Order and shipping information</a> </li>
+                                    <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("faq") })">@T("FAQ")</a> </li>
+                                    <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">@T("ConditionsOfUse")</a></li>
+                                    <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("returnpolicy") })">@T("ReturnPolicy")</a> </li>
+                                </ul>
+                            </div>
+                            <div role="tabpanel" id="contact" class="tab-pane" style="height:120px">
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.RouteUrl("ContactUs")">Contact customer care</a></li>
+                                    <li>Email: <a href="mailto:info@shopforbettertomorrows.com">info@shopforbettertomorrows.com</a></li>
+                                    @*<li><a href="~/jobs">Jobs</a></li>*@
+                                </ul>
+                            </div>
+
+                            <div role="tabpanel" id="myaccount" class="tab-pane" style="height:185px">
+
+                                <ul class="list-unstyled">
+
+                                    @if (Model.IsAuthenticated)
+                                    {
+                                    <li>@Model.Greeting</li>
+                                    <li></li>
+                                    }
+
+                                    <li>
+                                        @Html.ActionLink("My account", "MyAccount", new { controller = "Customer" }, new { @class = "account" })
+                                    </li>
+                                    <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
+                                    <li><a href="~/Order/ConfirmPayments">Confirm payment</a></li>
+                                    @*<li> Shipping to: Indonesia</li>*@
+                                    @if (Model.IsAuthenticated)
+                                    {
+                                    <li class="ico-logout"><a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a></li>
+                                    }
+
+                                </ul>
+
+                                @if (!Model.IsAuthenticated)
+                                {
+                                <div class="tab-pane-footer">
+                                    <div class="row">
+                                        <div class="col-xs-6 text-center">
+                                            <h3><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></h3>
+                                        </div>
+                                        <div class="col-xs-6 text-center">
+                                            <h3><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </li>
+                                }
+
+                            </div>
+
+                            <div role="tabpanel" id="bag" class="tab-pane">
+                                @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+                            </div>
 
 
+
+                        </div>
+                    </div>
+                </nav>
+
+                @*End Links*@
+
+                @*Notification window*@
+                <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="notificationModalLabel">@T("Common.Notification")</h4>
+                            </div>
+                            <div class="modal-body">
+                                @Html.Raw(HttpUtility.JavaScriptStringEncode(Model.AlertMessage))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end top balk-->
+@*Mobile*@
+<nav class="navbar navbar-fixed-top top-balk-mobile hidden-md hidden-lg visible-xs visible-sm" role="navigation">
+    <div class="container-fluid cf-padding">
+        <table>
+            <tr>
+                <td class="logo" style="text-align:left; vertical-align:middle;">
+                    <a href="@Url.RouteUrl("HomePage")" class="clean">
+                        <img title="@storeName" alt="@storeName" src="@Url.Content(logoPath1)" class="img-responsive sav-logo" />
+                    </a>
+                </td>
+
+                <td class="tas">
+                    <div class="mini-menu">
+                        @if (Model.ShoppingCartItems > 0)
+                        {
+                            <a class="ico-cart" href="@Url.RouteUrl("ShoppingCart")">
+                                <span id="mCartItemsQty" class="cart-qty">@Model.ShoppingCartItems</span>
+                            </a>
                         }
                         else
                         {
-                            <li> <a href="~/login" class="signin btn-login mr-2" style="font-size: 11px;">Account</a></li>
+                            <a class="ico-cart" href="@Url.RouteUrl("ShoppingCart")"><span id="mCartItemsQty" class="cart-qty"></span></a>
                         }
-                    </ul>
-                </div>
-
-                @*<a href="/login"><img src="~/Themes/v1/Content/images/account.png" alt=""></a>*@
-
-
-
-            </div>
-            <div class="pr-5">
-                @if (Model.ShoppingCartEnabled)
-                {
-                    var cartItem = "0";
-                    var cssCartItem = "bag-empty";
-                    if (Model.ShoppingCartItems > 0)
-                    {
-                        cartItem = string.Format("{0}", Model.ShoppingCartItems);
-                        cssCartItem = "shopping-bag";
-                    }
-                    <a href="#bag" onclick="$('.aside').asidebar('open')"><div id="icbag-panel" class="@cssCartItem align-items-center d-flex"><div id="mCartItemsQty" class="cart-qty" style="font-size: 11px;">@cartItem</div></div></a>
-
-                }
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-@*overlay shopping cart*@
-<div class="aside">
-    <div class="aside-header"><span class="close" data-dismiss="aside" aria-hidden="true">&times;</span></div>
-    <div class="aside-contents">
-        <div id="bag">@Html.Action("FlyoutShoppingCart", "ShoppingCart")</div>
-    </div>
-</div>
-<div class="aside-backdrop"></div>
-
-
-@*mobile navbar*@
-<div class="d-block d-lg-none">
-    <nav class="navbar navbar-expand-md sidebarNavigation fixed-top" data-sidebarClass="navbar-dark" style="background-color:#fff;">
-        <div class="text-center" style="width:100%;">
-            <div class="d-flex justify-content-between col-sm-12">
-                <div class=""><a class="navbar-brand" href="~/"><img class="img-fluid" style="max-height:55px;" src="~/Themes/v1/Content/images/logo.svg" /></a></div>
-                <div class="d-flex">
-                    <div class="mini-menu pull-right">
-                        @if (Model.ShoppingCartEnabled)
+                    </div>
+                </td>
+                <td class="burger">
+                    <a class="cd-nav-trigger"></a>
+                </td>
+            </tr>
+        </table>
+        @*<table>
+            <tr>
+                <td class="burger">
+                    <a class="cd-nav-trigger">
+                    </a>
+                </td>
+                <td class="logo" style="text-align:center; vertical-align:middle;">
+                    <a href="@Url.RouteUrl("HomePage")" class="clean">
+                        <img title="@storeName" alt="@storeName" src="@Url.Content(logoPath1)" class="img-responsive sav-logo center-block" />
+                    </a>
+                </td>
+                <td class="tas">
+                    <div class="mini-menu">
+                        @if (Model.ShoppingCartItems > 0)
                         {
-                            var cartItem = "0";
-                            var cssCartItem = "bag-empty";
-                            if (Model.ShoppingCartItems > 0)
-                            {
-                                cartItem = string.Format("{0}", Model.ShoppingCartItems);
-                                cssCartItem = "bag";
-                            }
-                            <a href="#bag" onclick="$('.aside').asidebar('open')">
-                                <div id="icbag-panel" class="@cssCartItem align-items-center d-flex">
-                                    <span id="mCartItemsQty" class="xans-element-xans-layout xans-layout-orderbasketcount cart-qty"><span style="color:#000;">@cartItem</span></span>
-                                </div>
+                            <a class="ico-cart" href="@Url.RouteUrl("ShoppingCart")">
+                                <span id="mCartItemsQty" class="cart-qty">@Model.ShoppingCartItems</span>
                             </a>
                         }
+                        else
+                        {
+                            <a class="ico-cart" href="@Url.RouteUrl("ShoppingCart")"><span id="mCartItemsQty" class="cart-qty"></span></a>
+                        }
                     </div>
-                    <div style="padding-top:7px;">
-                        <button class="navbar-togglers leftNavbarToggler btn-toggle" type="button" data-target="#navbarsExampleDefault"
-                                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                            <div class="hamburger">
-                                <div class="top-bun"></div>
-                                <div class="meat"></div>
-                                <div class="bottom-bun"></div>
-                            </div>
-                        </button>
-                    </div>
+                </td>
 
-                </div>
-
-                <div class=" navbar-collapse" id="navbarsExampleDefault" style="text-transform:uppercase;">
-                    <div class="d-block d-md-none">
-                        <div class="mb-4">
-                            <a class="navbar-brand" href="~/"><img class="img-responsive store-logo" src="~/Themes/v1/Content/images/logo.svg" /></a>
-                        </div>
-                        <div class="xclose position-absolute">X</div>
-
-                        @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId, isSidebar = false })
-
-                        <ul class="list-unstyled list-inline">
-                            <li><a href="~/newproducts">New Arrival</a></li>
-                            <li><a href="~/sale-all" class="sale-all">Sale</a></li>
-                            <li><a href="~/orderinformation" >How To Order?</a></li>
-                            <li><a href="#" class="" onclick="openSearch()">Search</a></li>
-
-                            @if (Model.IsAuthenticated)
-                            {
-                                <li class="dropdown dropright-list">
-                                    <a href="#" class="dropbtn" data-toggle="collapse" data-target="#collapse-nav2" aria-expanded="false" aria-controls="collapse-nav2">My Account</a>
-                                    <div class="collapse" id="collapse-nav2">
-                                        <a href="~/order/ConfirmPayments">Confirm Payment</a>
-                                        <a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a>
-                                        <a href="@Url.RouteUrl("CustomerInfo")">Personal Info</a>
-                                        <a href="@Url.RouteUrl("CustomerChangePassword")">Change Password</a>
-                                        <a href="~/customer/addressAdd">Address Book</a>
-                                        <a href="@Url.RouteUrl("Logout")"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Logout</a>
-                                    </div>
-                                </li>
-                            }
-                            else
-                            {
-                                <li><a href="~/login" class="signin btn-login">SIGN IN/SIGN UP</a></li>
-                            }
-
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </nav>
-</div>
-
-<div class="overlay2 d-sm-none" id="myOverlay">
-    <span class="closebtn" onclick="closeSearch()" title="Close Overlay">close</span>
-    <div class="overlay-content">
-        <form action="~/search" autocomplete="on">
-            <input class="search-nav mb-5" id="search" name="search" type="text" placeholder="Type something to search">
-        </form>
+            </tr>
+        </table>*@
     </div>
-</div>
+</nav>
 
 
 
-<script>
-    window.onload = function () { if (window.jQuery) { $(document).ready(function () { $(".sidebarNavigation .navbar-collapse").hide().clone().appendTo("body").removeAttr("class").addClass("sideMenu").show(); $("body").append("<div class=''></div>"); $(".navbar-toggle, .navbar-togglers").on("click", function () { $(".sideMenu").addClass($(".sidebarNavigation").attr("data-sidebarClass")); $(".sideMenu, .overlay, .xclose").toggleClass("open"); $(".overlay, .xclose").on("click", function () { $(this).removeClass("open"); $(".sideMenu").removeClass("open") }) }); $("body").on("click", ".sideMenu.open .nav-item", function () { if (!$(this).hasClass("dropdown")) { $(".sideMenu, .overlay, .xclose").toggleClass("open") } }); $(window).resize(function () { if ($(".navbar-toggler").is(":block")) { $(".sideMenu, .overlay").hide() } else { $(".sideMenu, .overlay, .xclose").show() } }) }) } else { console.log("sidebarNavigation Requires jQuery") } }
 
-    $(document).on('click', '.dropdown', function (e) {
-        e.stopPropagation();
-        $('.dropdown').not($(this)).removeClass('active');
-        $(this).toggleClass('active');
-    });
-
-    $(document).on('click', function () {
-        $('.dropdown').removeClass('active');
-    });
-
-    $(document).on('click', '.dropdown-content', function (e) {
-        e.stopPropagation();
-    })
-
-</script>
-
-@if (Model.ShoppingCartEnabled)
-{
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            if (
-                $('.toggle > input').is(':checked') &&
-                !$(event.target).parents('.toggle').is('.toggle')
-            ) {
-                $('.toggle > input').prop('checked', false);
-            }
+@Html.Partial("_Notifications")
 
 
-            $('.li-header-mini-cart').on('mouseenter', '#topcartlink', function () {
-                $('#flyout-cart').addClass('active');
+@*@if (Model.ShoppingCartEnabled)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.header').on('mouseenter', '#topcartlink', function () {
+                    $('#flyout-cart').addClass('active');
+                });
+                $('.header').on('mouseleave', '#topcartlink', function () {
+                    $('#flyout-cart').removeClass('active');
+                });
+                $('.header').on('mouseenter', '#flyout-cart', function () {
+                    $('#flyout-cart').addClass('active');
+                });
+                $('.header').on('mouseleave', '#flyout-cart', function () {
+                    $('#flyout-cart').removeClass('active');
+                });
             });
-            $('.li-header-mini-cart').on('mouseleave', '#topcartlink', function () {
-                $('#flyout-cart').removeClass('active');
-            });
-            $('.li-header-mini-cart').on('mouseenter', '#flyout-cart', function () {
-                $('#flyout-cart').addClass('active');
-            });
-            $('.li-header-mini-cart').on('mouseleave', '#flyout-cart', function () {
-                $('#flyout-cart').removeClass('active');
-            });
-
-        });
-
-        function openSearch() {
-            document.getElementById("myOverlay").style.display = "block";
-        }
-
-        function closeSearch() {
-            document.getElementById("myOverlay").style.display = "none";
-        }
-        function showMobileMenu() {
-            $('.mobile-left-sidebar').addClass('active');
-            $('.mobile-left-sidebar-overlay').addClass('active');
-        }
-        function closeMobileMenu() {
-            $('.mobile-left-sidebar').removeClass('active');
-            $('.mobile-left-sidebar-overlay').removeClass('active');
-        }
-        $('.show-mobile-menu-btn').click(showMobileMenu);
-        $('.mobile-left-sidebar-overlay').click(closeMobileMenu);
-        $('.close-mobile-menu-btn').cli
-
-
-    </script>
-}
+        </script>
+    }*@

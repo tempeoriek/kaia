@@ -1,0 +1,64 @@
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Localization
+@using Nop.Web.Framework.Themes
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var logo = "~/Themes/v1/Content/images/logo.png";
+}
+
+@if (string.IsNullOrEmpty(ViewBag.HideHeader)){
+    @Html.Action("HeaderLinks", "Common")
+}
+
+
+<div id="sidebar-fixed" class="sidebar hidden-xs hidden-sm">
+    @*Logo*@
+    <a href="@Url.RouteUrl("HomePage")"><img src="@Url.Content(logo)" title="Common Club" class="img-responsive sav-logo" /></a>
+
+    <div class="sidebar-menu">
+        @{
+
+            if (string.IsNullOrEmpty(ViewBag.HideMenu))
+            {
+                @Html.Partial("Menu");
+            }
+
+            if (IsSectionDefined("Left"))
+            {
+                @RenderSection("Left", false);
+            }
+
+        }
+    </div>
+</div>
+
+<div id="body-content">
+    @*Menu Mobile*@
+    @Html.Action("MenuSideMobile", "Common")
+
+   
+    @*<main></main>*@
+    @RenderBody()
+  
+</div>
+
+
+@if (string.IsNullOrEmpty(ViewBag.HideFooter))
+{
+    @Html.Action("Footer", "Common")
+}
+    
+
+@section RootScripts{
+@if (IsSectionDefined("scripts")){
+     @RenderSection("scripts", required: false)}
+}
+
+
+@section RootHeaderSection{
+@if (IsSectionDefined("HeaderSection")){
+    @RenderSection("HeaderSection", false)}
+}

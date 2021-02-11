@@ -1,0 +1,34 @@
+﻿
+<section class="col-main-sml mt-normal">
+    <div class="checkout-completed-blox">
+        <h1>
+            Payment confirmed
+        </h1>
+        <br /><br />
+        <h2>
+            Thank you for shopping
+        </h2>
+        <table class="table">
+            <tr>
+                <td style="border-right:1px solid #383838; width:50%;">&nbsp;</td>
+                <td></td>
+            </tr>
+        </table>
+        <p>
+            We'll start working on getting your order out to you<br />
+            You can check the status of your order in
+
+            @{
+                if (Model.OrderId != null)
+                {
+                    <a class="alt" href="@Url.RouteUrl("OrderDetails", new { orderID=Html.AttributeEncode(Model.OrderId)})"><i>order history</i></a>
+                }
+                else
+                {
+                    <a class="alt" href="@Url.RouteUrl("OrderDetails", new { orderID=Html.AttributeEncode(Model.Id)})"><i>order history</i></a>
+                }
+}
+
+        </p>
+    </div>
+</section>

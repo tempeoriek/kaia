@@ -34,11 +34,11 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
             function disableBack() { window.history.forward() }
             window.onload = disableBack();
             window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
-        });
+    });
     </script>
 
     @*
@@ -47,14 +47,7 @@
             Live: https://app.midtrans.com/snap/snap.js
     *@
 
-
-
-    <script type="text/javascript" src="@Model.SnapJS" data-client-key="@Model.SnapClientKey"></script>
-
-    @*<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="@Model.SnapClientKey"></script>*@
-
-
-    @*<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="@Model.Token"></script>*@
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="@Model.Token"></script>
     @*<script type="text/javascript">
               var payButton = document.getElementById('pay-button');
                 payButton.addEventListener('click', function () {

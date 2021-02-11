@@ -13,24 +13,20 @@
     }
     else
     {
-        continueUrl = "/"; //Url.RouteUrl("BillingShipping");
+        continueUrl = Url.RouteUrl("HomePage");
     }
 }
-<div class="page registration-result-page">
-    <div class="page-title">
-        @*<h1>@T("Account.Register")</h1>*@
-    </div>
-    <div class="page-body">
-        <div class="result">
-            Thank you for signing up.
-            <br />
-            
-            @*@Model.Result*@
-        </div>
-        <div class="buttons">
-            <input type="button" class="btn btn-default" onclick="location.href='@continueUrl'" value="@T("Account.Register.Result.Continue")" />
-        </div>
-    </div>
-</div>
 
+
+<section class="col-main-sml mt-normal">
+    <h1>@T("Account.Register")</h1>
+
+    <p>
+        @Model.Result
+    </p>
+    <br /><br />
+    <p>
+        <a href="@continueUrl" class="alt">@T("Account.Register.Result.Continue")</a>
+    </p>
+</section>
 

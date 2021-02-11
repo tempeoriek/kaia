@@ -20,13 +20,9 @@
     }
     <text>@Html.Raw(rangeText)</text>
 }
-
-
 @if (Model.Enabled)
-{ }
-    
-
-<div class="product-filter price-range-filter">
+{
+    <div class="product-filter price-range-filter">
         <div class="filter-title">
             <strong>@T("Filtering.PriceRangeFilter")</strong>
         </div>
@@ -54,5 +50,4 @@
         </div>
 
     </div>
-
-
+}

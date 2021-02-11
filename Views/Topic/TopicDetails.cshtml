@@ -11,7 +11,7 @@
     else
     {
         /*pop-up windows*/
-        Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+        Layout = "~/Views/Shared/_RootPopup.cshtml";
     }
 
     if (!Model.IsPasswordProtected)
@@ -27,37 +27,78 @@
         var topicUrl = Url.RouteUrl("Topic", new { SeName = Model.SeName }, this.Request.Url.Scheme);
         Html.AddCanonicalUrlParts(topicUrl);
     }
-   
 }
-<style>
-        #body-content{padding-top:0;}
-</style>
-
-
-<div class="container col-main mt-default">
-    <div class="page-content">
-        <h1>@Model.Title</h1>
-        @Html.Raw(Model.Body)
-
-    </div>
-    @*<div class="row d-flex justify-content-center">
-        <div class="page-content col-12 col-md-8 text-left mt-5 pt-5">
-            <h1 class="mb-3">About Onka</h1>
-            @if (!String.IsNullOrEmpty(Model.Title))
-                {
-                    <h1>@Model.Title</h1>
-                }
-
-            @Html.Raw(Model.Body)
-
-        </div>
-        <div class="col-12 col-md-2 mt-5 pt-5 text-center">
-            <div><img src="~/content/images/about.png" class="img-fluid"/></div>
-        </div>
-    </div>*@
-</div>
-
-
-
- 
+@if (Model.IsPasswordProtected)
+{
+    // For popup topics, use a minimal layout that includes the Ajax and jQuery scripts
+    if (isPopup != null && isPopup == true)
+    {
+        Layout = "~/Views/Shared/_RootPopup.cshtml";
+    }
     
+    
+    
+    <script type="text/javascript">
+        $(function () {
+            $('#button-password').click(function () {
+                var topicId = $("#@Html.FieldIdFor(model => model.Id)").val();
+                var password = $('#password').val();
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    url: '@Url.RouteUrl("TopicAuthenticate")',
+                    data: { "id": topicId, "password": password },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.Authenticated) {
+                            $('#ph-topic #ph-title h1').html(data.Title);
+                            if ($('#ph-topic #ph-title h1').text().length == 0) {
+                                $('#ph-title').hide();
+                            }
+                            $('#ph-topic .page-body').html(data.Body);
+                            $('#ph-password').hide();
+                            $('#ph-topic').show();
+                        }
+                        else {
+                            $('#password-error').text(data.Error);
+                            $('#ph-password #password').select().focus();
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+
+        $(document).ready(function () {
+            $('#ph-topic').hide();
+            $('#ph-password #password').select().focus();
+        });
+    </script>
+    
+    
+    
+    <div class="topic-password" id="ph-password">
+        @using (Html.BeginRouteForm("TopicAuthenticate"))
+        {
+            @Html.HiddenFor(model => model.Id)
+            <div class="enter-password-title">
+                @T("Topic.EnterPassword")
+            </div>
+            <div class="enter-password-form">
+                @Html.Password("password")
+                <input type="submit" id="button-password" value="@T("Topic.Button")" class="button-1 topic-password-button" />
+            </div>
+            <div class="password-error">
+                <span id="password-error"></span>
+            </div>
+        }
+    </div>
+}
+
+
+
+<section class="col-main-slim mt-normal">
+    @*<h1>@Model.Title</h1>*@
+    @Html.Raw(Model.Body)
+</section>
+

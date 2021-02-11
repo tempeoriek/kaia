@@ -4,9 +4,8 @@
 @using Nop.Web.Framework.Themes
 
 @{
-    
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
+    var logo = "~/Themes/v1/Content/images/logo.png";
 }
 
 @if (string.IsNullOrEmpty(ViewBag.HideHeader))
@@ -14,51 +13,54 @@
     @Html.Action("HeaderLinks", "Common")
 }
 
+<div id="sidebar-fixed" class="sidebar hidden-xs hidden-sm">
+    <a href="@Url.RouteUrl("HomePage")"><img src="@Url.Content(logo)"  class="img-responsive sav-logo" /></a>
+    <div class="sidebar-menu">
+        @{
+            if (string.IsNullOrEmpty(ViewBag.HideMenu)){
+                @Html.Partial("Menu");
+            }
+
+            if (IsSectionDefined("Left")){
+                @RenderSection("Left", false);
+            }
+        }
+    </div>
+</div>
 
 
-
-@{
-    if (string.IsNullOrEmpty(ViewBag.HideMenu))
+<div id="body-content">
+    @*Menu Mobile*@
+    @if (string.IsNullOrEmpty(ViewBag.HideMenu))
     {
-        @Html.Partial("Menu");
+        @Html.Action("MenuSideMobile", "Common")
+    }
+    @if (IsSectionDefined("custnavmob")){
+        
+        @RenderSection("custnavmob", false);
+
+      
     }
 
-    if (IsSectionDefined("Left"))
-    {
-        @RenderSection("Left", false);
-    }
-}
 
-
-
-
-<div id="body-wrapper hidden-xs">
     <div class="container-fluid cf-padding">
         <div class="row">
-            <div class="col-md-2 col-lg-3 hidden-xs hidden-sm colKlein">
+            <div class="col-md-2  hidden-xs hidden-sm colKlein">
 
             </div>
-            <div class="col-xs-12 col-md-8 col-lg-6 pt-alignment colGroot">
-              
-
+            <div class="col-md-8 pt-alignment colGroot">
                 @RenderBody()
-
             </div>
-            <div class="col-xs-12 col-md-2 col-lg-3  colKlein">
+            <div class="col-md-2 colKlein">
                 @if (IsSectionDefined("Right"))
                 {
                     @RenderSection("Right", false);
                 }
-                
             </div>
-            
         </div>
     </div>
-    @Html.Action("Footer", "Common")
 </div>
-
-
-
+@Html.Action("Footer", "Common")
 
 
 

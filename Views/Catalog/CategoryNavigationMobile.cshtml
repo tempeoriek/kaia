@@ -1,325 +1,191 @@
 ﻿@model CategoryNavigationModel
+
 @using Nop.Web.Models.Catalog;
 
 
-
-@functions{
-    public bool BreadCrumbContainsCurrentCategoryId(CategorySimpleModel category)
-    {
-        if (Model.CurrentCategoryId == 0)
-            return false;
-
-        if (category.Id == Model.CurrentCategoryId)
-            return true;
-
-        foreach (var subCategory in category.SubCategories)
-        {
-            if (BreadCrumbContainsCurrentCategoryId(subCategory))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-}
-
-@helper RenderCategoryLineSidebar(CategorySimpleModel category)
+@helper RenderCategoryLine(CategorySimpleModel category)
 {
-    bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
-    bool last = category.Id == Model.CurrentCategoryId;
-    string liClass = active ? "active" : "inactive";
 
-    if (last)
-    {
-        liClass += " last";
-    }
-
-    <li class="listItemB"><a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="@liClass"> <img alt="icon" src="~/Content/Images/dot menu.png"> @category.Name</a></li>
-
-    if (category.Id == Model.CurrentCategoryId ||
-        category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0)
-    {
-        if (category.SubCategories.Count > 0)
+    <li class="list-group-item">
+        @if (category.Id == Model.CurrentCategoryId)
         {
-            <ul class="sublist">
+            if ((category.SeName.Contains("sale")))
+            {
+                <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="active sale-item">@category.Name</a>
+            }
+            else
+            {
+                <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="active">@category.Name</a>
+            }
+
+        }
+        else if (category.SeName.Contains("sale"))
+        {
+
+            <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="sale-item">@category.Name</a>
+        }
+        else
+        {
+            <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a>
+        }
+    </li>
+
+
+    if (category.SubCategories.Count > 0)
+    {
+
+        <li class="list-group-item">
+            <ul class="list-unstyled sub-cat">
+
                 @foreach (var subCategory in category.SubCategories)
                 {
                     @RenderCategoryLine(subCategory)
                 }
             </ul>
-        }
+        </li>
     }
+
 }
 
 
-@*untuk yang category shop*@
-@helper RenderCategoryLine(CategorySimpleModel category)
+
+
+@if (Model.Categories.Count > 0)
 {
-    bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
-    bool last = category.Id == Model.CurrentCategoryId;
-    string liClass = active ? "active" : "inactive";
 
-    if (last)
-    {
-        liClass += " last";
-    }
+    <div class="menu-alternate">
+        <div class="row">
+            <div class="col-xs-5">
+                <nav role='navigation'>
+                    <ul class='nav-mob'>
 
-    <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="@liClass dropdown-item"> @category.Name</a>
-}
-
-@*untuk yang category collection*@ 
-@helper RenderCategoryLineCollection(CategorySimpleModel category)
-{
-    bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
-    bool last = category.Id == Model.CurrentCategoryId;
-    string liClass = active ? "active" : "inactive";
-
-    if (last)
-    {
-        liClass += " last";
-    }
-
-    <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="@liClass dropdown-item"> @category.Name</a>
-}
-
-
-@helper RenderCategoryMobile(CategorySimpleModel category)
-{
-    bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
-    bool last = category.Id == Model.CurrentCategoryId;
-    string liClass = active ? "active" : "inactive";
-
-    if (last)
-    {
-        liClass += " last";
-    }
-    <li><a href="#ddl1-@category.SeName">@category.Name</a></li>
-  
-}
-
-@helper RenderCategoryMobileCollection(CategorySimpleModel category)
-{
-    bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
-    bool last = category.Id == Model.CurrentCategoryId;
-    string liClass = active ? "active" : "inactive";
-
-    if (last)
-    {
-        liClass += " last";
-    }
-     <li><a href="#ddl1-@category.SeName">@category.Name</a></li>
-}
-
-
-@{
-    var liCollapse = (Model.CurrentCategoryId > 0) ? "" : "collapse";
-    var parentId = (ViewBag.isMobile != null) ? "phmenu-mobile" : "phmenu";
-    var divId = (ViewBag.isMobile != null) ? "shop-mobile" : "shop";
-
-}
-
-
-
-
-
-
-
-
-
-
-
-@*desktop - mousover type*@
-@{
-    var issidebar = (ViewBag.isSidebar == null) ? false : Convert.ToBoolean(ViewBag.isSidebar);
-
-    if (!issidebar)
-    {
-        if (Model.Categories.Count > 0)
-        {
-            <ul class="list-unstyled list-inline hidden-xs hidden-sm">
-                
-                @foreach (var category in Model.Categories)
-                {
-                    <li class="dropdown">
-                        <a href="#" class="dropbtn">@category.Name</a>
-                        <div class="dropdown-content">
-                            @if (category.SeName.Equals("shop", StringComparison.OrdinalIgnoreCase))
-                            {
-                            <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="dropdown-item">Shop All</a>
-                            <a href="~/new-arrivals" class="dropdown-item">New Arrivals</a>
-
-                            }
-
-                            @foreach (var subcat in category.SubCategories)
-                            {
-                                @RenderCategoryLine(subcat)
-                            }
-                        </div>
-                    </li>
-
-                }
-
-                @*<li class="dropdown"> 
-                    <a href="#" class="dropbtn">SHOP</a>
-                    <div class="dropdown-content">
-                        @foreach (var category in Model.Categories){
-                            @RenderCategoryLine(category)
-                        }
-                    </div>
-                </li>
-                 <li class="dropdown"> 
-                    <a href="#" class="dropbtn">COLLECTION</a>
-                    <div class="dropdown-content">
-                        @foreach (var category in Model.Categories){
-                            @RenderCategoryLineCollection(category)
-                        }
-                    </div>
-                </li>*@
-            </ul>
-
-            @*Mobile Version*@
-            <ul class="hidden visible-xs visible-sm">
-                <li class="dropright dropright-list">
-                    <a href="#">SHOP</a>
-                    <ul class="dropright-drop">
-                         @foreach (var category in Model.Categories){
-                            @RenderCategoryMobile(category)
-                        }
-                    </ul>
-                </li>
-                 <li class="dropright dropright-list">
-                    <a href="#">COLLECTION</a>
-                    <ul class="dropright-drop">
-                         @foreach (var category in Model.Categories){
-                            @RenderCategoryMobileCollection(category)
-                        }
-                    </ul>
-                </li>
-            </ul>
-        }
-
-    }
-    else
-    {
-         @*sidebar*@
-if (Model.Categories.Count > 0)
-{
-    var menu1 = Model.Categories.OrderByDescending(x => x.Id).ToList();
-    <ul class="sidebar-menu list-unstyled" id="pop-sidebar-menu">
-        @foreach (var category in menu1)
-        {
-            var cssCategoryActief = "inactive";
-            if (Model.CurrentCategoryId == category.Id)
-            {
-                cssCategoryActief = "active";
-            }
-
-            if (category.SeName.Equals("shop", StringComparison.OrdinalIgnoreCase))
-            {
-                //skip category
-                cssCategoryActief = "inactive";
-                if (Model.CurrentCategoryId == category.Id)
-                {
-                    cssCategoryActief = "active";
-                }
-
-                <li class="list-group-item panel">
-                    <a class="inactive" data-parent="#pop-sidebar-menu"></a>
-                    <div class="list-group-submenu dropdown-container"><hr /></div>
-                </li>
-                <li class="list-group-item panel"><a class="@cssCategoryActief" href="~/shop">Shop All</a></li>
-                <li class="list-group-item panel"><a class="inactive" href="~/new-arrivals">New Arrivals</a></li>
-                foreach (var subcategory in category.SubCategories)
-                {
-                var cssSubCategoryActief = "inactive";
-                if (subcategory.Id == Model.CurrentCategoryId)
-                {
-                cssSubCategoryActief = "active";
-                }
-                <li class="list-group-item panel"><span><a class="@cssSubCategoryActief" href="~/@subcategory.SeName">@subcategory.Name</a></span></li>
-                }
-                }
-                else
-                {
-                <li class="list-group-item panel">
-                    <a class="@cssCategoryActief" href="#@category.SeName" data-toggle="collapse" data-parent="#pop-sidebar-menu">@category.Name</a>
-                    <div class="list-group-submenu dropdown-container" id="@category.SeName">
-                        <hr />
-
-
-                        @foreach (var subcategory in category.SubCategories)
+                        @foreach (var category in Model.Categories)
                         {
-                            var cssSubCategoryActief = "inactive";
-                            if (subcategory.Id == Model.CurrentCategoryId)
+                            var onSale = "";
+                            if ((category.SeName.Contains("sale")))
                             {
-                                cssSubCategoryActief = "active";
+                                onSale = "sale-item";
                             }
 
-                            <span><a class="@cssSubCategoryActief" href="~/@subcategory.SeName">@subcategory.Name</a></span>
+                            <li data-menu='@category.SeName' class="list-group-item">
+
+                                @if (category.Id == Model.CurrentCategoryId)
+                                {
+                                    <a href="#" class="active @onSale">@category.Name</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="@onSale">@category.Name</a>
+                                }
+                            </li>
                         }
+
+                        @*Content*@
+                        <li data-menu="About" class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("aboutus") })">@T("AboutUs")</a></li>
+                        <li data-menu="Stockist" class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("stockist") })">@T("stockist")</a></li>
+                       
+                        <li data-menu="blank1" class="list-group-item"></li>
+                        <li data-menu="blank2" class="list-group-item"></li>
+                        <li data-menu="Help" class="list-group-item"><a href="#">Help</a></li>
+                        <li data-menu="contact" class="list-group-item"><a href="#">Contact</a></li>
+                        <li data-menu="myaccount" class="list-group-item"><a href="#">My account</a></li>
+
+
+                    </ul>
+
+
+
+                </nav>
+            </div>
+            <div class="col-xs-7">
+                <div class="menu-alternate-col2 stories">
+                    @*<div class="most-viewed"><span></span></div>*@
+
+                    @foreach (var category in Model.Categories)
+                    {
+                        //if (category.SubCategories.Count > 0)
+                        //{
+                        <div class="subcat-mob">
+                            <ul class="list-unstyled">
+                                @foreach (var subCategory in category.SubCategories)
+                                {
+                                    @RenderCategoryLine(subCategory)
+                                }
+                            </ul>
+                        </div>
+                        //}
+                    }
+
+                    @*Hack for lookbook and other empty lines*@
+                    @for (int i = 1; i <= 4; i++)
+                    {
+                        @RenderEmptyLine()
+                    }
+
+                    @*Help content*@
+                    <div class="subcat-mob">
+                        <ul class="list-unstyled">
+                            <li class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("faq") })">@T("FAQ")</a> </li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">@T("ConditionsOfUse")</a></li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("returnpolicy") })">@T("ReturnPolicy")</a> </li>
+                        </ul>
                     </div>
-                </li>
-                }
 
-                }
-            </ul>
+                    @*Contact*@
+                    <div class="subcat-mob">
+                        <ul class="list-unstyled">
+                            <li class="list-group-item"><a href="@Url.RouteUrl("ContactUs")">Contact customer care</a></li>
+                            <li class="list-group-item">Email: <a href="mailto:info@shopforbettertomorrows.com">info@shopforbettertomorrows.com</a></li>
+                            @*<li class="list-group-item"><a href="~/jobs">Jobs</a></li>*@
+                        </ul>
+                    </div>
 
 
+                    @*My account*@
+                    <div class="subcat-mob">
+                        <ul class="list-unstyled">
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.CustomerInfo")</a></li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a></li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerChangePassword")">@T("Account.ChangePassword")</a></li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
+                            @*<li class="list-group-item"><a href="@Url.RouteUrl("CustomerReturnRequests")">@T("Account.CustomerReturnRequests")</a></li>
+                            <li class="list-group-item"><a href="~/customer/giftcards">Voucher</a></li>
 
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerBackInStockSubscriptions")">@T("Account.BackInStockSubscriptions")</a></li>*@
+                            <li class="list-group-item"><a href="~/Order/ConfirmPayment">Confirm payment</a></li>
+                            <li class="list-group-item"></li>
+                            <li class="list-group-item"></li>
 
-    @*foreach (var category in Model.Categories)
-    {
-
-        if (category.Name.Equals("food", StringComparison.OrdinalIgnoreCase))
-        {
-            <li class="list-group-item" style="margin-bottom:30px;">
-                        @{
-                            var cssCategoryActief = "inactive";
-                            if (Model.CurrentCategoryId == category.Id){
-                                cssCategoryActief = "active";
-                            }
-                        }
-
-                        <a class="@cssCategoryActief" href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
-                            @if (category.Name.Equals("shop", StringComparison.OrdinalIgnoreCase))
+                            @if (!Model.IsAuthenticated)
                             {
-                                <text>SHOP ALL</text>
+                                <li class="list-group-item"><a href="@Url.RouteUrl("Login")">@T("Account.Login")</a></li>
+                                <li class="list-group-item"><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
                             }
                             else
                             {
-                                @category.Name
-                            }
-
-                        </a>
-                        <ul class="list-unstyled" style="margin-top:20px; border-bottom:1px solid red;">
-                            @foreach (var subcategory in category.SubCategories)
-                            {
-                                <li>
-                                    <span>
-                                        @{
-                                            var cssSubCategoryActief = "inactive";
-
-                                            if (subcategory.Id == Model.CurrentCategoryId)
-                                            {
-                                                cssSubCategoryActief = "active";
-                                            }
-                                        }
-
-                                        <a class="@cssSubCategoryActief" href="~/@subcategory.SeName">@subcategory.Name</a>
-                                    </span>
-                                </li>
-
+                                <li class="list-group-item"><a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a></li>
                             }
                         </ul>
-                    </li>
-                    break;
+
+
+
+                        <!--end -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 }
-            }*@
-        }
 
-    }
+
+@helper RenderEmptyLine()
+{
+    <div class="subcat-mob">
+        <ul class="list-unstyled">
+            <li class="list-group-item"></li>
+        </ul>
+    </div>
+
 }
-
-

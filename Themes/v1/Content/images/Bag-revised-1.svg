@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="712" height="903" viewBox="0 0 712 903">
+  <defs>
+    <style>
+      .cls-1, .cls-3 {
+        fill: #b7b7b7;
+      }
+
+      .cls-2, .cls-3 {
+        font-size: 520px;
+      }
+
+      .cls-3 {
+        text-anchor: middle;
+        font-family: "Futura-Medium";
+      }
+    </style>
+  </defs>
+  <rect x="32" y="242" width="648" height="630" class="cls-1"/>
+  <text transform="translate(356 29) rotate(180)" class="cls-2"><tspan x="0" class="cls-3">U</tspan></text>
+</svg>

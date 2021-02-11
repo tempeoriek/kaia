@@ -1,23 +1,21 @@
 ﻿@model TopicModel
 @using Nop.Web.Models.Topics;
+
+
 @if (Model.IsPasswordProtected)
 {
     <script type="text/javascript">
-        $(function() {
-            $('#button-password-@Model.Id').click(function() {
-                var postData = {
-                    id: $("#@Html.FieldIdFor(model => model.Id)").val(),
-                    password: $('#password-@Model.Id').val()
-                };
-                addAntiForgeryToken(postData);
-
+        $(function () {
+            $('#button-password-@Model.Id').click(function () {
+                var topicId = $("#@Html.FieldIdFor(model => model.Id)").val();
+                var password = $('#password-@Model.Id').val();
                 $.ajax({
                     cache: false,
                     type: 'POST',
                     url: '@Url.RouteUrl("TopicAuthenticate")',
-                    data: postData,
+                    data: { "id": topicId, "password": password },
                     dataType: 'json',
-                    success: function(data) {
+                    success: function (data) {
                         if (data.Authenticated) {
                             $('#ph-topic-@Model.Id #ph-title-@Model.Id h2').html(data.Title);
                             if ($('#ph-topic-@Model.Id #ph-title-@Model.Id h2').text().length == 0) {
@@ -26,7 +24,8 @@
                             $('#ph-topic-@Model.Id .topic-block-body').html(data.Body);
                             $('#ph-password-@Model.Id').hide();
                             $('#ph-topic-@Model.Id').show();
-                        } else {
+                        }
+                        else {
                             $('#password-error-@Model.Id').text(data.Error);
                             $('#ph-password-@Model.Id #password-@Model.Id').select().focus();
                         }
@@ -36,13 +35,12 @@
             });
         });
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#ph-topic-@Model.Id').hide();
             $('#ph-password-@Model.Id #password-@Model.Id').select().focus();
         });
     </script>
     <div class="topic-password" id="ph-password-@Model.Id">
-        
         @using (Html.BeginRouteForm("TopicAuthenticate"))
         {
             @Html.HiddenFor(model => model.Id)
@@ -70,12 +68,12 @@
 else
 {
     <div class="topic-block">
-        @*@if (!String.IsNullOrEmpty(Model.Title))
+        @if (!String.IsNullOrEmpty(Model.Title))
         {
             <div class="topic-block-title">
-                <h4>@Model.Title</h4>
+                <h2>@Model.Title</h2>
             </div>
-        }*@
+        }
         <div class="topic-block-body">
             @Html.Raw(Model.Body)
         </div>

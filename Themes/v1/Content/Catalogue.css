@@ -81,30 +81,38 @@ margin:auto;font-size:16px;color:#000;text-align:center;
 .price_item {
    
 }
+.product-price{
+    font-size:16px;
+    font-family:'Work';
+    padding-top:20px;
+    padding-bottom:10px;
+}
 /*end of shop all*/
-
 /*cataogue*/
 .catalogue-img {
-    display: flex;
+    /*display: flex;
     padding-left: 170px;
     padding-right: 170px;
-    padding-top:25px;
+    padding-top:25px;*/
+}
+.catalogue-text{
+    position: absolute;
+    left:80px;
+    top:50%;
 }
 
-
-
 /*Product Detail Page*/
-.product-detail{/*padding-left: 150px;padding-right: 90px;*/}
+.product-detail{padding-left: 150px;padding-right: 90px;}
 .product-description{
-    max-width:355px;
+    max-width:700px;
     margin:0 auto 30px;
-    font-size: 11px;
+  
 }
 
 .product-description .description p, 
 .description>ul>li{
     margin-bottom:0;
-    line-height:23px;
+    line-height:18px;
 }
 
 .detail-price{display:flex;}
@@ -165,14 +173,10 @@ margin:auto;font-size:16px;color:#000;text-align:center;
 }
 
 .select-size {
-    /*display: flex;
-    justify-content: space-between;*/
+    display: flex;
+    color: #707070;
+    font-size: 13px;
 }
-
-    .select-size p {
-        margin-bottom: 0;
-        opacity: 0.6
-    }
 
 .select-size ol,
 .select-size ul{margin-bottom:0;}
@@ -208,20 +212,21 @@ margin:auto;font-size:16px;color:#000;text-align:center;
 
 .select-quantity {
     display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    padding:3px;
+    font-size: 14px;
     color: #000;
-    height: 70px;
-    margin-right:30px;
-    border: none;
+    margin-top:5px;
 }
+
+.select-quantity .title{
+    width:71px;
+}
+
 .quantity-btn {
     background-color: transparent;
-    border-color: transparent;
-    color:#000;
-    font-size:16px;
-
+    color:#707070;
+    border:solid 1px #707070;
+    width:30px;
+    border-radius:50%;
 }
 /*end of product detail*/
 
@@ -272,7 +277,7 @@ margin:auto;font-size:16px;color:#000;text-align:center;
     .collection1, .collection2{padding-left:0;padding-right:0}
     .product-detail{flex-direction:column;}
     .img-detail{width:375.97px;}
-    .product-description{padding:20px; margin-top:20px;}
+    .product-description{padding:0; margin-top:20px;}
     .img-recommendation{width:164.39px;}
     .name_item, .price_item{font-size:12px;}
     .collection1>h3, .collection1>p, .collection2>h3, .collection2>p, .collection3>h3, .collection3>p{font-size:12px;line-height:18px;}
@@ -314,6 +319,34 @@ margin:auto;font-size:16px;color:#000;text-align:center;
     }
     .product-detail {padding-left: 0px;padding-right: 0px;
 }
+    .catalogue-text {
+        position: absolute;
+        left: 40px;
+        top: 75%;
+    }
+
+    .form-select-size{
+        width:100%;
+        text-align:right;
+    }
+
+    .ddlAttrb{ 
+        max-width:100px;
+        margin-right:0;
+        margin-left:auto;
+    }
+
+
+    .select-quantity_control{
+        width:100%;
+        text-align:right;
+    }
+
+
+    .related-products{
+        width:100% !important;
+    }
+
 }
 
 
@@ -327,34 +360,37 @@ h1.cataloque-name {
 }
 
 
-.catalog-line {/*padding-left: 4px;padding-right: 4px;*/}
+.catalog-line {
+    padding-left: 40px;
+    padding-right: 40px;
+}
 
 .product-item {margin-bottom: 47px; text-align:center;}
 .product-item h3 {
     font-weight: normal;
-        text-transform: unset;
-        text-transform: uppercase;
-        line-height: 1em;
-        font-size: 14px;
-        color: #707070;
-    }
+    text-transform: unset;
+    line-height: 1.5em;
+    font-size: 13px;
+ }
 
-.product-item a {display: inline;color:#231F20}
-/* .product-item a {display: inline;color:#969696} */
+.product-item a {display: inline;color:#101010;text-transform: uppercase;}
 .product-item .img-thumbnail {border: none;border-radius: 0; max-width: 100%;padding: 0;width: 100%;}
 .product-item .description {margin-top: 15px; min-height: 60px; text-align:left;}
 .product-item .description ul {list-style:none;}
 
 
 .product-item  .prices {padding-top: 0;}
-.price {display: inline-block; font-size: 11px;}
-.old--price {color: #969696;}
-.price .actual--price{color:#FFAF42}
+.price {display: inline-block;}
+.old--price {color: #101010;}
+.price .actual--price{color:#890303}
 .product-item .price + .price{margin-left:13px;color:#965226}
 
 
 .new-item,
-.out-of-stock {text-transform: uppercase; color: #2F2F2F; font-size: 11px;}
+.out-of-stock {
+    text-transform: uppercase;
+    color: #890303
+}
 
 
 
@@ -370,23 +406,17 @@ h1.cataloque-name {
 
 
 .product-detail h1 {
+    font-family: 'SemiBold';
+    text-transform: uppercase;
     line-height: 1.5em;
-    font-size:16px;
+    font-size: 18px;
 }
+
 
 .product-detail .prices .old-product-price{color:#707070;}
-.product-detail .prices .product-price{font-size:16px;}
+.product-detail .prices .product-price{color: #2F2F2F; font-size:14px;}
 
-
-.product-detail .attributes{
-    margin:30px 0 20px;
-}
-
-
-
-.qty_txt {
-    margin-bottom: 10px;
-}
+.qty_txt{margin-bottom:10px;}
 
 .desc_item {
     display: flex;
@@ -439,12 +469,11 @@ h1.cataloque-name {
 
 
 #EnteredQuantity {
-    max-width: 50px;
+    max-width: 40px;
     background-color: transparent;
     border: none;
-    color:#000;
+    color:#707070;
     text-align: center;
-    font-size:14px;
 }
 
 input::-webkit-outer-spin-button,
@@ -458,18 +487,8 @@ input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
 
-
-.add2cart {}
-    .add2cart p {
-        font-size: 13px;
-        margin-bottom: 0;
-        opacity: 0.6;
-    }
-
-
 /******/
 .related-products {
-    max-width: 700px;
     margin: 0 auto 30px;
 }
 
@@ -490,31 +509,3 @@ input[type=number] {
 
 }
 .cross-sells .cross-sells-item{ /*padding-right:0; padding-left:0;*/ }
-
-
-#productgallery{
-    width:130px;
-}
-
-
-@media (max-width: 991.98px) {
-
-    .product-item{margin-bottom:24px;}
-
-    .product-item .description {
-        margin-top: 5px;
-    }
-
-    .product-item .prices{
-        line-height:1rem;
-    }
-
-
-    .product-description {
-        padding: 0;
-        margin-top: 20px;
-        width:100%;
-        max-width:100%;
-        font-size: 11px;
-    }
-}

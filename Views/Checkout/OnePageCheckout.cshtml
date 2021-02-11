@@ -32,150 +32,151 @@
 }
 
 
-<div class="col-main mt-large checkout" style="padding-bottom:15em;">
-    <div class="cart-page">
-        <div class="cart-header">
-            <h1>Checkout</h1>
-        </div>
+<div class="col-main mt-normal checkout">
+    <div class="row catalogue-img d-flex justify-content-center">
+        <div class="cart-page">
+            <div class="cart-header">
+                <h4 class="text-left" style="font-weight:700;text-transform:uppercase;">Checkout</h4>
+            </div>
 
-        <div class="page-body checkout-data">
-            <ol class="list-unstyled opc" id="checkout-steps">
-                <li id="opc-billing" class="tab-section allow">
-                    <div class="step-title checkout-margin-title">
-                        <h2>@T("Checkout.BillingAddress")</h2>
-                    </div>
-                    <div id="checkout-step-billing" class="step a-item" style="display: none;">
-                        <form id="co-billing-form" action="">
-                            <div id="checkout-billing-load">
-                                @Html.Action("OpcBillingForm", "Checkout")
-                                @*billing address content will be loaded here*@
-                            </div>
-                        </form>
-
-                        <div class="buttons" id="billing-buttons-container">
-                            <input type="button" title="@T("Common.Continue")" class="btn btn-default new-address-next-step-button" onclick="Billing.save()" value="@T("Common.Continue")" />
-                            <span class="please-wait" id="billing-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
-                        </div>
-                    </div>
-                </li>
-                @if (Model.ShippingRequired)
-                {
-                    <li id="opc-shipping" class="tab-section">
+            <div class="page-body checkout-data">
+                <ol class="list-unstyled opc" id="checkout-steps">
+                    <li id="opc-billing" class="tab-section allow">
                         <div class="step-title checkout-margin-title">
-                            <h2 class="title">@T("Checkout.ShippingAddress")</h2>
+                            <h4>@T("Checkout.BillingAddress")</h4>
                         </div>
-                        <div id="checkout-step-shipping" class="step a-item" style="display: none;">
-                            <form action="" id="co-shipping-form">
-                                <div id="checkout-shipping-load">
-                                    @*shipping address content will be loaded here*@
+                        <div id="checkout-step-billing" class="step a-item" style="display: none;">
+                            <form id="co-billing-form" action="">
+                                <div id="checkout-billing-load">
+                                    @Html.Action("OpcBillingForm", "Checkout")
+                                    @*billing address content will be loaded here*@
                                 </div>
                             </form>
 
-                            <div class="buttons" id="shipping-buttons-container">
-                                @if (!Model.DisableBillingAddressCheckoutStep)
-                                {
-                                    <p class="back-link">
-                                        <a href="#" onclick="Checkout.back(); return false; "><small>&laquo; </small>@T("Common.Back")</a>
-                                    </p>
-                                }
-                                <input type="button" class="btn btn-default new-address-next-step-button" title="@T("Common.Continue")" onclick="Shipping.save()" value="@T("Common.Continue")" />
-                                <span id="shipping-please-wait" class="please-wait" style="display: none;"> @T("Common.LoadingNextStep")</span>
+                            <div class="buttons" id="billing-buttons-container">
+                                <input type="button" title="@T("Common.Continue")" class="btn btn-default new-address-next-step-button" onclick="Billing.save()" value="@T("Common.Continue")" />
+                                <span class="please-wait" id="billing-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
                             </div>
                         </div>
                     </li>
-                    <li id="opc-shipping_method" class="tab-section">
-                        <div class="step-title checkout-margin-title">
-                            <h2 class="title">@T("Checkout.ShippingMethod")</h2>
-                        </div>
-                        <div id="checkout-step-shipping-method" class="step a-item" style="display: none;">
-                            <form id="co-shipping-method-form" action="">
-                                <div id="checkout-shipping-method-load">
-                                    @*shipping methods content will be loaded here*@
+                    @if (Model.ShippingRequired)
+                    {
+                        <li id="opc-shipping" class="tab-section">
+                            <div class="step-title checkout-margin-title">
+                                <h4 class="title">@T("Checkout.ShippingAddress")</h4>
+                            </div>
+                            <div id="checkout-step-shipping" class="step a-item" style="display: none;">
+                                <form action="" id="co-shipping-form">
+                                    <div id="checkout-shipping-load">
+                                        @*shipping address content will be loaded here*@
+                                    </div>
+                                </form>
+
+                                <div class="buttons" id="shipping-buttons-container">
+                                    @if (!Model.DisableBillingAddressCheckoutStep)
+                                    {
+                                        <p class="back-link">
+                                            <a href="#" onclick="Checkout.back(); return false; "><small>&laquo; </small>@T("Common.Back")</a>
+                                        </p>
+                                    }
+                                    <input type="button" class="btn btn-default new-address-next-step-button" title="@T("Common.Continue")" onclick="Shipping.save()" value="@T("Common.Continue")" />
+                                    <span id="shipping-please-wait" class="please-wait" style="display: none;"> @T("Common.LoadingNextStep")</span>
                                 </div>
-                                <script type="text/javascript">
+                            </div>
+                        </li>
+                        <li id="opc-shipping_method" class="tab-section">
+                            <div class="step-title checkout-margin-title">
+                                <h4 class="title">@T("Checkout.ShippingMethod")</h4>
+                            </div>
+                            <div id="checkout-step-shipping-method" class="step a-item" style="display: none;">
+                                <form id="co-shipping-method-form" action="">
+                                    <div id="checkout-shipping-method-load">
+                                        @*shipping methods content will be loaded here*@
+                                    </div>
+                                    <script type="text/javascript">
                                 ShippingMethod.init('#co-shipping-method-form', '@(storeLocation)checkout/OpcSaveShippingMethod/');
-                                </script>
-                                <div class="buttons" id="shipping-method-buttons-container">
-                                    <p class="back-link">
-                                        <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
-                                    </p>
-                                    <input type="button" class="btn btn-default shipping-method-next-step-button" onclick="ShippingMethod.save()" value="@T("Common.Continue")" />
-                                    <span id="shipping-method-please-wait" class="please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-                }
-                <li id="opc-payment_method" class="tab-section">
-                    <div class="step-title checkout-margin-title">
-                        <h2 class="title">@T("Checkout.PaymentMethod")</h2>
-                    </div>
-                    <div id="checkout-step-payment-method" class="step a-item" style="display: none;">
-                        <form action="" id="co-payment-method-form">
-                            <div id="checkout-payment-method-load">
-                                @*payment methods content will be loaded here*@ Payment is not required
+                                    </script>
+                                    <div class="buttons" id="shipping-method-buttons-container">
+                                        <p class="back-link">
+                                            <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
+                                        </p>
+                                        <input type="button" class="btn btn-default shipping-method-next-step-button" onclick="ShippingMethod.save()" value="@T("Common.Continue")" />
+                                        <span id="shipping-method-please-wait" class="please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-
-                        <div class="buttons" id="payment-method-buttons-container">
-                            <span class="back-link">
-                                <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
-                            </span>
-                            <input type="button" class="btn btn-default  payment-method-next-step-button" onclick="PaymentMethod.save()" value="@T("Common.Continue")" />
-                            <span class="please-wait" id="payment-method-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                        </li>
+                    }
+                    <li id="opc-payment_method" class="tab-section">
+                        <div class="step-title checkout-margin-title">
+                            <h4 class="title">@T("Checkout.PaymentMethod")</h4>
                         </div>
-                    </div>
-                </li>
-                @*<li id="opc-payment_info" class="tab-section">
-                        <div class="step-title">
-                            <h2 class="title">@T("Checkout.PaymentInfo")</h2>
-                        </div>
-                        <div id="checkout-step-payment-info" class="step a-item" style="display: none;">
-                            <form action="" id="co-payment-info-form">
-                                <div id="checkout-payment-info-load">
-                                     Payment is not required
+                        <div id="checkout-step-payment-method" class="step a-item" style="display: none;">
+                            <form action="" id="co-payment-method-form">
+                                <div id="checkout-payment-method-load">
+                                    @*payment methods content will be loaded here*@ Payment is not required
                                 </div>
                             </form>
 
-                            <div class="buttons" id="payment-info-buttons-container">
+                            <div class="buttons" id="payment-method-buttons-container">
                                 <span class="back-link">
                                     <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
                                 </span>
-                                <input type="button" class="btn btn-default payment-info-next-step-button" onclick="PaymentInfo.save()" value="@T("Common.Continue")" />
-                                <span class="please-wait" id="payment-info-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                                <input type="button" class="btn btn-default  payment-method-next-step-button" onclick="PaymentMethod.save()" value="@T("Common.Continue")" />
+                                <span class="please-wait" id="payment-method-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
                             </div>
                         </div>
-                    </li>*@
-                <li id="opc-confirm_order" class="tab-section">
-                    <div class="step-title checkout-margin-title">
-                        <h2 class="title">@T("Checkout.ConfirmOrder")</h2>
-                    </div>
-                    <div id="checkout-step-confirm-order" class="step-overview a-item" style="display: none;">
-                        <div id="checkout-confirm-order-load">
-                            @*confirm order content will be loaded here*@
-                        </div>
+                    </li>
+                    @*<li id="opc-payment_info" class="tab-section">
+                            <div class="step-title">
+                                <h2 class="title">@T("Checkout.PaymentInfo")</h2>
+                            </div>
+                            <div id="checkout-step-payment-info" class="step a-item" style="display: none;">
+                                <form action="" id="co-payment-info-form">
+                                    <div id="checkout-payment-info-load">
+                                         Payment is not required
+                                    </div>
+                                </form>
 
-                        <div class="buttons text-center" id="confirm-order-buttons-container" style="margin-top:25px;">
-                            <span class="back-link">
-                                <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
-                            </span>
-                            <input type="button" class="btn btn-default confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="@T("Common.Confirm")" />
-                            <span class="please-wait" id="confirm-order-please-wait" style="display: none;">@T("Checkout.SubmittingOrder")</span>
+                                <div class="buttons" id="payment-info-buttons-container">
+                                    <span class="back-link">
+                                        <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
+                                    </span>
+                                    <input type="button" class="btn btn-default payment-info-next-step-button" onclick="PaymentInfo.save()" value="@T("Common.Continue")" />
+                                    <span class="please-wait" id="payment-info-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                                </div>
+                            </div>
+                        </li>*@
+                    <li id="opc-confirm_order" class="tab-section">
+                        <div class="step-title checkout-margin-title">
+                            <h4 class="title">@T("Checkout.ConfirmOrder")</h4>
                         </div>
-                    </div>
-                </li>
-            </ol>
+                        <div id="checkout-step-confirm-order" class="step-overview a-item" style="display: none;">
+                            <div id="checkout-confirm-order-load">
+                                @*confirm order content will be loaded here*@
+                            </div>
+
+                            <div class="buttons text-center" id="confirm-order-buttons-container" style="margin-top:25px;">
+                                @*<span class="back-link">
+                                    <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a>
+                                </span>*@
+                                <input type="button" class="btn btn-default confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="@T("Common.Confirm")" />
+                                <span class="please-wait" id="confirm-order-please-wait" style="display: none;">@T("Checkout.SubmittingOrder")</span>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+
         </div>
 
-
     </div>
-
-
 
 </div>
 
 @section scripts {
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
     <script type="text/javascript">
             Billing.init('#co-billing-form', '@(storeLocation)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
             if ($("#billing-address-select").length > 0) {
@@ -202,69 +203,61 @@
             }
     </script>
 
-    <script type="text/javascript">
+    @*<script type="text/javascript">
 
-        // create select wrapper and arrows
-        function createSelectWrapper() {
-            // select wrapper and arrows
-            var select_wrapper = $("<span>", {
-                "class": "select-wrapper"
+            // create select wrapper and arrows
+            function createSelectWrapper() {
+                // select wrapper and arrows
+                var select_wrapper = $("<span>", {
+                    "class": "select-wrapper"
+                });
+                var select_carets = $("<div>", {
+                    "class": "select__carets"
+                }).appendTo(select_wrapper);
+                var select_caretUp = $("<div>", {
+                    "class": "select__caret select__caret--right fa fa-caret-up"
+                }).appendTo(select_carets);
+                var select_caretDown = $("<div>", {
+                    "class": "select__caret select__caret--down fa fa-caret-down"
+                }).appendTo(select_carets);
+
+                return select_wrapper;
+            }
+
+            // add custom arrows to select input
+            function upgradeSelect() {
+                // add select input to the wrapper
+                $("select").each(function () {
+                    var wrapper = createSelectWrapper();
+                    $(this).replaceWith(wrapper)
+                    $(this).appendTo(wrapper);
+                });
+            }
+
+            upgradeSelect();
+
+            // handles select down arrow click
+            $(".select__caret--down").on("click", function () {
+                // find the select input we need
+                var sel = $(this).parents(".select-wrapper").find("select");
+                console.log(sel);
+                // set focus to select input so we can use arrow keys
+                $(sel).focus();
+                // increment select next option
+                $(sel).find("option:selected").prop("selected", false).next().prop("selected", true);
             });
-            var select_carets = $("<div>", {
-                "class": "select__carets"
-            }).appendTo(select_wrapper);
-            var select_caretUp = $("<div>", {
-                "class": "select__caret select__caret--right fa fa-caret-up"
-            }).appendTo(select_carets);
-            var select_caretDown = $("<div>", {
-                "class": "select__caret select__caret--down fa fa-caret-down"
-            }).appendTo(select_carets);
 
-            return select_wrapper;
-        }
-
-        // add custom arrows to select input
-        function upgradeSelect() {
-            // add select input to the wrapper
-            $("select").each(function () {
-                var wrapper = createSelectWrapper();
-                $(this).replaceWith(wrapper)
-                $(this).appendTo(wrapper);
+            // handles select up arrow click
+            $(".select__caret--right").on("click", function () {
+                // find the select input we need
+                var sel = $(this).parents(".select-wrapper").find("select");
+                // set focus to select input so we can use arrow keys
+                $(sel).focus();
+                // increment select next option
+                $(sel).find("option:selected").prop("selected", false).prev().prop("selected", true);
             });
-        }
-
-        upgradeSelect();
-
-        // handles select down arrow click
-        $(".select__caret--down").on("click", function () {
-            // find the select input we need
-            var sel = $(this).parents(".select-wrapper").find("select");
-            console.log(sel);
-            // set focus to select input so we can use arrow keys
-            $(sel).focus();
-            // increment select next option
-            $(sel).find("option:selected").prop("selected", false).next().prop("selected", true);
-        });
-
-        // handles select up arrow click
-        $(".select__caret--right").on("click", function () {
-            // find the select input we need
-            var sel = $(this).parents(".select-wrapper").find("select");
-            // set focus to select input so we can use arrow keys
-            $(sel).focus();
-            // increment select next option
-            $(sel).find("option:selected").prop("selected", false).prev().prop("selected", true);
-        });
-    </script>
-
-  
-
+        </script>*@
 }
-
-
-
-
-
 
 @section HeaderSection{
 
@@ -273,3 +266,8 @@
 
 }
 
+
+
+@section Left{
+    @Html.Partial("MenuStatic")
+}

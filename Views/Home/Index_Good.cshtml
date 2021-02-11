@@ -1,0 +1,312 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";}
+
+@*@Html.Action("ShowTopic", "Topic", new { systemName = "Homepage" })*@
+
+
+@{
+    var domain = Request.ServerVariables["HTTP_HOST"];
+}
+
+
+
+@if (domain.Contains("shopforbettertomorrows"))
+{
+    //show blank
+}
+else
+{
+
+
+
+
+
+    @Html.Action("HeaderLinks", "Common")
+
+    <div id="sidebar-fixed" class="sidebar hidden-xs hidden-sm">
+        @*Logo*@
+        <a href="@Url.RouteUrl("HomePage")"><img src="~/Themes/v1/Content/images/logo.png" title="Commonclub" class="img-responsive sav-logo" /></a>
+
+        <div class="sidebar-menu">
+            @Html.Partial("Menu")
+        </div>
+    </div>
+    
+    @Html.Action("MenuSideMobile", "Common")
+
+
+    <div class="full-width i1"><img class="img-responsive center-block" src="/content/images/uploaded/homepage/i1.jpg" alt="" /></div>
+
+    @*<div class="container-fluid">
+            <div class="row full-lr">
+                <div class="col-xs-12">
+                    <img class="img-responsive pull-right" src="/content/images/uploaded/homepage/asset 2.png" alt="" />
+                </div>
+            </div>
+        </div>*@
+
+    <div class="container-fluid homepagev2 grid">
+        <div class="row">
+            <div class="col-sm-6">
+                <a href="#"><img class="img-responsive" src="/content/images/uploaded/homepage/i2.jpg" alt="" /></a>
+                <div class="">
+                    <a href="#"><h3>New Favourite: Basic Pants</h3></a>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <a href="#"><img class="img-responsive" src="/content/images/uploaded/homepage/i3.jpg" alt="" /></a>
+                <div class="">
+                    <a href="#"><h3>New Arrival: Fall Season collection</h3></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid homepagev2 row3">
+        <div class="row full-lr">
+            <div class="col-xs-12">
+                <div class="" style="max-width:880px; margin-left:auto;margin-right:auto;">
+                    <img class="img-responsive center-block" src="~/content/images/uploaded/homepage/i4.jpg" />
+                    <div class="" style="padding-top:26px;">
+                        <strong>Fall Season 2020</strong><br />On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <section class="container instagram">
+        <div id="instagram-feed" />
+        @*<ul class="list-unstyled list-inline">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    <li><img src="@string.Format("/Content/Images/uploaded/homepage/instagram/IG {0}.jpg", i)" style="height:216px;" /></li>
+                }
+            </ul><div class=""><a href="#"><h3>Visit Our Instagram</h3></a></div>*@
+    </section>
+    @*<div class="container instagram visible-xs-block"><div id="instagram-feed-mobile" /></div>*@
+    <section class="container instagram" style="margin-top:20px;"><a href="//www.instagram.com/shopatvelvet" target="_blank"><h3>Visit Our Instagram</h3></a></section>
+
+
+    @Html.Action("Footer", "Common")
+}
+
+
+@section RootHeaderSection{
+
+    @*<link rel="stylesheet" type="text/css" href="~/Themes/v1/content/homepage.css" />*@
+    <link href="~/Scripts/app/InstaGet/css/instaget.min.css" rel="stylesheet" />
+    <style>
+        .ig-instagram-size-auto .ig-instagram-items .ig-instagram-item {
+            margin: 0;
+        }
+    </style>
+    <style>
+
+        #sidebar-fixed {
+            position: absolute;
+        }
+
+        @@media screen and (min-width: 1079px) {
+            #body-content {
+                /*margin-top: -60px;*/
+            }
+        }
+
+        .gamma-gallery li {
+            margin-right: 0;
+            margin-bottom: 0;
+        }
+
+            .gamma-gallery li + li {
+                margin-left: 16px;
+            }
+
+
+        .row3 {
+            margin-top: 154px;
+        }
+
+        .instagram {
+            margin-top: 220px;
+        }
+
+        @@media screen and (max-width:676px) {
+            .i1 {
+                top: 50px;
+            }
+
+            .homepagev2 {
+                margin-top: 75px;
+            }
+
+                .homepagev2 h3 {
+                    margin-bottom: 60px;
+                }
+
+                .homepagev2 .row {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+
+            .row3 {
+                margin-top: 0;
+            }
+
+            .instagram {
+                margin-top: 55px;
+            }
+
+                .instagram h3 {
+                    margin-left: 20px;
+                }
+
+
+            .ig-instagram-size-auto .ig-instagram-items {
+                margin-left: 20px;
+                margin-right: -5px;
+            }
+
+            .ig-instagram-columns-5 .ig-instagram-item {
+                -webkit-box-flex: 0;
+                flex: 0 0 calc(100%/3 - 10px) !important;
+            }
+        }
+
+        @@media screen and (min-width:768px) {
+            /*  .list-group-item{color:#ffffff;}
+            .list-group-item.inactive{color:#ffffff;}
+            .list-group-item a{color:#ffffff;}
+                .list-group-item a:active,
+                .list-group-item a:hover{
+                    color:#ffffff;
+                }
+
+            .navbar-nav > li > a{color:#ffffff;}
+            #top-nav > ul li {
+                color: #ffffff;
+            }
+
+            li.tab-menu > a {
+                color: #ffffff;
+            }
+
+            .open li.tab-menu > a {
+                color: #231F20;
+            }*/
+        }
+    </style>
+
+
+
+}
+
+@section Rootscripts{
+    <script>
+
+        //function isMobile() {
+        //    try { document.createEvent("TouchEvent"); return true; }
+        //    catch (e) { return false; }
+        //}
+        //$(function () {
+        //    if (window.matchMedia("(max-width: 768px)").matches && isMobile()) {
+        //        //$("section").css({ "height": $(window).height() });
+        //        //var timer;
+        //        //$(window).resize(function () {
+        //        //    clearTimeout(timer);
+        //        //    timer = setTimeout(function () {
+        //        //        $(".panel").css({ "height": $(window).height() });
+        //        //    }, 40);
+        //        //});
+
+        //        $.scrollify({
+        //            section: ".naar"
+        //        });
+
+        //    };
+        //});
+
+        $(".effect-opacity").hover(function () {
+            $(this).find(".overlay").css({ opacity: 1 });
+        },
+            function () {
+                $(this).find(".overlay").css({ opacity: 0 });
+            }
+        );
+
+        $(".overlay").click(function () {
+            var url = $(this).prev().attr("href");
+            if (url != "")
+                window.location = url;
+            return false;
+        });
+
+
+        $(function () {
+            if (window.matchMedia("(max-width: 768px)").matches) {
+                if (navigator.userAgent.indexOf('Safari') != -1 || navigator.userAgent.indexOf('Chrome') == -1) {
+
+                    $('.overlay').each(function () {
+                        this.style.position = 'absolute';
+                        this.style.top = '40%';
+                    });
+
+                };
+
+            }
+            else {
+                if (navigator.userAgent.indexOf('Safari') != -1 || navigator.userAgent.indexOf('Chrome') == -1) {
+                    $(window).on('load', function () {
+                        $('.overlay').each(function () {
+                            this.style.position = 'absolute';
+                            this.style.top = $(this).parent().parent().height() / 2 + 'px';
+                            this.style.marginTop = -$(this).height() / 2 + 'px';
+                        });
+                    });
+
+                }
+                else {
+
+                    $('.overlay').each(function () {
+                        this.style.position = 'absolute';
+                        this.style.top = $(this).parent().height() / 2 + 'px';
+                        this.style.marginTop = -$(this).height() / 2 + 'px';
+                        this.style.left = ($(this).parent().width() - $(this).width()) / 2 + 'px';
+                    });
+
+
+                }
+            }
+
+        })
+
+    </script>
+
+    <script src="~/Scripts/app/InstaGet/js/instaget.min.js"></script>
+    <script>
+        new instaGet('#instagram-feed', {
+            username: 'shopatvelvet',
+            counter: 4,
+            numcol: 4,
+            moreBtn: false,
+            info: false,
+            width: '100%',
+            height: '100%',
+            resolution: 'm',
+        });
+                //new instaGet('#instagram-feed-mobile', {
+                //    username: 'shopatvelvet',
+                //    counter: 4,
+                //    numcol: 4,
+                //    moreBtn: false,
+                //    info: false,
+                //    width: '100%',
+                //    height: '100%',
+                //    resolution: 'm',
+                //});
+
+    </script>
+
+}

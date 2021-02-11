@@ -1,163 +1,110 @@
 ﻿@model ProductDetailsModel
+@using Nop.Core.Domain.Media
+@using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
+@{
+    //Html.AddScriptParts("~/Scripts/jquery.magnific-popup.js");
+    Html.AddCssFileParts("~/Content/magnific-popup/magnific-popup.css");
+
+    //int productPerRow = EngineContext.Current.Resolve<MediaSettings>().ProductThumbPerRowOnProductDetailsPage;
+}
 
 
-@if (Model.PictureModels.Count > 0)
-{
-    <div class="row d-none d-lg-flex">
-        <div class="col-2"></div>
-        <div class="col-2 no-gutter">
-
-            @*<nav class="col-sm-3" id="productgallery">
-                    <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="130">
-                        <li><a href="#section1">Section 1</a></li>
-                        <li><a href="#section2">Section 2</a></li>
-                        <li><a href="#section3">Section 3</a></li>
-                    </ul>
-                </nav>*@
-
-
-            <div id="productgallery" class="">
-                <ul class="nav" data-spy="affix" data-offset-top="100">
-                    @for (int i = 0; i < Model.PictureModels.Count; i++)
-                    {
-                        var css = "";
-                        if (i == 0)
-                        {
-                            css = "selected";
-                        }
-                        var pic = Model.PictureModels[i];
-
-                        <li><a href="#prodimg-@i" class="@css" data-full="@pic.FullSizeImageUrl"><img src="@pic.FullSizeImageUrl" class="img-fluid" style="max-width:93px" /></a></li>
-                    }
-
-                </ul>
-
-
-            </div>
-
-        </div>
-        <div class="col-8">
-            <div class="prod-images d-flex flex-column">
-                @for (int i = 0; i < Model.PictureModels.Count; i++)
-                {
-                    var pic = Model.PictureModels[i];
-                    <div><img src="@pic.FullSizeImageUrl" class="img-fluid w-100" id="prodimg-@i" /></div>
-                }
-            </div>
-
-
-        </div>
-    </div>
-
-
-    @*Mobile View*@
-<div id="carouselExampleIndicators" class="carousel slide d-block d-lg-none" data-ride="carousel">
-    <ol class="carousel-indicators">
-        @{
-            var index = 1;
-            foreach (var p in Model.PictureModels)
+<div style="max-width:90%; margin:0 auto 0; text-align:center;">
+        @*@if (Model.DefaultPictureZoomEnabled)
             {
-                if (index == 0)
-                {
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                }
-                else
-                {
-                    <li data-target="#carouselExampleIndicators" data-slide-to="@index"></li>
-                }
+                <li>
+                    <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" id="main-product-img-lightbox-anchor-@Model.Id">
+                        <img class="img-responsive" alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img-@Model.Id" />
+                    </a>
+                </li>
 
-                index++;
             }
+            else
+            {
+                <li>
+                    <img class="img-responsive" alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img-@Model.Id" />
+                </li>
+            }*@
+
+  @if (Model.PictureModels.Count > 0)
+  {
+    <ul class="list-unstyled hidden-xs text-center">
+        @foreach (var p in Model.PictureModels)
+        {
+            <li class="prod-image zoom-link">
+                <a class="thumb-popup-link" href="@p.FullSizeImageUrl" title="@p.Title">
+                    <img class="img-responsive center-block" src="@p.FullSizeImageUrl" alt="@p.AlternateText" title="@p.Title" />
+                </a>
+            </li>
         }
+    </ul>
+  }
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('.thumb-popup-link').magnificPopup(
+        {
+            type: 'image',
+            removalDelay: 300,
+            gallery: {
+                enabled: true,
+                tPrev: 'Previous',
+                tNext: 'Next',
+                tCounter: '@T("Media.MagnificPopup.Counter")',
+                arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%">%title%</button>', // markup of an arrow button
+            },
+            tClose: '@T("Media.MagnificPopup.Close")',
+            tLoading: '@T("Media.MagnificPopup.Loading")',
+            image: {
+                verticalFit: false
+            }
+
+        });
+    });
+    </script>
 
 
 
 
-    </ol>
+
+    <!--end images-->
+
+</div>
+
+@*Mobile View*@
+<div id="carouselImg" class="visible-xs carousel slide">
+
+    <!-- Carousel items -->
     <div class="carousel-inner">
+
         @{ int counter = 1;
 
-            foreach (var p in Model.PictureModels)
-            {
-                if (counter == 1)
-                {
+         foreach (var p in Model.PictureModels)
+         {
+             if (counter == 1)
+             {
+                <div class="item active">
+                    <img class="img-responsive" src="@p.FullSizeImageUrl" alt="@p.AlternateText" title="@p.Title" />
+                </div>
+             }
+             else
+             {
+                <div class="item">
+                    <img class="img-responsive" src="@p.FullSizeImageUrl" alt="@p.AlternateText" title="@p.Title" />
+                </div>
+             }
 
-                    <div class="carousel-item active">
-                        <img class="img-fluid" src="@p.FullSizeImageUrl" alt="@p.AlternateText" title="@p.Title" />
-                    </div>
-                }
-                else
-                {
-                    <div class="carousel-item">
-                        <img class="img-fluid" src="@p.FullSizeImageUrl" alt="@p.AlternateText" title="@p.Title" />
-                    </div>
-                }
-
-                counter++;
-            }
+             counter++;
+         }
         }
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+
+    <!-- Carousel nav -->
+    <a class="carousel-control left" href="#carouselImg" data-slide="prev"><i class="fa fa-angle-left fa-lg"></i></a>
+    <a class="carousel-control right" href="#carouselImg" data-slide="next"><i class="fa fa-angle-right fa-lg"></i></a>
 </div>
 
 
 
-}
-
-<script>
-
-
-    //var $slides = document.querySelector('#slides');
-    //var $slidesControls = Array.from(document.querySelectorAll('#slides_controls input'));
-    //var $slideWidth = document.querySelector('#slide_width');
-    //var $slidesVisible = document.querySelector('#slides_visible');
-    //var slide = $slides.dataset.slide;
-
-    //$slidesControls.forEach(function (element, index) {
-    //    element.addEventListener('change', function () {
-    //        document.documentElement.style.setProperty('--slide', index);
-    //    });
-    //});
-
-    //$slideWidth.addEventListener('keyup', function (e) {
-    //    if (e.keyCode == 13) {
-    //        document.documentElement.style.setProperty('--slideWidth', this.value + 'px');
-    //    }
-    //});
-
-    //$slidesVisible.addEventListener('input', function () {
-    //    document.documentElement.style.setProperty('--slidesVisible', this.value);
-    //})
-          
-</script>
-
-
-<script>
-    //$(document).ready(function () {
-
-    //    $('a').click(function () {
-    //        var largeImage = $(this).attr('data-full');
-    //        $('.selected').removeClass();
-    //        $(this).addClass('selected');
-    //        $('.full img').hide();
-    //        $('.full img').attr('src', largeImage);
-    //        $('.full img').fadeIn();
-    //    });
-
-    //    $('.full img').on('click', function () {
-    //        var modalImage = $(this).attr('src');
-    //        $.fancybox.open(modalImage);
-    //    });
-
-    //});
-</script>
 
 
