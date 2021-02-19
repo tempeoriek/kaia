@@ -33,7 +33,7 @@
         <div class="mt-3 mb-3 row" style="display: flex; justify-content: center;">
           @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
           {
-            <a style="color: black;" class="nav-link active" href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
+            <a style="color: black; margin-right: 1%;" href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
           }
         </div>
         
@@ -73,7 +73,7 @@
         <div class="mt-3 mb-3 row" style="display: flex; justify-content: center;">
           @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
           {
-            <a style="color: black;" class="nav-link active" href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
+            <a style="color: black; margin-right: 1%" href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
           }
         </div>
         

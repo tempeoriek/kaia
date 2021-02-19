@@ -84,7 +84,7 @@ h2.altfont {font-family: 'sav', Helvetica, Georgia, Garamond; font-size:12px; ma
 label{ font-weight:normal; margin-bottom:0;}
 
 a{color:#231F20;}
-a:hover, a:focus, a:active { text-decoration:none; color:#231F20; border-bottom:1px solid #231F20;}
+a:hover, a:focus, a:active { text-decoration:underline;}
 
 a.alt{text-decoration:none; color:#414042; border-bottom:1px solid #414042;}
 a.alt:hover, a.alt:focus, a.alt:active { border-bottom-color:transparent; }
