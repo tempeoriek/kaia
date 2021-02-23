@@ -1,0 +1,206 @@
+﻿@model LoginModel
+@using Nop.Web.Models.Customer;
+@using Nop.Core;
+@using Nop.Core.Infrastructure;
+@{
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Login").Text);
+
+    //register URL with return URL (if specified)
+    var registerUrl = Url.RouteUrl("Register");
+    if (!String.IsNullOrEmpty(this.Context.Request.QueryString["returnUrl"]))
+    {
+        var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+        registerUrl = webHelper.ModifyQueryString(registerUrl, "returnurl=" + HttpUtility.UrlEncode(this.Context.Request.QueryString["returnUrl"]), null);
+    }
+
+
+    //ViewBag.HideMenu = "false";
+
+}
+
+@*@Html.Action("ExternalMethods", "ExternalAuthentication")
+    @Html.Partial("_ExternalAuthentication.AssociateMessage")
+    @Html.Partial("_ExternalAuthentication.Errors")*@
+
+
+<div class="col-main-sml mt-normal">
+
+    @*<h1>Login or create an account</h1>*@
+    @*<h1>@T("Account.Login.Welcome")</h1>*@
+
+    <div class="login">
+        @*<h2>@T("Account.Login.ReturningCustomer")</h2>*@
+
+        @using (Ajax.BeginForm("Login", "Customer", new AjaxOptions
+        {
+            InsertionMode = InsertionMode.InsertAfter,
+            HttpMethod = "POST",
+            LoadingElementId = "ajax-loader",
+            OnSuccess = "loginCallback",
+            UpdateTargetId = "pnlMsg"
+        }, new { id = "form1", @class = "login-form" }))
+        {
+            @Html.AntiForgeryToken()
+            var validationSummary = Html.ValidationSummary(true, T("Account.Login.Unsuccessful").Text);
+            @*<div style="font-style:normal; color:#cd6369;">
+                Since we have moved to a new website, please retrieve your password by clicking "forgot password" and follow the link provided in the email.
+            </div>*@
+            
+            <div class="text-danger">
+                @Html.ValidationSummary(true, T("Account.Login.Unsuccessful").Text)
+            </div>
+
+            if (Model.UsernamesEnabled)
+            {
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.Username, new { @class = "control-label" }, ":")
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Username, new { @class = "username form-control", autofocus = "autofocus" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Username)
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+
+                    @Html.LabelFor(m => m.Email, new { @class = "control-label" }, ":")
+                    @Html.TextBoxFor(m => m.Email, new { @class = "email form-control", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+            }
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" }, ":")
+                <span class="forgot-password pull-right">
+                    @Html.RouteLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery")
+                </span>
+
+                @Html.PasswordFor(m => m.Password, new { @class = "password form-control" })
+                @Html.ValidationMessageFor(m => m.Password)
+
+            </div>
+
+            if (Model.DisplayCaptcha)
+            {
+                <div class="captcha-box">
+                    @Html.Raw(Html.GenerateCaptcha())
+                </div>
+            }
+
+            <div id="pnlMsg" class="text-danger">@validationSummary</div>
+
+            <div class="form-group">
+                <div class="buttons">
+                    <input class="btn btn-default" type="submit" value="@T("Account.Login.LoginButton")" />
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+
+    <div class="login">
+
+
+        @if (Model.CheckoutAsGuest)
+        {
+            <h2>@T("Account.Login.CheckoutAsGuestOrRegister")</h2>
+            <p>
+                @Html.Action("TopicBlock", "Topic", new { systemName = "CheckoutAsGuestOrRegister" })
+            </p>
+            <input type="button" class="button-1 checkout-as-guest-button btn btn-default" onclick="location.href='@Url.RouteUrl("Checkout")'" value="@T("Account.Login.CheckoutAsGuest")" />
+            <input type="button" class="button-1 register-button btn btn-default" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
+
+        }
+        else
+        {
+
+            <h2 style="margin-top:10em;">@T("Account.Login.NewCustomer")</h2>
+            <p>
+                @T("Account.Login.NewCustomerText")
+            </p>
+            <div class="form-group">
+                <div class="buttons">
+                    <input type="button" class="btn btn-default" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
+                </div>
+            </div>
+
+        }
+    </div>
+
+</div>
+
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        console.log()
+        function loginCallback(data) {
+            console.log(data)
+            if (data.ok) {
+                if (data.msg != "")
+                {
+                    $("#pnlMsg").html(data.msg);
+                }
+                else
+                {
+                    $("#pnlMsg").html('');
+                }
+                if (window.location.search.toString().includes("admin")) {
+                    data.newurl = "/admin"
+                } 
+                window.location = data.newurl;
+            }
+            else {
+                $("#pnlMsg").html(data.msg);
+            }
+        }
+
+    </script>
+}
+
+
+@section Left
+{
+    @Html.Partial("MenuStatic")
+}
+
+
+
+@*<br /><br />
+
+    <button type="button" class="btn btn-primary btn-add2cart"
+            onclick="displayAdd2CartNotification('xxx', 'error', 3500)"
+            data-loading-text="Adding..." >Click me</button>
+
+
+    <button type="button" class="btn btn-default btn-primary btn-add2cart"
+            onclick="displayAdd2CartNotification('added', 'success', 3500)">
+        Click me
+    </button>
+
+    <div id="add2cart-notification" title="@T("Common.Notification")" class="field-validation-error" style="display:none;"></div>
+
+
+    <script>
+        $('.btn-add2cart').click(function () {
+            var btn = $(this);
+            $(btn).buttonLoader('start');
+            setTimeout(function () {
+                $(btn).buttonLoader('stop');
+            }, 3500);
+        });
+
+    </script>*@
+
+    
+
+
