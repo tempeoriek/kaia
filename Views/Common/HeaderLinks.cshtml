@@ -38,8 +38,13 @@
 
     }
 
-
-   
+    string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+    var csshome = "";
+    if (absolutepath == "/") {
+        csshome = "top-balk-mobile homemobile";
+    } else {
+        csshome = "top-balk-mobile";
+    }
 
 }
 
@@ -192,7 +197,7 @@
 </div>
 <!-- end top balk-->
 @*Mobile*@
-<nav class="navbar navbar-fixed-top top-balk-mobile hidden-md hidden-lg visible-xs visible-sm" role="navigation">
+<nav class="navbar navbar-fixed-top @csshome hidden-md hidden-lg visible-xs visible-sm" role="navigation">
     <div class="container-fluid cf-padding">
         <table>
             <tr>

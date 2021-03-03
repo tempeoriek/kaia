@@ -508,7 +508,7 @@ footer .copy{ font-size:25px; padding-top:2px;}
 
 
 /* top menu */
- img.sav-logo{ max-width:177px; margin-top:26px;}
+ img.sav-logo{ max-width:80px; margin-top:26px;}
 
 .cc-logo {
     font-family: 'SuisseIntl-Bold';
@@ -538,6 +538,7 @@ footer .copy{ font-size:25px; padding-top:2px;}
 
 /*mobile*/
 .top-balk-mobile{ background-color:#ffffff; border-bottom:1px solid #cccccc;}
+.homemobile{ background-color:transparent !important; border: none !important;}
 
 .top-balk-mobile table { width:100%}
 .top-balk-mobile table td{ }
@@ -768,7 +769,7 @@ li.tab-menu  > a:active { text-decoration:none; color:#383838; border-bottom:1px
     position:absolute;
     padding-left:25px;
 }
-.sidebar-menu{padding:110px 0 0 0;}
+.sidebar-menu{padding:83px 0 0 0;}
 
 a.sale-item   {color:#ed1c24;}
 a.sale-item:hover,
