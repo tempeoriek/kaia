@@ -1,0 +1,31 @@
+﻿@model ProductDetailsModel
+@using Nop.Web.Models.Catalog;
+@if ((Model.FreeShippingNotificationEnabled && Model.IsFreeShipping) || !String.IsNullOrWhiteSpace(Model.DeliveryDate))
+{
+    <div class="delivery">
+        @if (Model.FreeShippingNotificationEnabled && Model.IsFreeShipping)
+        {
+            <div class="free-shipping">@T("Products.FreeShipping")</div>
+        }
+        
+        @if (!String.IsNullOrWhiteSpace(Model.DeliveryDate))
+        {
+            <div class="delivery-date">
+                @T("Products.DeliveryDate"):
+                <span class="value">@Model.DeliveryDate</span>
+            </div>
+        }
+        else
+        {
+            <div class="delivery-date">
+                <a href="mailto:shop@peggyhartanto.com">SHOP@PEGGYHARTANTO.COM</a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="delivery-date">
+        <a href="mailto:shop@peggyhartanto.com">SHOP@PEGGYHARTANTO.COM</a>
+    </div>
+}

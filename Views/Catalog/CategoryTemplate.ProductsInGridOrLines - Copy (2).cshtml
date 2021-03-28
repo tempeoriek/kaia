@@ -1,0 +1,365 @@
+﻿@model CategoryModel
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+
+@{
+    Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+    if (canonicalUrlsEnabled)
+    {
+        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(categoryUrl);
+    }
+
+    //var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
+}
+
+
+<div class="container-catalog">
+    
+    @*<div id="make-3D-space">
+        <div id="product-card">
+            <div id="product-front">
+                <div class="shadow"></div>
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt.png" alt="" />
+                <div class="image_overlay"></div>
+                <div id="view_details">View details</div>
+                <div class="stats">
+                    <div class="stats-container">
+                        <span class="product_price">$39</span>
+                        <span class="product_name">Adidas Originals</span>
+                        <p>Men's running shirt</p>
+
+                        <div class="product-options">
+                            <strong>SIZES</strong>
+                            <span>XS, S, M, L, XL, XXL</span>
+                            <strong>COLORS</strong>
+                            <div class="colors">
+                                <div class="c-blue"><span></span></div>
+                                <div class="c-red"><span></span></div>
+                                <div class="c-white"><span></span></div>
+                                <div class="c-green"><span></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="product-back">
+                <div class="shadow"></div>
+                <div id="carousel">
+                    <ul>
+                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large.png" alt="" /></li>
+                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large2.png" alt="" /></li>
+                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large3.png" alt="" /></li>
+                    </ul>
+                    <div class="arrows-perspective">
+                        <div class="carouselPrev">
+                            <div class="y"></div>
+                            <div class="x"></div>
+                        </div>
+                        <div class="carouselNext">
+                            <div class="y"></div>
+                            <div class="x"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="flip-back">
+                    <div id="cy"></div>
+                    <div id="cx"></div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+
+    <div class="row mt-large">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h1>@Model.Name</h1>
+            </div>
+        </div>
+
+        @*<div class="hidden-xs hidden-sm col-md-3 col-md-pull-6" style="margin-top:1.25em;">
+            @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
+        </div>
+        <div class="hidden-xs hidden-sm col-md-3 text-right" style="margin-top:1.25em;">
+            @if (Model.PagingFilteringContext.AllowProductSorting)
+        {
+                <div class="product-sorting">
+                    <span>@T("Catalog.OrderBy")</span>
+                    @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
+                </div>
+        }
+        </div>*@
+    </div>
+
+    <section class="plr-mobile">
+
+        @if (Model.Products.Count > 0)
+    {
+            @*filtering*@
+            @*<div class="product-filters">
+                @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
+                {
+                    @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
+                }
+                @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
+                {
+                    @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
+                }
+            </div>*@
+
+            @*description*@
+                if (!String.IsNullOrWhiteSpace(Model.Description))
+                {
+                    <div class="category-description">
+                        @if (!String.IsNullOrWhiteSpace(Model.Description))
+                        {
+                            @Html.Raw(Model.Description)
+                            <br />
+                        }
+                    </div>
+                }
+
+
+        var pg_i = 0;
+
+        var classrow = "";
+        if (Model.PagingFilteringContext.AvailableViewModes.Count > 1)
+        {
+            var gridMode = Model.PagingFilteringContext.AvailableViewModes[0];
+            var listMode = Model.PagingFilteringContext.AvailableViewModes[1];
+
+            if (listMode.Selected)
+            {
+                classrow = "modelist";
+            }
+        }
+
+        <br />
+
+    <div class="row">
+        <div id="trxlist" class="scroll">
+            @foreach (var product in Model.Products)
+            {
+                
+                    <div class="col-xs-6 col-sm-4 col-md-3 catalog-line">
+                        @Html.Partial("_ProductBox", product)
+                    </div>
+
+
+                pg_i++;
+            }
+            <div class="gap"></div>
+        </div>
+
+    </div>
+
+   
+    }
+    else
+    {
+            <p></p>
+            <h4 style="text-align:center;">
+                Currently no items available in this category
+            </h4>
+
+    }
+
+
+
+    </section>
+
+</div>
+
+@section HeaderSection{
+ 
+
+}
+
+@section scripts{
+
+
+
+
+<script>
+    /* image hover*/
+    //(function ($) {
+    //    $("#trxlist").on("mouseenter", ".swapImg", function (event) {
+    //        var $this = $(this);
+    //        var newSource = $this.data('alt-src');
+    //        $this.data('alt-src', $this.attr('src'));
+    //        $this.attr('src', newSource);
+    //    }).on("mouseleave", ".swapImg", function (event) {
+    //        var $this = $(this);
+    //        var newSource = $this.data('alt-src');
+    //        $this.data('alt-src', $this.attr('src'));
+    //        $this.attr('src', newSource);
+    //    });
+
+    //})(jQuery);
+
+</script>
+
+
+
+    <script>
+
+        (function ($) {
+            $("#trxlist").on("mouseenter", ".product-card", function (event) {
+                $(this).addClass('animate');
+                $('div.carouselNext, div.carouselPrev').addClass('visible');
+            }).on("mouseleave", ".product-card", function (event) {
+                $(this).removeClass('animate');
+                $('div.carouselNext, div.carouselPrev').removeClass('visible');
+            });
+
+        })(jQuery);
+
+
+        $(document).ready(function () {
+
+            // Lift card and show stats on Mouseover
+            //$('#product-card').hover(function () {
+            //    $(this).addClass('animate');
+            //    $('div.carouselNext, div.carouselPrev').addClass('visible');
+            //}, function () {
+            //    $(this).removeClass('animate');
+            //    $('div.carouselNext, div.carouselPrev').removeClass('visible');
+            //});
+
+            $('.product-card').hover(function (e) {
+                $(this).addClass('animate');
+                $('div.carouselNext, div.carouselPrev').addClass('visible');
+            }, function (e) {
+                $(this).removeClass('animate');
+                $('div.carouselNext, div.carouselPrev').removeClass('visible');
+            });
+
+            // Flip card to the back side
+            $('#view_details').click(function () {
+                $('div.carouselNext, div.carouselPrev').removeClass('visible');
+                $('#product-card').addClass('flip-10');
+                setTimeout(function () {
+                    $('#product-card').removeClass('flip-10').addClass('flip90').find('div.shadow').show().fadeTo(80, 1, function () {
+                        $('#product-front, #product-front div.shadow').hide();
+                    });
+                }, 50);
+
+                setTimeout(function () {
+                    $('#product-card').removeClass('flip90').addClass('flip190');
+                    $('#product-back').show().find('div.shadow').show().fadeTo(90, 0);
+                    setTimeout(function () {
+                        $('#product-card').removeClass('flip190').addClass('flip180').find('div.shadow').hide();
+                        setTimeout(function () {
+                            $('#product-card').css('transition', '100ms ease-out');
+                            $('#cx, #cy').addClass('s1');
+                            setTimeout(function () { $('#cx, #cy').addClass('s2'); }, 100);
+                            setTimeout(function () { $('#cx, #cy').addClass('s3'); }, 200);
+                            $('div.carouselNext, div.carouselPrev').addClass('visible');
+                        }, 100);
+                    }, 100);
+                }, 150);
+            });
+
+            // Flip card back to the front side
+            $('#flip-back').click(function () {
+
+                $('#product-card').removeClass('flip180').addClass('flip190');
+                setTimeout(function () {
+                    $('#product-card').removeClass('flip190').addClass('flip90');
+
+                    $('#product-back div.shadow').css('opacity', 0).fadeTo(100, 1, function () {
+                        $('#product-back, #product-back div.shadow').hide();
+                        $('#product-front, #product-front div.shadow').show();
+                    });
+                }, 50);
+
+                setTimeout(function () {
+                    $('#product-card').removeClass('flip90').addClass('flip-10');
+                    $('#product-front div.shadow').show().fadeTo(100, 0);
+                    setTimeout(function () {
+                        $('#product-front div.shadow').hide();
+                        $('#product-card').removeClass('flip-10').css('transition', '100ms ease-out');
+                        $('#cx, #cy').removeClass('s1 s2 s3');
+                    }, 100);
+                }, 150);
+
+            });
+
+
+            /* ----  Image Gallery Carousel   ---- */
+            var carousel = $('#carousel ul');
+            var carouselSlideWidth = 335;
+            var carouselWidth = 0;
+            var isAnimating = false;
+
+            // building the width of the casousel
+            $('#carousel li').each(function () {
+                carouselWidth += carouselSlideWidth;
+            });
+            $(carousel).css('width', carouselWidth);
+
+            // Load Next Image
+            $('div.carouselNext').on('click', function () {
+                var currentLeft = Math.abs(parseInt($(carousel).css("left")));
+                var newLeft = currentLeft + carouselSlideWidth;
+                if (newLeft == carouselWidth || isAnimating === true) { return; }
+                $('#carousel ul').css({
+                    'left': "-" + newLeft + "px",
+                    "transition": "300ms ease-out"
+                });
+                isAnimating = true;
+                setTimeout(function () { isAnimating = false; }, 300);
+            });
+
+            // Load Previous Image
+            $('div.carouselPrev').on('click', function () {
+                var currentLeft = Math.abs(parseInt($(carousel).css("left")));
+                var newLeft = currentLeft - carouselSlideWidth;
+                if (newLeft < 0 || isAnimating === true) { return; }
+                $('#carousel ul').css({
+                    'left': "-" + newLeft + "px",
+                    "transition": "300ms ease-out"
+                });
+                isAnimating = true;
+                setTimeout(function () { isAnimating = false; }, 300);
+            });
+        });
+    </script>
+
+    }
+
+
+@*subcategories*@
+@*@if (Model.SubCategories.Count > 0)
+    {
+        <div class="category-grid sub-category-grid">
+            <div class="item-grid">
+                @foreach (var item in Model.SubCategories)
+                {
+                    <div class="item-box">
+                        <div class="sub-category-item">
+                            <h2 class="title">
+                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                    @item.Name
+                                </a>
+                            </h2>
+                            <div class="picture">
+                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                    <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }*@
+

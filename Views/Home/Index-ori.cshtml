@@ -1,0 +1,128 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Action("HeaderLinks", "Common")
+
+<div class="hero" style="background-image:url('/Content/Images/uploaded/homepage/slider1.jpg')">
+
+</div>
+
+<div class="mt-5">
+    <a href="~/new-arrivals"><img class="img-fluid" src="~/Content/Images/uploaded/homepage/slider2.jpg" /></a>
+</div>
+
+
+@*<div class="homepage">
+        <div class="mb-20">
+
+            <div class="hidden-sm hidden-xs mb-20">
+                <div class="full-width banner">
+                    <img class="img-fluid" src="~/Content/Images/uploaded/homepage/slider1.jpg" />
+                    <h1 class="text-header text-center">SPRING CAPSULE</h1>
+                    <h2 class="text-center text-header2">2019 COLLECTION</h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="hidden-sm hidden-xs">
+            <div class="full-width banner">
+                <img class="img-fluid" src="~/Content/Images/uploaded/homepage/slider2.jpg" />
+                <h1 class="new-arrival d-none d-sm-block">NEW ARRIVALS</h1>
+                <h1 class="d-block d-sm-none" style="margin-top: -220px;padding-left: 10%;color: white;font-size: 14px;">NEW ARRIVALS</h1>
+            </div>
+        </div>
+    </div>*@
+
+<!-- category -->
+@Html.Action("HomepageCategories", "Catalog")
+@*<div class="row">@Html.Action("HomepageProducts", "Product")</div>*@
+
+
+
+@* Gina *@
+@*<div>
+    <img src="~/Content/Images/Mask Group 27.png" class="d-none d-sm-block" style="z-index:-1" />
+    <img src="~/Content/Images/home1.png" class="d-block d-sm-none" style="z-index:-1; margin:auto; " />
+    <h1 class="text-header text-center">SPRING CAPSULE</h1>
+    <h2 class="text-center text-header2">2019 COLLECTION</h2>
+</div>*@
+
+@*<div class="header-2">
+    <img src="~/Content/Images/Mask Group 20.png" class="d-none d-sm-block" alt="Responsive image" style="z-index:-1 " />
+    <img src="~/Content/Images/home2.png" class="d-block d-sm-none" style="z-index:-1" />
+    <h1 class="new-arrival d-none d-sm-block">NEW ARRIVALS</h1>
+    <h1 class="d-block d-sm-none" style="margin-top: -220px;padding-left: 10%;color: white;font-size: 14px;">NEW ARRIVALS</h1>
+</div>*@
+
+@*<section class="homepage">
+    <div class="container ">
+        <div class="item1">
+            <div class="header_home" style="margin-top:50px;">
+                <div class="category1" style="">
+                    <img src="~/Content/Images/Mask Group 1.png" style="z-index:-1" class="img-category"/>
+                    <h2 class="text-center text-category">TOPS</h2>
+                </div>
+                <div class="category2" style="">
+                    <img src="~/Content/Images/Mask Group 2.png" class="img-category"/>
+                    <h2 class="text-center text-category">BOTTOMS</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="item2">
+            <div class="header_home" style="margin-top:50px;">
+                <div class="category3">
+                    <img src="~/Content/Images/Mask Group 3.png" class="img-category"/>
+                    <h2 class="text-center text-category">OUTWEARS</h2>
+                </div>
+                <div class="category4">
+                    <img src="~/Content/Images/Mask Group 4.png" class="img-category"/>
+                    <h2 class="text-center text-category">DRESSERS & JUMPSUITS</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>*@
+
+
+<!-- Instagram Picture -->
+@*<div class="semi-footer mt-30">
+    <div class="item3">
+        <div class="col text-center"><h2>sare Girls</h2></div>
+        <div class="col text-center"><h3>Be inspired by the outfits of our #saregirls</h3></div>
+        <div class="thumb-instagram mt-30">
+            <div><img src="~/Content/Images/Mask Group 21.png" /></div>
+            <div><img src="~/Content/Images/Mask Group 22.png" /></div>
+            <div><img src="~/Content/Images/Mask Group 23.png" /></div>
+        </div>
+        <div class="col text-center"><a href="https://www.instagram.com/sare_/" target="_blank"><p class="discover"><u>DISCOVER MORE</u></p></a></div>
+    </div>
+</div>*@
+
+
+
+
+
+@Html.Action("Footer", "Common")
+
+
+@section RootHeaderSection
+{
+
+    <link href="~/Themes/v1/Content/homepage.css" rel="stylesheet" />
+}
+
+@section RootScripts{
+    
+    <script>
+       $(document).ready(function () {
+           $("#body-wrapper").toggleClass("clean-all");
+       });
+
+      
+</script>
+
+    }

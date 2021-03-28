@@ -206,10 +206,7 @@
 
 
 .prod-details .attributes{ display:block;margin-bottom:10px;margin-top:10px}
-.prod-details .attribute__name {
-    font-weight:bold;
-    
-}
+.prod-details .attribute__name {font-weight:bold;}
 
 .prod-details .description {}
 .prod-details ul.list-icons{}
@@ -257,7 +254,7 @@
 }
 
 .prod-images{ padding-bottom:11vw;}
-.prod-images img{ margin-bottom:13px;}
+
 
 #productgallery .nav li{ 
     display:block; 
@@ -290,84 +287,3 @@
 #productgallery  a:hover{ background-color:transparent;}
 
 
-
-
-/*slick*/
-.slick-dots{
-    left:41% !important;
-}
-
-.slick-dots li.slick-active button::before {
-    background-color: #808080 !important;
-    border: 1px solid #808080;
-    border-radius: 50%;
-}
-
-
-
-.slick-prev, 
-.slick-next {
-
-    font-size: 0;
-    line-height: 0;
-    position: absolute;
-    display: block;
-    width: 20px !important;
-    height: 20px !important;
-    padding: 0;
-    -webkit-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-    transform: translate(0, -50%);
-    cursor: pointer;
-    color: transparent;
-    border: none;
-    outline: none;
-    background: transparent;
-    width: 50px !important;
-    height: 52px !important;
-    bottom: 0 !important;
-    top:unset !important;
-
-}
-
-.slick-prev::before,
-.slick-next::before {
-    font-size: 28px !important;
-    line-height: 1;
-    padding: 12px 0px 12px 50px !important;
-    background-repeat: no-repeat;
-    background-size: 60px auto !important;
-    background-position: center center;
-   
-}
-
-.slick-next::before {
-    content: ' ';
-    background-image: url('/Themes/v1/content/images/left.png') !important;
-
-
-}
-.slick-prev::before {
-    content: ' ';
-    background-image: url('/Themes/v1/content/images/right.png') !important;
-
-}
-
-
-  .slick-prev {
-        /*left: 570px;*/
-      left:unset !important;
-      bottom:53px !important;
-  }
-
-  .slick-next{
-  
-  }
-
-
-.slick-prev, 
-.slick-next {
-    /*top: 90%;*/
-     right:7% !important;
-     z-index:999 !important;
-}

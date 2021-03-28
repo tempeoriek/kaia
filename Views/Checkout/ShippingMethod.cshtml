@@ -1,0 +1,84 @@
+﻿@model CheckoutShippingMethodModel
+@using Nop.Web.Models.Checkout;
+@{
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Checkout").Text);
+}
+
+
+@*@Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Shipping })*@
+
+<div class="col-main">
+        <div class="row">
+
+            <div class="col-sm-6">
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3>@T("Checkout.SelectShippingMethod")</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="checkout-blox">
+                            <div class="section shipping-method">
+                                @using (Html.BeginRouteForm("CheckoutShippingMethod", FormMethod.Post))
+                                {
+                                    if (Model.Warnings.Count == 0)
+                                    {
+                                        <div class="method-lists">
+                                            @for (int i = 0; i < Model.ShippingMethods.Count; i++)
+                                            {
+                                                var shippingMethod = Model.ShippingMethods[i];
+
+                                                <div class="radio-default">
+                                                    <input id="shippingoption_@(i)" type="radio" name="shippingoption" value="@(shippingMethod.Name)___@(shippingMethod.ShippingRateComputationMethodSystemName)" checked="@shippingMethod.Selected" />
+                                                    <label for="shippingoption_@(i)"><span></span> @T("Checkout.SelectShippingMethod.MethodAndFee", shippingMethod.Description, shippingMethod.Fee)</label>
+                                                </div>
+                                                @*if (!String.IsNullOrEmpty(shippingMethod.Description))
+                                                {
+                                                    <div class="method-description">
+                                                        @Html.Raw(shippingMethod.Description)
+                                                    </div>
+                                                }*@
+                                            }
+
+                                         
+                                        </div>
+
+
+                                     
+                                        if (Model.NotifyCustomerAboutShippingFromMultipleLocations)
+                                        {
+                                            <div class="multiple-locations">
+                                                @T("Checkout.ShippingMethod.ShippingFromMultipleLocations")
+                                            </div>
+                                        }
+                                        <div class="buttons mt-default" style="text-align:right;">
+                                            @*<input type="submit" name="nextstep" value="@T("Checkout.NextButton")" class="btn btn-default" />*@
+                                            <input type="submit" name="nextstep" value="Go to Payment Method" class="btn btn-default" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="message-error">
+                                            <ul>
+                                                @foreach (var warning in Model.Warnings)
+                        {
+                                                    <li>@warning</li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    
+
+
+</div>

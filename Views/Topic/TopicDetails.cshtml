@@ -1,0 +1,64 @@
+﻿@model TopicModel
+@using Nop.Core.Domain.Seo
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Topics;
+@{
+    var isPopup = ViewBag.IsPopup;
+    if (isPopup == null || isPopup == false)
+    {
+        
+    }
+    else
+    {
+        /*pop-up windows*/
+        Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+    }
+
+    if (!Model.IsPasswordProtected)
+    {
+        Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Title);
+        Html.AddMetaDescriptionParts(Model.MetaDescription);
+        Html.AddMetaKeywordParts(Model.MetaKeywords);
+    }
+
+    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+    if (canonicalUrlsEnabled)
+    {
+        var topicUrl = Url.RouteUrl("Topic", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(topicUrl);
+    }
+   
+}
+<style>
+        #body-content{padding-top:0;}
+</style>
+
+
+@* <div class="container col-main mt-default"> *@
+<div class="container col-main topic-body">
+    <div class="page-content">
+        <h1>@Model.Title</h1>
+        @Html.Raw(Model.Body)
+
+    </div>
+    @*<div class="row d-flex justify-content-center">
+        <div class="page-content col-12 col-md-8 text-left mt-5 pt-5">
+            <h1 class="mb-3">About Onka</h1>
+            @if (!String.IsNullOrEmpty(Model.Title))
+                {
+                    <h1>@Model.Title</h1>
+                }
+
+            @Html.Raw(Model.Body)
+
+        </div>
+        <div class="col-12 col-md-2 mt-5 pt-5 text-center">
+            <div><img src="~/content/images/about.png" class="img-fluid"/></div>
+        </div>
+    </div>*@
+</div>
+
+
+
+ 
+    

@@ -1,0 +1,80 @@
+﻿@model IList<ProductOverviewModel>
+
+@using Nop.Web.Models.Catalog;
+
+@if (Model.Count > 0)
+{
+   <div class="col-md-12 mt-large">
+          @{
+            var counter = 0;
+            var cssClass = "";
+          }
+
+        @foreach (var item in Model)
+        {
+            if (counter == 0)
+            {
+                cssClass = "active";
+            }
+            else if (counter > 0 && counter <= 3)
+            {
+                cssClass = "active-next";
+            }
+            else
+            {
+                cssClass = "";
+            }
+
+            <div class="col-md-4 item @cssClass">
+                @Html.Partial("_ProductBox", item)
+            </div>
+
+        }
+
+    </div>
+
+    //ini codingan yang lama
+    @*<div class="container-fluid homepage-carousel">
+        <h1 class="big pt-35 pb-35">@T("HomePage.Products")</h1>
+        <div class="container carousel" data-ride="carousel" id="mySlider" data-interval="false">
+            <div class="row carousel-inner center-block">
+                @{
+                    var counter = 0;
+                    var cssClass = "";
+                }
+
+                @foreach (var item in Model)
+                {
+                    if (counter == 0)
+                    {
+                        cssClass = "active";
+                    }
+                    else if (counter > 0 && counter <= 3)
+                    {
+                        cssClass = "active-next";
+                    }
+                    else
+                    {
+                        cssClass = "";
+                    }
+
+                    <div class="col-md-4 item @cssClass">
+                        @Html.Partial("_ProductBox", item)
+                    </div>
+
+                }
+            </div>
+            <a class="left carousel-control" href="#mySlider" role="button" data-slide="prev">
+                <img src="~/Themes/v1/content/images/ic_chevron_left-1.png" alt="">
+                <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="right carousel-control" href="#mySlider" role="button" data-slide="next">
+                <img src="~/Themes/v1/content/images/ic_chevron_left.png" alt="">
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>*@
+
+}
+
