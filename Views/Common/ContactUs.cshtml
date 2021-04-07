@@ -1,103 +1,118 @@
 ﻿@model ContactUsModel
 @using Nop.Web.Models.Common;
 @{
-
     //title
     Html.AddTitleParts(T("PageTitle.ContactUs").Text);
+
+    ViewBag.HideMenu = "true";
 }
 
-@*<section class="col-main">
-    <h1>@T("PageTitle.ContactUs")</h1>
-    @Html.Action("TopicBlock", "Topic", new { systemName = "ContactUs" })
-</section>
-<br /><br />*@
 
+<div class="col-main mt-normal">
 
-@*Contact form*@
-<div class="container">
-    <div class="row d-flex justify-content-center">
-            <div class="contactus_top col-8">
+    @*<h1 class="forpanel">@T("PageTitle.ContactUs")</h1>*@
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3>Customer care</h3>
+                </div>
                 @Html.Action("TopicBlock", "Topic", new { systemName = "ContactUs" })
             </div>
-            <br />
-            <div class="contactus_bottom col-8 mt-5">
-             <h2 class="mb-3">Drop us a message</h2>   
-                @if (Model.SuccessfullySent)
-            {
-                    <div class="result text-center">
-                        @Model.Result
-                    </div>
+
+
+        </div>
+        <div class="col-sm-6">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3>Send us a message</h3>
+                </div>
+
+                <div class="panel-body">
+
+
+                    @if (Model.SuccessfullySent)
+                {
+                <div class="result text-center">
+                    @Model.Result
+                </div>
                 }
                 else
                 {
                     using (Html.BeginForm())
                     {
-                        @Html.AntiForgeryToken()
+                @Html.AntiForgeryToken()
 
-                        <div class="message-error">
-                            @Html.ValidationSummary(true)
-                        </div>
-                        <div class="fieldset">
-                            
-                            <div class="form-group">
-                               @Html.LabelFor(model => model.FullName) @Html.ValidationMessageFor(model => model.FullName)
-                                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control contactus-form"@*, placeholder = T("Your name")*@ })
-                            </div>
-                            <div class="d-flex">
-                                <div class="form-group pr-5" style="width:50%">
+                <div class="message-error">
+                    @Html.ValidationSummary(true)
+                </div>
+                <div class="fieldset">
 
-                                    @Html.LabelFor(model => model.Email)@Html.ValidationMessageFor(model => model.Email)
-                                    @Html.TextBoxFor(model => model.Email, new
-                                    {
-                                        @class = "form-control contactus-form"@*, placeholder = T("Your E-mail")*@})
-                                </div>
+                    <div class="form-group">
+                        Name * @Html.ValidationMessageFor(model => model.FullName)
+                        @*@Html.LabelFor(model => model.FullName, new { @class = "col-sm-2 control-label" }, ":")*@
+                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+
+                    </div>
 
 
+                    <div class="form-group">
+                        Email * @Html.ValidationMessageFor(model => model.Email)
+                        @*@Html.LabelFor(model => model.Email, new { @class = "control-label" }, ":")*@
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
 
-                                @if (Model.SubjectEnabled)
-                                {
-                                    <div class="form-group pl-5" style="width:50%">
-                                        @Html.LabelFor(model => model.Subject) @Html.ValidationMessageFor(model => model.Subject)
-                                        @Html.TextBoxFor(model => model.Subject, new
-                                        {
-                                            @class = "form-control contactus-form"@*, placeholder = T("ContactUs.Subject.Hint")*@})
+                    </div>
 
-                                    </div>
-                                }
-                            </div>
-                            <div class="form-group contactus-form">
-                                @Html.LabelFor(model => model.Enquiry, new { @class = "control-label" }, " *") @Html.ValidationMessageFor(model => model.Enquiry)
-                                @Html.TextAreaFor(model => model.Enquiry, new { @class = "enquiry form-control"@*, placeholder = T("Your message")*@})
-                            </div>
-
-                            @if (Model.DisplayCaptcha)
+                    @if (Model.SubjectEnabled)
                             {
-                                <div class="captcha-box">
-                                    @Html.Raw(Html.GenerateCaptcha())
-                                </div>
+                            <div class="inputs">
+                                @Html.LabelFor(model => model.Subject)
+                                @Html.TextBoxFor(model => model.Subject, new { @class = "subject", placeholder = T("ContactUs.Subject.Hint") })
+                                @Html.ValidationMessageFor(model => model.Subject)
+                            </div>
                             }
 
-                            <div class="buttons pull-right mt-30">
-                                <button type="submit" name="send-email" class="btn btn-default" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending...">Send</button>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry, new { @class = "control-label" }, " *") @Html.ValidationMessageFor(model => model.Enquiry)
+                        @Html.TextAreaFor(model => model.Enquiry, new { @class = "enquiry form-control" })
+                    </div>
+
+                    @if (Model.DisplayCaptcha)
+                            {
+                            <div class="captcha-box">
+                                @Html.Raw(Html.GenerateCaptcha())
                             </div>
-                        </div>
+                            }
+
+                    <div class="buttons pull-right">
+                        @*<input type="submit" name="send-email" class="button-1 register-next-step-button btn btn-default load" value="@T("ContactUs.Button")" data-loading-text="Sending ..."  />*@
+                        <button type="submit" name="send-email" class="btn btn-default full-width-xs load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending..." >@T("ContactUs.Button")</button>
+                    </div>
+
+                </div>
+
+
                     }
                 }
 
+                </div>
+
+
             </div>
 
+        </div>
+
     </div>
+
 </div>
 
+@section Left{
+    @Html.Partial("MenuStatic")
+}
 
+@section scripts{
 
-
-
-    @section Left{
-
-    }
-
-    @section scripts{
-
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+    @Scripts.Render("~/bundles/jqueryval")
+}

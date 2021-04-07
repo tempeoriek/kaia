@@ -1,0 +1,85 @@
+﻿@model CategoryModel
+
+@{
+
+
+    Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+    if (canonicalUrlsEnabled)
+    {
+        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(categoryUrl);
+    }
+
+    //var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
+}
+
+
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using SAV.Web.Models.Catalog;
+@using SAV.Web.Extensions;
+
+
+@*@if (Model.DisplayCategoryBreadcrumb)
+{
+    <div>
+        <ol class="breadcrumb">
+            <li><a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a></li>
+            @foreach (var cat in Model.CategoryBreadcrumb)
+            {
+                var isLastCategory = cat.Id == Model.Id;
+
+                if (isLastCategory)
+                {
+            <li class="active">@cat.Name</li>
+                }
+                else
+                {
+            <li><a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" title="@cat.Name">@cat.Name</a></li>
+                }
+
+            }
+        </ol>
+    </div>
+}*@
+
+<h1 class="text-center">@Model.Name</h1>
+
+@*description*@
+@if (!String.IsNullOrWhiteSpace(Model.Description))
+{
+    <div class="category-description">
+        @Html.Raw(Model.Description)
+    </div>
+}
+
+@if (Model.Products.Count > 0)
+{
+    var pg_i = 0;
+
+    foreach (var product in Model.Products)
+    {
+        if (pg_i % 3 == 0)
+        {
+            @:<div class="row catalog-line fadingIn transparent">
+        }
+
+        <div class="col-md-4">
+            @Html.Partial("_ProductBox", product)
+        </div>
+
+        if (pg_i % 3 == 2)
+        {
+            @:</div>
+        }
+
+        pg_i++;
+
+    }
+}
+

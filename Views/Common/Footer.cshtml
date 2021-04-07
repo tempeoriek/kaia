@@ -5,54 +5,96 @@
 @using Nop.Web.Models.Common;
 
 <footer data-section-name="footer">
-	<div class="container">
-		<div class="row mt-2 mt-md-4">
-			<div class="col-12 d-flex flex-column align-items-center">
-				<div class="input-group col-md-4 mt-5 mb-4" style="width: 160px;" id="nieuwsbrief">
-					<form action="https://aboutonka.us19.list-manage.com/subscribe/post?u=fd378e85fe4fe1460877e78f4&amp;id=6c013484fd" 
-					method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate style="display: flex;">
-						<input style="font-size: 11px;" id="mce-EMAIL" class="email form-control py-2"  name="EMAIL" placeholder="Subsribe to newsletter" value="" required="required" />
-						<span class="input-group-append">
-							<i class="fa fa-chevron-right" style="margin-top: 4px; font-size: 7px;"></i>
-						</span>
-					</form>
-						<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-						<script type='text/javascript'>(function ($) { window.fnames = new Array(); window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME'; ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; }(jQuery)); var $mcj = jQuery.noConflict(true);</script>
-					<div id="nieuwsbrief-msg" style="display:none;">
-						Thank you for subscribing!
-					</div>
-				</div>
+  <div class="container">
+    <div class="row mt-2 mt-md-4">
+      @* desktop *@
+      <div class="col-12 d-flex flex-column align-items-center hidden-xs hidden-sm d-none d-md-block" style="position: absolute; left: calc((100% - 100vw) / 2); right: calc((100% - 100vw) / 2); height: max-content; width: 100vw; background-color: whitesmoke;">
+        <div class="input-group col-md-4 mt-5 mb-4" id="nieuwsbrief" style="display: flex !important; justify-content: center; align-items: center">
+          <form action="https://aboutonka.us19.list-manage.com/subscribe/post?u=fd378e85fe4fe1460877e78f4&amp;id=6c013484fd" 
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate style="display: flex; justify-content: center;">
+            <input style="font-size: 11px;" id="mce-EMAIL" class="email form-control py-2"  name="EMAIL" placeholder="Subsribe to newsletter" value="" required="required" />
+            <span class="input-group-append" style="margin-left: -9px;">
+              @* <i class="glyphicon glyphicon-chevron-right" style="margin-top: 4px; font-size: 7px;"></i> *@
+              <img style="width: 7px; margin-top: 4px;" src="~/Themes/v1/Content/images/Path 27.png" class="brandImage" />
+            </span>
+          </form>
+          <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+          <script type='text/javascript'>(function ($) { window.fnames = new Array(); window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME'; ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; }(jQuery)); var $mcj = jQuery.noConflict(true);</script>
+          <div id="nieuwsbrief-msg" style="display:none;">
+            Thank you for subscribing!
+          </div>
+        </div>
 
-				<div class="">
-					<a href="~/" style="font-size: 27px; font-family: ClearfaceStd-Regular;">Shopee</a>&nbsp.&nbsp
-					<a href="~/" style="font-size: 27px; font-family: ClearfaceStd-Regular;">Instagram</a>
-				</div>
+        <div class="row" style="display: flex; justify-content: center; padding-top: 1%; padding-bottom: 1%;">
+          <a href="~/" style="font-size: 27px; font-family: ClearfaceStd-Regular; color: black">Shopee</a>&nbsp;<span style='font-size:30px;'>&#46;</span>&nbsp;
+          <a href="~/" style="font-size: 27px; font-family: ClearfaceStd-Regular; color: black">Instagram</a>
+        </div>
 
-				<div class="d-block d-sm-flex mt-0 mt-md-3 mb-0">
-					@foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
-					{
-						<a class="nav-item nav-link active" href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
-					}
-					<a class="nav-item nav-link active" href="~/contactus">Contact</a>
-				</div>
-				<div class="">
-					<p class="copyright-text">
-						&#9400; Kaia 2020. All right reserved.  site by <a href="http://flitts.com" target="_blank" style="font-size:1rem;">flitts</a>
-					</p>
-				</div>
-				<div class="mt-2">
-					<a href="~/"><img style="width:30px;" src="~/Themes/v1/Content/images/logo.svg" class="brandImage" /></a>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="mt-3 mb-3 row" style="display: flex; justify-content: center;">
+          @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
+          {
+            <a style="color: black; margin: 0 0.5%;" href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
+          }
+        </div>
+        
+        <div class="row" style="display: flex; justify-content: center; margin-top: -2px; padding-bottom: 1%;">
+          <p>
+            &#9400; Kaia <script>document.write(new Date().getFullYear())</script>. All right reserved.</a>
+          </p>
+        </div>
+        <div style="display: flex; justify-content: center; margin-bottom: 2%;">
+          <a href="~/"><img style="width:30px;" src="~/Themes/v1/Content/images/logo.svg" class="brandImage" /></a>
+        </div>
+      </div>
+      
+      @* mobile *@
+      <div class="col-12 d-flex flex-column align-items-center hidden-md hidden-lg d-block d-md-none" style="background-color: whitesmoke;">
+        <div class="input-group col-md-4 mt-5 mb-4" id="nieuwsbrief">
+          <form action="https://aboutonka.us19.list-manage.com/subscribe/post?u=fd378e85fe4fe1460877e78f4&amp;id=6c013484fd" 
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate style="display: flex; justify-content: center;">
+            <input style="font-size: 11px;" id="mce-EMAIL" class="email form-control py-2"  name="EMAIL" placeholder="Subsribe to newsletter" value="" required="required" />
+            <span class="input-group-append" style="margin-left: -9px;">
+              @* <i class="glyphicon glyphicon-chevron-right" style="margin-top: 4px; font-size: 7px;"></i> *@
+              <img style="width: 7px; margin-top: 4px;" src="~/Themes/v1/Content/images/Path 27.png" class="brandImage" />
+            </span>
+          </form>
+          <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+          <script type='text/javascript'>(function ($) { window.fnames = new Array(); window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME'; ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; }(jQuery)); var $mcj = jQuery.noConflict(true);</script>
+          <div id="nieuwsbrief-msg" style="display:none;">
+            Thank you for subscribing!
+          </div>
+        </div>
+
+        <div class="row" style="display: flex; justify-content: center; padding-top: 1%; padding-bottom: 5%;">
+          <a href="~/" style="font-size: 27px; font-family: ClearfaceStd-Regular; color: black">Shopee</a>&nbsp;<span style='font-size:30px;'>&#46;</span>&nbsp;
+          <a href="~/" style="font-size: 27px; font-family: ClearfaceStd-Regular; color: black">Instagram</a>
+        </div>
+
+        <div class="mt-3 mb-3 row" style="display: flex; justify-content: center;">
+          @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
+          {
+            <a style="color: black; margin-right: 1%" href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
+          }
+        </div>
+        
+        <div class="row" style="display: flex; justify-content: center; margin-top: -2px; padding-bottom: 1%;">
+          <p>
+            &#9400; Kaia <script>document.write(new Date().getFullYear())</script>. All right reserved.</a>
+          </p>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <a href="~/"><img style="width:30px;" src="~/Themes/v1/Content/images/logo.svg" class="brandImage" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>
    
 
 <script>
-	$("#mc-embedded-subscribe").click(function () {
-		$("#nieuwsbrief").css("display", "none");
-		$("#nieuwsbrief-msg").css("display", "block");
-	});
+  $("#mc-embedded-subscribe").click(function () {
+    $("#nieuwsbrief").css("display", "none");
+    $("#nieuwsbrief-msg").css("display", "block");
+  });
 </script>
 

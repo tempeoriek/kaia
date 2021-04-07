@@ -37,7 +37,8 @@
                 </div>
                 <div class="terms-of-service text-center">
                     <input id="termsofservice" type="checkbox" name="termsofservice" />
-                    <span>@T("Checkout.TermsOfService.IAccept")<a class="read" onclick="javascript:OpenWindow('@Url.RouteUrl("TopicPopup", new { SystemName = "ConditionsOfUse" })', 450, 500, true)">@T("Checkout.TermsOfService.Read")</a></span>
+                    <span>By placing your order you agree to our <a class="read" onclick="javascript:OpenWindow('@Url.RouteUrl("TopicPopup", new { SystemName = "TermsAndConditions" })', 450, 500, true);">Terms & Conditions</a></span>
+                    @*<span>@T("Checkout.TermsOfService.IAccept")<a class="read" onclick="javascript:OpenWindow('@Url.RouteUrl("TopicPopup", new { SystemName = "ConditionsOfUse" })', 450, 500, true)">@T("Checkout.TermsOfService.Read")</a></span>*@
                 </div>
             }
         </div>

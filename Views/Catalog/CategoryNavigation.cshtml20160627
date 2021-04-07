@@ -1,0 +1,107 @@
+﻿@model CategoryNavigationModel
+@using Nop.Web.Models.Catalog;
+
+@functions{
+    public bool BreadCrumbContainsCurrentCategoryId(CategorySimpleModel category)
+    {
+        if (Model.CurrentCategoryId == 0)
+            return false;
+
+        if (category.Id == Model.CurrentCategoryId)
+            return true;
+
+        foreach (var subCategory in category.SubCategories)
+        {
+            if (BreadCrumbContainsCurrentCategoryId(subCategory))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+@helper RenderCategoryLine(CategorySimpleModel category)
+{
+
+    //Check if "Collection" category
+    if (category.SeName.Equals("shop-collection", StringComparison.OrdinalIgnoreCase))
+    {
+        <li class="list-group-item">
+            <a href="@Url.RouteUrl("Category", new { SeName = "spring-2015" })" class="@if (category.Id == Model.CurrentCategoryId) {<text>active</text>}
+                                                                     else
+                                                                     {<text>inactive</text>}">@category.Name</a>
+                                                                </li>
+    }
+    else
+    {
+        <li class="list-group-item">
+            <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="@if (category.Id == Model.CurrentCategoryId) {<text>active</text>}
+                                                                     else
+                                                                     {<text>inactive</text>}">@category.Name</a>
+                                                                </li>
+    }
+
+
+    if (category.SeName.Equals("sale-2", StringComparison.OrdinalIgnoreCase))
+    {
+        
+    }
+    
+
+    if (category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0)
+    {
+        if (category.SubCategories.Count > 0)
+        {
+
+            <li class="list-group-item">
+                <ul class="list-unstyled sub-cat">
+
+                    @foreach (var subCategory in category.SubCategories)
+                    { @RenderCategoryLine(subCategory)}
+                </ul>
+            </li>
+        }
+    }
+
+}
+
+
+@if (Model.Categories.Count > 0)
+{
+    var url = Request.ServerVariables["SCRIPT_NAME"];
+    if (url.Length > 1){url = url.Substring(1);}
+    
+
+    <div class="list-group">
+        <ul class="list-unstyled">
+
+            @foreach (var category in Model.Categories)
+            {
+                @RenderCategoryLine(category)
+            }
+
+            @*<li class="list-group-item">
+                <a href="@Url.RouteUrl("Lookbook")" class="@if (url == "lookbook") {<text>active</text>} else {<text>inactive</text>}">Lookbook</a>
+            </li>*@
+
+            @*Content*@
+            <li class="list-group-item">
+                <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("aboutus") })"
+                   class="@if (url == Html.GetTopicSeName("aboutus"))
+                          {<text>active</text>} else {<text>inactive</text>}">@T("AboutUs")</a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("stockist") })"
+                           class="@if (url == Html.GetTopicSeName("stockist"))
+                          {<text>active</text>} else {<text>inactive</text>}">@T("stockist")</a>
+                    </li>
+
+                    @*<li class="list-group-item"><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+                    <li class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("HowToOrder") })">How to order</a></li>*@
+                </ul>
+
+    </div>
+}

@@ -28,43 +28,32 @@
 }
 
 
-    <section class="col-main-sml checkout-completed-blox mt-large text-center">
+    <section class="col-main-sml checkout-completed-blox mt-normal text-center">
 
-        @*<div class="row">
-        <div class="col-5">
-            <img src="~/Content/Images/uploaded/assets/completedpage.jpg" class="img-fluid mx-auto d-block" />
-        </div>
-        <div class="col-7">*@
-        <p style="color:#969696; text-transform:uppercase; margin-top:40px;">
-            @*@T("Checkout.YourOrderHasBeenSuccessfullyProcessed")*@
-           Thank you for your order
+        <p style="text-transform:uppercase; margin-top:40px;">
+            @T("Checkout.YourOrderHasBeenSuccessfullyProcessed")
         </p>
 
         <p class="mt-4" style="font-size:1.5rem;">
             Your Order# <span class="checkout-completed-orderid"><a href="@Url.RouteUrl("OrderDetails", new { orderID = Html.AttributeEncode(Model.OrderId) })">@FormatOrderId(Model.OrderId)</a></span>
         </p>
-
-        <p class="mt-4">If you choose to pay via Bank transfer, please make your payment directly to the following bank account and include your order number as the payment reference.<br />
-            <strong>BCA</strong><br />Account No.: 0860.656.493<br />Beneficiary Name: Ilham Rahmandika
+        <br /><br />
+        <p class="mt-4">
+            <strong>TOTAL: @Model.OrderTotal</strong>
         </p>
-        <p class="text-center mt-4">
-            We are getting started on your order right away, and you will receive an order confirmation email shortly to your email.
+        <br /><br />
+        <p class="mt-4">
+            If you choose to pay via Bank transfer, please make your payment directly to the following bank account and include your order number as the payment reference.<br />
+            <strong>BCA</strong><br />Account No.: xxx.xx.xxx<br />Beneficiary Name: XXX
         </p>
-
-
-        @*<p class="text-center mt-4">
+        <br /><br />
+        <p style="text-transform:uppercase;">@T("Checkout.ThankYou")</p>
+        @*<p class="text-center">
             <a href="@Url.RouteUrl("OrderDetails", new { orderID = Html.AttributeEncode(Model.OrderId) })">@T("Checkout.PlacedOrderDetails")</a>
             <div class="buttons">
-                <input type="button" value="@T("Checkout.ThankYou.Continue")" class="btn btn-default" onclick="setLocation('@Url.RouteUrl("HomePage")')" />
+                    <input type="button" value="@T("Checkout.ThankYou.Continue")" class="btn btn-default" onclick="setLocation('@Url.RouteUrl("HomePage")')" />
             </div>
         </p>*@
-
-        <p style="color:#969696; text-transform:uppercase;">
-            @T("Checkout.ThankYou")
-        </p>
-
-        @*</div>
-        </div>*@
     </section>
 <br /><br /><br /><br /><br />
 
@@ -72,13 +61,13 @@
 
 
 @section scripts {
-    <script>
+    @*<script>
         $(document).ready(function () {
             function disableBack() { window.history.forward() }
             window.onload = disableBack();
             window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
         });
-    </script>
+    </script>*@
 }
 
 

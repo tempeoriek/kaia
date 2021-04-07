@@ -1,0 +1,174 @@
+﻿@model CategoryNavigationModel
+
+@using Nop.Web.Models.Catalog;
+
+
+@helper RenderCategoryLine(CategorySimpleModel category)
+{
+
+    <li class="list-group-item">
+        @if (category.Id == Model.CurrentCategoryId)
+        {
+            <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="active">@category.Name</a>
+        }
+        else
+        {
+            <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a>
+        }
+    </li>
+
+
+    if (category.SubCategories.Count > 0)
+    {
+
+        <li class="list-group-item">
+            <ul class="list-unstyled sub-cat">
+
+                @foreach (var subCategory in category.SubCategories)
+                {
+                    @RenderCategoryLine(subCategory)
+                }
+            </ul>
+        </li>
+    }
+
+}
+
+
+
+
+@if (Model.Categories.Count > 0)
+{
+
+    <div class="menu-alternate">
+        <div class="row">
+            <div class="col-xs-5">
+                <nav role='navigation'>
+                    <ul class='nav-mob'>
+
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li data-menu='@category.SeName' class="list-group-item">
+
+                                @if (category.Id == Model.CurrentCategoryId)
+                                {
+                                    <a href="#" class="active">@category.Name</a>
+                                }
+                                else
+                                {
+                                    <a href="#">@category.Name</a>
+                                }
+                            </li>
+                        }
+
+                        @*Content*@
+                        @*<li data-menu="Lookbook" class="list-group-item"><a href="@Url.RouteUrl("Lookbook")">Lookbook</a></li>*@
+                        <li data-menu="About" class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("aboutus") })">@T("AboutUs")</a></li>
+                        <li data-menu="Stockist" class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("stockist") })">@T("stockist")</a></li>
+                        @*<li data-menu="Contact" class="list-group-item"><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+                            <li data-menu="HowToOrder" class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("HowToOrder") })">How to order</a></li>*@
+
+                        <li data-menu="blank1" class="list-group-item"></li>
+                        <li data-menu="blank2" class="list-group-item"></li>
+                        <li data-menu="Help" class="list-group-item"><a href="#">Help</a></li>
+                        <li data-menu="contact" class="list-group-item"><a href="#">Contact</a></li>
+                        <li data-menu="myaccount" class="list-group-item"><a href="#">My account</a></li>
+
+
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-xs-7">
+                <div class="menu-alternate-col2 stories">
+                    @*<div class="most-viewed"><span></span></div>*@
+
+
+
+                    @foreach (var category in Model.Categories)
+                    {
+                        //if (category.SubCategories.Count > 0)
+                        //{
+                        <div class="subcat-mob">
+                            <ul class="list-unstyled">
+                                @foreach (var subCategory in category.SubCategories)
+                                {
+                                    @RenderCategoryLine(subCategory)
+                                }
+                            </ul>
+                        </div>
+                        //}
+                    }
+
+                    @*Hack for lookbook and other empty lines*@
+                    @for (int i = 1; i <= 4; i++)
+                    {
+                        @RenderEmptyLine()
+                    }
+
+                    @*Help content*@
+                    <div class="subcat-mob">
+                        <ul class="list-unstyled">
+                            <li class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("faq") })">@T("FAQ")</a> </li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">@T("ConditionsOfUse")</a></li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("returnpolicy") })">@T("ReturnPolicy")</a> </li>
+                        </ul>
+                    </div>
+
+                    @*Contact*@
+                    <div class="subcat-mob">
+                        <ul class="list-unstyled">
+                            <li class="list-group-item"><a href="@Url.RouteUrl("ContactUs")">Contact customer care</a></li>
+                            <li class="list-group-item">Email: <a href="mailto:contact@shopatvelvet.com">contact@shopatvelvet.com</a></li>
+                            <li class="list-group-item"><a href="~/jobs">Jobs</a></li>
+                        </ul>
+                    </div>
+
+
+                    @*My account*@
+                    <div class="subcat-mob">
+                        <ul class="list-unstyled">
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.CustomerInfo")</a></li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a></li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerChangePassword")">@T("Account.ChangePassword")</a></li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerReturnRequests")">@T("Account.CustomerReturnRequests")</a></li>
+                            <li class="list-group-item"><a href="~/customer/giftcards">Voucher</a></li>
+
+                            <li class="list-group-item"><a href="@Url.RouteUrl("CustomerBackInStockSubscriptions")">@T("Account.BackInStockSubscriptions")</a></li>
+                            <li class="list-group-item"><a href="~/Order/ConfirmPayment">Confirm payment</a></li>
+                            <li class="list-group-item"></li>
+                            <li class="list-group-item"></li>
+
+                            @if (!Model.IsAuthenticated)
+                            {
+                                <li class="list-group-item"><a href="@Url.RouteUrl("Login")">@T("Account.Login")</a></li>
+                                <li class="list-group-item"><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
+                            }
+                            else
+                            {
+                                <li class="list-group-item"><a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a></li>
+                            }
+                        </ul>
+
+
+
+                        <!--end -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@helper RenderEmptyLine()
+{
+    <div class="subcat-mob">
+        <ul class="list-unstyled">
+            <li class="list-group-item"></li>
+        </ul>
+    </div>
+
+}

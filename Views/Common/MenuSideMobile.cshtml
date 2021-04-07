@@ -16,71 +16,52 @@
         currentProductId = Convert.ToInt32(Url.RequestContext.RouteData.Values["productId"].ToString());
     }
 
-
-    var press = "inactive";
-    var common = "inactive";
-    var topic = "";
-    var url = Request.RawUrl;
-    
-    var seoname = url.Substring(url.LastIndexOf("/") + 1);
-    if (seoname.Equals("press", StringComparison.OrdinalIgnoreCase))
-    {
-        press = "active";
-    }
-    else if (seoname.Equals("common", StringComparison.OrdinalIgnoreCase))
-    {
-        common = "active";
-    }
-    else
-    {
-       topic = seoname;
-    }
-
 }
 
+<div id="cd-nav" class="cd-nav">
+    <div class="cd-navigation-wrapper">
+        <div class="cd-half-block">
+            @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId, isMobile = true })
+        </div><!-- .cd-half-block -->
+        <div class="cd-half-block">
+            @*<div class="list-group">
+                    <ul class="list-unstyled">
+                        <li class="list-group-item">@Html.Action("CurrencySelector", "Common")</li>
 
-@*<nav id="slide-menu">
-    <div class="fancybox-close menu-trigger-close"></div>
-    <ul>
-        <li>
-           
-        </li>
-        <li class="timeline">Timeline</li>
-        <li class="events">Events</li>
-        <li class="calendar">Calendar</li>
-        <li class="logout">Logout</li>
-    </ul>
-</nav>*@
+                        @if (Model.IsAuthenticated)
+                        {
+                            <li class="list-group-item">
+                                @Html.ActionLink(@Model.Greeting, "MyAccount", new { controller = "Customer" }, new { @class = "account" })
+                            </li>
+                            <li class="list-group-item"><a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a></li>
+                        }
+                        else
+                        {
+                            <li class="list-group-item"><a href="@Url.RouteUrl("Login")">@T("Account.Login")</a></li>
+                        }
 
-@if (Model.IsAuthenticated)
-{
-    <ul class="list-unstyled">
-        <li class="list-group-item"><a href="">HELLO, @Model.Greeting.ToUpper()</a></li>
-        <li class="list-group-item"><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.CustomerInfo").ToString().ToUpper()</a></li>
-        <li class="list-group-item"><a href="@Url.RouteUrl("CustomerAddressAdd")">@T("Account.CustomerAddresses").ToString().ToUpper()</a></li>
-        <li class="list-group-item"><a href="@Url.RouteUrl("CustomerChangePassword")">@T("Account.ChangePassword").ToString().ToUpper()</a></li>
-        <li class="list-group-item"><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders").ToString().ToUpper()</a></li>
-        <li class="list-group-item"><a href="@Url.RouteUrl("CustomerReturnRequests")">@T("Account.CustomerReturnRequests")</a></li>
-        <li class="list-group-item"><a href="~/order/confirmpayments">CONFIRM PAYMENT</a></li>
-        <li class="list-group-item" style="margin-top:16px;">
-            <a href="@Url.RouteUrl("Logout")">@T("Account.Logout").ToString().ToUpper()</a>
-        </li>
-    </ul>
-}
-else
-{
-    <ul class="list-unstyled">
-        <li class="list-group-item">&nbsp;</li>
-        <li class="list-group-item">&nbsp;</li>
-        <li class="list-group-item">&nbsp;</li>
-        <li class="list-group-item">&nbsp;</li>
-        <li class="list-group-item">&nbsp;</li>
-        <li class="list-group-item" style="margin-top:16px;">
-            <a href="~/Login">SIGN IN / REGISTER</a>
-        </li>
-    </ul>
-}
+                    </ul>
+                </div>*@
+            <br /><br /><br />
+            <div class="list-group">
+                <ul class="list-unstyled">
+                    <li class="list-group-item"></li>
+                    <li class="list-group-item"></li>
+                    <li class="list-group-item"></li>
+                    <li class="list-group-item">
+                        @Html.Action("SearchBox", "Catalog")
+                    </li>
+
+                </ul>
+            </div>
+        </div>
 
 
-
-
+    </div> <!-- .cd-navigation-wrapper -->
+</div> <!-- .cd-nav -->
+@*<li class="gn-search-item">
+        <input class="gn-search" type="search" placeholder="Search">
+        <a class="gn-icon gn-icon-search">
+            <span>Search</span>
+        </a>
+    </li>*@

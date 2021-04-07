@@ -22,18 +22,18 @@
                                 {
                                     addressLine += ", " + address.City;
                                 }
-                                if (address.StateProvinceEnabled && !String.IsNullOrEmpty(address.StateProvinceName))
-                                {
-                                    addressLine += ", " + address.StateProvinceName;
-                                }
-                                if (address.ZipPostalCodeEnabled && !String.IsNullOrEmpty(address.ZipPostalCode))
-                                {
-                                    addressLine += " " + address.ZipPostalCode;
-                                }
-                                if (address.CountryEnabled && !String.IsNullOrWhiteSpace(address.CountryName))
-                                {
-                                    addressLine += ", " + address.CountryName;
-                                }
+                                //if (address.StateProvinceEnabled && !String.IsNullOrEmpty(address.StateProvinceName))
+                                //{
+                                //    addressLine += ", " + address.StateProvinceName;
+                                //}
+                                //if (address.ZipPostalCodeEnabled && !String.IsNullOrEmpty(address.ZipPostalCode))
+                                //{
+                                //    addressLine += " " + address.ZipPostalCode;
+                                //}
+                                //if (address.CountryEnabled && !String.IsNullOrWhiteSpace(address.CountryName))
+                                //{
+                                //    addressLine += ", " + address.CountryName;
+                                //}
                                 //how should we render "FormattedCustomAddressAttributes" here?
                                 <option value="@(address.Id)">@(addressLine)</option>
                             }

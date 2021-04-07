@@ -9,7 +9,7 @@
 
     //logo path
     var currentThemeName = "v1"; //EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
-    var logo = "~/Themes/" + currentThemeName + "/Content/images/logo.png";
+    var logo = "~/Themes/" + currentThemeName + "/Content/images/logo.svg";
 
     //store name
     var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
@@ -74,7 +74,7 @@
 
 
 <div class="left_menu">
-    <a href="~/"><img style="width:97px;margin-left:-30px;" src="~/Themes/v1/Content/images/logo.png" class="brandImage" /></a>
+    <a href="~/"><img style="width:97px;margin-left:-30px;" src="~/Themes/v1/Content/images/logo.svg" class="brandImage" /></a>
     <nav class="navbar navbar-expand-md sidebarNavigation mt-4 d-block" data-sidebarClass="navbar-dark" style="background-color:transparent; ">
         @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId, isSidebar = false })
     </nav>
@@ -92,7 +92,7 @@
     <div class="row" style="height:100px;">
         <div class="col-3" style="background-color:orange;">
             <div class="d-flex flex-column">
-                <a href="~/"><img style="width:97px;margin-left:-30px;" src="~/Themes/v1/Content/images/logo.png" class="brandImage" /></a>
+                <a href="~/"><img style="width:97px;margin-left:-30px;" src="~/Themes/v1/Content/images/logo.svg" class="brandImage" /></a>
                 <nav class="navbar navbar-expand-md sidebarNavigation mt-4 d-block" data-sidebarClass="navbar-dark" style="background-color:transparent; ">
                     @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId, isSidebar = false })
                 </nav>
@@ -190,7 +190,7 @@
 
 
                 <div class="">
-                    <a class="navbar-brand" href="~/"><img class="img-responsive brandImage" style="max-width:63px;" src="~/Themes/v1/Content/images/logo.png" /></a>
+                    <a class="navbar-brand" href="~/"><img class="img-responsive brandImage" style="max-width:63px;" src="~/Themes/v1/Content/images/logo.svg" /></a>
                 </div>
 
                 <div class="d-flex">
@@ -250,7 +250,7 @@
                         </div>*@
                     <div class="d-block d-md-none">
                         <div class="mb-4">
-                            <a class="navbar-brand" href="~/"><img class="img-responsive store-logo" src="~/Themes/v1/Content/images/logo.png" /></a>
+                            <a class="navbar-brand" href="~/"><img class="img-responsive store-logo" src="~/Themes/v1/Content/images/logo.svg" /></a>
                         </div>
                         <div class="xclose position-absolute" style="top:10px; right:10px;">
                             X

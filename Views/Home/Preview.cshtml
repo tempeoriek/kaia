@@ -1,0 +1,329 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutOne.cshtml";}
+
+@Html.Action("ShowTopic", "Topic", new { systemName = "HomepagePreRelease" })
+
+
+@*<section class="hidden-xs"><img class="img-responsive" src="/content/Images/uploaded/homepage/home_slider.jpg" alt="" /></section>
+<div class="container-fluid homepagev2 grid hidden-xs">
+    <div class="row full-lr">
+        <div class="col-sm-6">
+            <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/dummy01.jpg" alt="" /></a>
+            <div class="text-center">
+                <a href="http://www.shopatvelvet.com/new-arrivals"><h3>Shop New Arrivals</h3></a>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <a href="http://www.shopatvelvet.com/collection"><img class="img-responsive" src="/content/images/uploaded/homepage/dummy01.jpg" alt="" /></a>
+            <div class="text-center">
+                <a href="http://www.shopatvelvet.com/collection"><h3>Shop by collection</h3></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="container-fluid homepagev2 grid hidden-xs">
+    <div class="row full-lr">
+        <div class="col-sm-4">
+            <a href="http://www.shopatvelvet.com/about"><img class="img-responsive" src="/content/images/uploaded/homepage/Landing-2-4.jpg" alt="" /></a>
+            <div class="text-center">
+                <a href="http://www.shopatvelvet.com/about"><h3>About The Brand</h3></a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <a href="https://instagram.com/shopatvelvet/"><img class=" img-responsive" src="/content/images/uploaded/homepage/Landing-2-4.jpg" alt="" /></a>
+            <div class="text-center">
+                <a href="https://instagram.com/shopatvelvet/"><h3>A Glimpse of life</h3></a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <a href="http://www.instagram.com/shopatvelvet"> <img class=" img-responsive" src="/content/images/uploaded/homepage/Landing-2-4.jpg" alt="" /></a>
+            <div class="text-center">
+                <a href="http://www.instagram.com/shopatvelvet"><h3>#weshopatvelvet</h3></a>
+            </div>
+        </div>
+    </div>
+</section>*@
+
+<section class="container blox-tiles  hidden-xs" style="margin-top:220px;">
+    <h2 class="altfont">JOURNAL</h2>
+    @Html.Action("NewestBlogs", "Blog")
+</section>
+
+@*<section class="container blox-tiles instagram hidden-xs" style="margin-top:220px;">
+    <h2 class="altfont">#weshopatvelvet</h2>
+    <ul class="list-unstyled list-inline">
+        <li>
+            <img src="~/Content/Images/uploaded/homepage/instagram/ig1.png" style="height:142px;" />
+        </li>
+        <li>
+            <img src="~/Content/Images/uploaded/homepage/instagram/ig1.png" style="height:142px;" />
+        </li>
+        <li>
+            <img src="~/Content/Images/uploaded/homepage/instagram/ig1.png" style="height:142px;" />
+        </li>
+        <li>
+            <img src="~/Content/Images/uploaded/homepage/instagram/ig1.png" style="height:142px;" />
+        </li>
+        <li>
+            <img src="~/Content/Images/uploaded/homepage/instagram/ig1.png" style="height:142px;" />
+        </li>
+        <li>
+            <img src="~/Content/Images/uploaded/homepage/instagram/ig1.png" style="height:142px;" />
+        </li>
+    </ul>
+</section>*@
+
+@* Xselling
+        <section class="container blox-tiles xselling">
+        <!-- desktop -->
+        <table cellpadding="0" cellspacing="0" class="hidden-xs hidden-sm">
+            <tr>
+                <td rowspan="2" style="width:228px">
+                    <div class="col-xs-12 effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img01.jpg" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Shop New Arrivals</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td style="width:228px">
+                    <div class="col-xs-12 effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img02.jpg" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Shop New Arrivals</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+
+                <td colspan="2" rowspan="2">
+                    <div class="col-xs-12 effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img03.jpg" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Shop New Arrivals</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="col-xs-12 effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img04.jpg" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Back In stock</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px;">
+                    <div class="col-xs-12  effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img05.jpg" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Shop New Arrivals</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td colspan="2" style="padding-top:10px; width:466px;">
+                    <div class="col-xs-12  effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive1" src="/content/images/uploaded/homepage/gallery/img06.png" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Shop New Arrivals</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td style="padding-top:10px;">
+                    <div class="col-xs-12  effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img07.jpg" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Lorem ipsum</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!--tablet -->
+        <table cellpadding="0" cellspacing="0" class="hidden-xs hidden-md hidden-lg">
+            <tr>
+                <td style="width:228px">
+                    <div class="col-xs-12 effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img01.jpg" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Shop New Arrivals</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+
+                <td >
+                    <div class="col-xs-12 effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img03.jpg" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Shop New Arrivals</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding-top:10px;">
+                    <div class="col-xs-12  effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img05.jpg" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Shop New Arrivals</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td colspan="2" style="padding-top:10px; width:466px;">
+                    <div class="col-xs-12  effect-opacity">
+                        <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive1" src="/content/images/uploaded/homepage/gallery/img06.png" alt="" /></a>
+                        <div class="overlay">
+                            <a href="http://www.shopatvelvet.com/new-arrivals">
+                                <div class="sav-hoverbox">
+                                    <h3>Shop New Arrivals</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+
+        <div class="row visible-xs">
+            <div class="col-xs-12 effect-opacity">
+                <a href="http://www.shopatvelvet.com/new-arrivals"><img class="img-responsive" src="/content/images/uploaded/homepage/gallery/img03.jpg" alt="" /></a>
+                <div class="overlay">
+                    <a href="http://www.shopatvelvet.com/new-arrivals">
+                        <div class="sav-hoverbox">
+                            <h3>Shop New Arrivals</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>*@
+
+
+
+
+@section HeaderSection{
+    <style>
+        @@media screen and (min-width: 1079px) {
+            #body-content {
+                margin-top: -60px;
+            }
+        }
+
+        .gamma-gallery li {
+            margin-right: 0;
+            margin-bottom: 0;
+        }
+
+            .gamma-gallery li + li {
+                margin-left: 16px;
+            }
+    </style>
+}
+
+@section scripts{
+    <script>
+
+        $(".effect-opacity").hover(function () {
+            $(this).find(".overlay").css({ opacity: 1 });
+        },
+        function () {
+            $(this).find(".overlay").css({ opacity: 0 });
+        }
+        );
+
+            $(".overlay").click(function () {
+                var url = $(this).prev().attr("href");
+                if (url != "")
+                    window.location = url;
+                return false;
+            });
+
+
+            $(function () {
+                if (window.matchMedia("(max-width: 768px)").matches) {
+                    if (navigator.userAgent.indexOf('Safari') != -1 || navigator.userAgent.indexOf('Chrome') == -1) {
+
+                        $('.overlay').each(function () {
+                            this.style.position = 'absolute';
+                            this.style.top = '40%';
+                        });
+
+                    };
+
+                }
+                else {
+                    if (navigator.userAgent.indexOf('Safari') != -1 || navigator.userAgent.indexOf('Chrome') == -1) {
+                        $(window).on('load', function () {
+                            $('.overlay').each(function () {
+                                this.style.position = 'absolute';
+                                this.style.top = $(this).parent().parent().height() / 2 + 'px';
+                                this.style.marginTop = -$(this).height() / 2 + 'px';
+                            });
+                        });
+
+                    }
+                    else {
+
+                        $('.overlay').each(function () {
+                            this.style.position = 'absolute';
+                            this.style.top = $(this).parent().height() / 2 + 'px';
+                            this.style.marginTop = -$(this).height() / 2 + 'px';
+                            this.style.left = ($(this).parent().width() - $(this).width()) / 2 + 'px';
+                        });
+
+
+                    }
+                }
+
+            })
+
+    </script>
+
+}

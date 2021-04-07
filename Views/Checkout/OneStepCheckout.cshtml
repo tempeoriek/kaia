@@ -4,22 +4,19 @@
 @{
 
     ViewBag.Title = "Checkout";
-    ViewBag.HideMenu = "true";
+    //ViewBag.HideMenu = "true";
 }
 
 
 <div class="col-main mt-large">
-    <div class="row">
-        <div class="col-xs-12 text-center">
-            <h1>@ViewBag.Title</h1>
-        </div>
-    </div>
+    @*<h1>@ViewBag.Title</h1>*@
 
-    @*@Html.Action("OrderSummary", "ShoppingCart")
-    <br />*@
+    @*@Html.Action("OrderSummary", "ShoppingCart")*@
     @using (Html.BeginForm())
     {
 
+        <div class="balk-separator"></div>
+        
         <div class="row">
             <div class="col-sm-6">
                 <!-- billing -->
@@ -29,7 +26,8 @@
                     </div>
                     <div class="panel-body">
                         <div class="checkout-blox">
-                            @if (Model.BillingAdress != null)
+                            @{
+                                if (Model.BillingAdress != null)
                                 {
                                     {
                                         if (Model.BillingAdress.ExistingAddresses.Count > 0)
@@ -50,7 +48,7 @@
 
                                     }
                                 }
-                            
+                            }
 
                             <div class="radio">
                                 <label>
@@ -121,21 +119,21 @@
 
                             <div id="shipping-new-address-form" style="display:none;">
                                 @{
-                                    var validationSummary = Html.ValidationSummary(true);
+        var validationSummary = Html.ValidationSummary(true);
 
-                                    if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
-                                    {
-                                        <div class="message-error">@validationSummary</div>
-                                    }
+        if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+        {
+            <div class="message-error">@validationSummary</div>
+        }
 
 
-                                    var dataDictAddress = new ViewDataDictionary();
-                                    //Merge ModelState (required for validation)
+        var dataDictAddress = new ViewDataDictionary();
+        //Merge ModelState (required for validation)
 
-                                    dataDictAddress.ModelState.Merge(ViewData.ModelState);
-                                    dataDictAddress.TemplateInfo.HtmlFieldPrefix = "ShippingNewAddress";
+        dataDictAddress.ModelState.Merge(ViewData.ModelState);
+        dataDictAddress.TemplateInfo.HtmlFieldPrefix = "ShippingNewAddress";
 
-                                    @Html.Partial("_CreateOrUpdateAddress", Model.ShippingAddress.NewAddress, dataDictAddress)
+        @Html.Partial("_CreateOrUpdateAddress", Model.ShippingAddress.NewAddress, dataDictAddress)
                                 }
                             </div>
                             <!-- end shipping adres -->
@@ -151,6 +149,8 @@
             </div>
         </div>
 
+    <div class="balk-separator"></div>
+        
         <div class="row">
             <div class="col-sm-6">
 
@@ -176,24 +176,27 @@
                                                 @*@T("Checkout.SelectShippingMethod.MethodAndFee", shippingMethod.Name, shippingMethod.Fee)*@
                                                 @Html.Raw(shippingMethod.Name)
 
-                                                @*@if (!String.IsNullOrEmpty(shippingMethod.Description))
+                                                @if (!String.IsNullOrEmpty(shippingMethod.Description))
                                                 {
                                                     <span class="method-description">
                                                         @Html.Raw(shippingMethod.Description)
                                                     </span>
 
-                                                }*@
+                                                }
                                             </label>
                                         </div>
                                     }
                                 </div>
                             }
-
-                            <br />
+                            
+                        <br />
+                            @*<span class="red">Free express shipping for order above IDR.500,000</span>
+                            <br />*@
                             Shipment fee will be calculated on the next page.
-                            <br /><br />
-
-                           
+                            @*<br /><br />
+                        <div style="color:#ed1c24">
+                            Due to Eid holiday, all orders confirmed during 21 June -2 July 2017 will be processed on July 3 afterwards.
+                        </div>*@
                         </div><!-- end shipping method-->
 
 
@@ -253,10 +256,10 @@
                                 </div>
                             }
 
-                            @*<p>
-                                You will enter your payment details on a secure payment page when you click on "Proceed to payment".
-                               
-                            </p>*@
+                            <p>
+                                You will enter your payment details on a secure payment page when you click on "Proceed to payment". <br />
+                                No sensitive information is handled by Shopatvelvet.
+                            </p>
 
                             <!-- end payment method -->
 
@@ -282,19 +285,10 @@
             <div class="col-sm-12">
 
 
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <div class="buttons text-right">
-                                <input type="submit" id="confirm-button" name="confirm-button" value="Review order" class="btn btn-default btn-primary quarter-width" />
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-
-
+                <div class="form-group">
+                    <div class="buttons text-right">
+                        <input type="submit" id="confirm-button" name="confirm-button" value="Review order" class="btn btn-default btn-primary quarter-width btn-mt" />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -311,7 +305,7 @@
 
 
 @section Left{
-    @*@Html.Partial("MenuStatic")*@
+    @Html.Partial("MenuStatic")
 }
 
 
